@@ -1,35 +1,54 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
+import login
 
-# exemplo de professor
-class Home():
-    def __init__(self, master): #customizar a janela
-        self.janela = master
-        self.janela.title('Banco de Brasil')
-        self.janela.geometry('400x400')
-        #self.janela.maxsize(400)
-        #self.janela.resizable(width=True,height=True)
-        #Menu
-        mnu_barra = tk.Menu(self.janela) #Barra
-        mnu_arquivo = tk.Menu(mnu_barra, tearoff=0) #Item
-        mnu_barra.add_cascade(label='Contas', menu=mnu_arquivo)
-        mnu_arquivo.add_command(label='Novo Arquivo...') #SubItens
-        mnu_arquivo.add_command(label='Sair', command=self.janela.destroy)
-        self.janela.config(menu=mnu_barra)
-        mnu_editar = tk.Menu(mnu_barra, tearoff=0)
-        mnu_barra.add_cascade(label='Editar', menu=mnu_editar)
-        mnu_editar.add_command(label='Copiar')
-        mnu_editar.add_command(label='Colar')
-        mnu_editar.add_command(label='Recortar')
-        mnu_editar.add_separator()
-        mnu_pesquisar = tk.Menu(mnu_editar, tearoff=0)
-        mnu_editar.add_cascade(label='Pesquisar', menu=mnu_pesquisar)
-        mnu_pesquisar.add_command(label='Arquivo')
-        mnu_pesquisar.add_command(label='Caracter')
-        mnu_pesquisar.add_command(label='Palavra')
+# Função para abrir uma nova janela
+def abrir_janela(titulo_janela):
+    messagebox.showinfo("Nova Janela", f"Abrindo {titulo_janela}")
+
+
+# Função para exibir uma mensagem quando uma opção do menu é selecionada
+# def menu_cb(menu_item):
+#     messagebox.showinfo("Menu", f"Selecionado: {menu_item}")
 
 
 
-app = tk.Tk()
-janelaPrincipal = Home(app)
-app.mainloop()
+def sair():
+    if messagebox.askokcancel("Sair", "Deseja sair do programa?"):
+        home.destroy()
+
+def janela_login():
+    login.root.mainloop()
+
+#  janela principal
+home = tk.Tk()
+home.title("Sistema Bancário")
+
+#  barra de menus
+menu_bar = tk.Menu(home)
+home.config(menu=menu_bar)
+
+# === Arquivo ===
+menu_arquivo = tk.Menu(menu_bar, tearoff=0)
+menu_bar.add_cascade(label="Arquivo", menu=menu_arquivo)
+menu_arquivo.add_command(label="Nova Conta", command=lambda: abrir_janela("Nova Conta"))
+menu_arquivo.add_command(label="Encerrar Conta", command=lambda: abrir_janela("Encerrar Conta"))
+menu_arquivo.add_separator()
+menu_arquivo.add_command(label="Sair", command=sair)
+
+# === Operações ===
+menu_operacoes = tk.Menu(menu_bar, tearoff=0)
+menu_bar.add_cascade(label="Operações", menu=menu_operacoes)
+menu_operacoes.add_command(label="Depósito", command=lambda: abrir_janela("Depósito"))
+menu_operacoes.add_command(label="Saque", command=lambda: abrir_janela("Saque"))
+menu_operacoes.add_separator()
+menu_operacoes.add_command(label="Transferência", command=lambda: abrir_janela("Transferência"))
+
+# === Ajuda ===
+# help_menu = tk.Menu(menu_bar, tearoff=0)
+# menu_bar.add_cascade(label="Ajuda", menu=help_menu)
+# help_menu.add_command(label="Sobre", command=lambda: menu_cb("Sobre"))
+
+# primeiro chama a janela de login
+home.after(0, janela_login)
+home.mainloop()
