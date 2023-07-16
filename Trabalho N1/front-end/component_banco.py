@@ -70,7 +70,7 @@ class MostrarBancos:
             self.top_editar = tk.Toplevel()
             self.top_editar.grab_set()
 
-            lbl_id = tk.Label(self.top_editar, text='Nome:')
+            #id do objeto invisivel 
             self.ent_id = tk.Entry(self.top_editar)
             self.ent_id.insert('end', valores[0])
 
@@ -81,10 +81,8 @@ class MostrarBancos:
             self.ent_nome.grid(row=0, column=1)
             self.ent_nome.insert('end', valores[1])
 
-            btn_confirmar = tk.Button(self.top_editar,
-                                      text='Confirmar',
-                                      command=self.confirmar_edicao)
-            btn_confirmar.grid(row=3, column=0)
+            btn_confirmar = tk.Button(self.top_editar,text='Confirmar',command=self.confirmar_edicao)
+            btn_confirmar.grid(row=1, column=0, columnspan=2)
 
     def confirmar_edicao(self):
         id = int(self.ent_id.get())

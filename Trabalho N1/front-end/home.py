@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from interface_banco import CadastroBanco, MostrarBancos
+from component_banco import CadastroBanco, MostrarBancos
 from banco import Banco
 
 def limpar_tela(frame):
