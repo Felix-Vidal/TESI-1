@@ -23,5 +23,5 @@ class Banco:
 
     @classmethod
     def listar_bancos(cls):
-        nomes_bancos = [banco._nome for banco in cls._lista_bancos]
-        return nomes_bancos
+        bancos = [banco for banco in cls._lista_bancos]
+        return bancos

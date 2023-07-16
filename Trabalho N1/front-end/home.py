@@ -37,6 +37,12 @@ class Home:
         menu_conta.add_command(label="Mostrar Contas Corrente")
         menu_conta.add_command(label="Mostrar Contas Poupança")
 
+        # === Cliente ===
+        menu_cliente = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Cliente", menu=menu_cliente)
+        menu_cliente.add_command(label="Criar Cliente")
+        menu_cliente.add_command(label="Mostrar Clientes")
+
         # === Operações ===
         menu_operacoes = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Operações", menu=menu_operacoes)

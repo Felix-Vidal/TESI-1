@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from banco import Banco
 
 class CadastroBanco:
@@ -23,18 +23,33 @@ class CadastroBanco:
         else:
             messagebox.showerror("Erro", "Por favor, informe o nome do banco.")
 
-
+colunas_bancos = ('id','nome')
 class MostrarBancos:
     def __init__(self, frame, banco):
         self.root = frame
         self.banco = banco
+    	
 
-        self.listbox_bancos = tk.Listbox(frame)
+        self.listbox_bancos = ttk.Treeview(frame, columns=colunas_bancos, show='headings')
         self.listbox_bancos.pack()
 
+        #Cabeçalho
+        self.listbox_bancos.heading('id', text='ID')
+        self.listbox_bancos.heading('nome', text='Nome')
+
+        #Colunas
+        self.listbox_bancos.column('id', minwidth=200, width=200)
+        self.listbox_bancos.column('nome', minwidth=200, width=200)
+
+        #Linhas
         bancos = self.banco.listar_bancos()
         for b in bancos:
-            self.listbox_bancos.insert(tk.END, b)
+            self.listbox_bancos.insert('', 'end', values=[b._num, b._nome])
+
+        #Barra de rolagem
+        scb = tk.Scrollbar(self.root, orient=tk.VERTICAL,command=self.listbox_bancos.yview)
+        scb.grid(row=0, column=1, sticky='ns')
+        self.tvw.config(yscrollcommand=scb.set)
 
 
 
