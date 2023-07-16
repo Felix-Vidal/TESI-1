@@ -1,54 +1,70 @@
 import tkinter as tk
 from tkinter import messagebox
-import login
+from interface_banco import CadastroBanco, MostrarBancos
+from banco import Banco
 
-# Função para abrir uma nova janela
-def abrir_janela(titulo_janela):
-    messagebox.showinfo("Nova Janela", f"Abrindo {titulo_janela}")
+def limpar_tela(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+class Home:
+    
+    def __init__(self, root):
+
+        self.root = root
+        # Configuração da janela principal
+        self.root.title("Sistema Bancário")
+        self.root.geometry("500x300")
+
+        #  barra de menus
+        menu_bar = tk.Menu(self.root)
+        self.root.config(menu=menu_bar)
 
 
-# Função para exibir uma mensagem quando uma opção do menu é selecionada
-# def menu_cb(menu_item):
-#     messagebox.showinfo("Menu", f"Selecionado: {menu_item}")
+        # === Banco ===
+        menu_banco = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Banco", menu=menu_banco)
+        menu_banco.add_command(label="Novo Banco", command=self.cadastrar_banco)
+        menu_banco.add_command(label="Mostrar Banco", command=self.mostrar_bancos)
+        # menu_banco.add_command(label="Atualizar Banco",command= atualizar_banco )
 
 
+        # === Conta ===
+        menu_conta = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Conta", menu=menu_conta)
+        menu_conta.add_command(label="Criar Conta")
+        menu_conta.add_separator()
+        menu_conta.add_command(label="Mostrar Contas Corrente")
+        menu_conta.add_command(label="Mostrar Contas Poupança")
 
-def sair():
-    if messagebox.askokcancel("Sair", "Deseja sair do programa?"):
-        home.destroy()
+        # === Operações ===
+        menu_operacoes = tk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Operações", menu=menu_operacoes)
+        menu_operacoes.add_command(label="Transferência")
+        menu_operacoes.add_separator()
+        menu_operacoes.add_command(label="Depósito")
+        menu_operacoes.add_command(label="Saque")
+        
 
-def janela_login():
-    login.root.mainloop()
+        # === Sair ===
+        menu_bar.add_command(label="Sair", command=self.sair)
 
-#  janela principal
-home = tk.Tk()
-home.title("Sistema Bancário")
+        self.frame = tk.Frame(self.root)
+        self.frame.pack()
 
-#  barra de menus
-menu_bar = tk.Menu(home)
-home.config(menu=menu_bar)
 
-# === Arquivo ===
-menu_arquivo = tk.Menu(menu_bar, tearoff=0)
-menu_bar.add_cascade(label="Arquivo", menu=menu_arquivo)
-menu_arquivo.add_command(label="Nova Conta", command=lambda: abrir_janela("Nova Conta"))
-menu_arquivo.add_command(label="Encerrar Conta", command=lambda: abrir_janela("Encerrar Conta"))
-menu_arquivo.add_separator()
-menu_arquivo.add_command(label="Sair", command=sair)
+    def sair(self):
+        if messagebox.askokcancel("Sair", "Deseja sair do programa?"):
+            self.root.destroy()
+        
+    def cadastrar_banco(self):
+        limpar_tela(self.frame)
+        self.root.title("Cadastrar Bancos")
+        cadastro = CadastroBanco(self.frame)
+        
 
-# === Operações ===
-menu_operacoes = tk.Menu(menu_bar, tearoff=0)
-menu_bar.add_cascade(label="Operações", menu=menu_operacoes)
-menu_operacoes.add_command(label="Depósito", command=lambda: abrir_janela("Depósito"))
-menu_operacoes.add_command(label="Saque", command=lambda: abrir_janela("Saque"))
-menu_operacoes.add_separator()
-menu_operacoes.add_command(label="Transferência", command=lambda: abrir_janela("Transferência"))
 
-# === Ajuda ===
-# help_menu = tk.Menu(menu_bar, tearoff=0)
-# menu_bar.add_cascade(label="Ajuda", menu=help_menu)
-# help_menu.add_command(label="Sobre", command=lambda: menu_cb("Sobre"))
-
-# primeiro chama a janela de login
-home.after(0, janela_login)
-home.mainloop()
+    def mostrar_bancos(self):
+        limpar_tela(self.frame)
+        self.root.title("Mostrar Bancos")
+        mostrar = MostrarBancos(self.frame, Banco)

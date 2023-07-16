@@ -2,44 +2,36 @@ import tkinter as tk
 from tkinter import messagebox
 from banco import Banco
 
-
 class CadastroBanco:
-    def __init__(self, root, banco):
-        self.root = root
-        self.banco = banco
 
-        self.label_nome = tk.Label(root, text="Nome do Banco:")
+    def __init__(self, frame):
+        self.root = frame
+
+        self.label_nome = tk.Label(self.root, text="Nome do Banco:")
         self.label_nome.pack()
-        self.entry_nome = tk.Entry(root)
+        self.entry_nome = tk.Entry(self.root)
         self.entry_nome.pack()
 
-        self.button_cadastrar = tk.Button(root, text="Cadastrar", command=self.cadastrar)
+        self.button_cadastrar = tk.Button(self.root, text="Cadastrar", command=self.cadastrar)
         self.button_cadastrar.pack()
 
     def cadastrar(self):
         nome_banco = self.entry_nome.get()
         if nome_banco:
             novo_banco = Banco(nome_banco)
-            self.banco.incluir_banco(novo_banco)
             messagebox.showinfo("Cadastro de Banco", "Banco cadastrado com sucesso!")
-            self.root.destroy()
         else:
             messagebox.showerror("Erro", "Por favor, informe o nome do banco.")
 
 
 class MostrarBancos:
-    def __init__(self, root, banco):
-        self.root = root
+    def __init__(self, frame, banco):
+        self.root = frame
         self.banco = banco
 
-        self.listbox_bancos = tk.Listbox(root)
+        self.listbox_bancos = tk.Listbox(frame)
         self.listbox_bancos.pack()
 
-        self.button_mostrar = tk.Button(root, text="Mostrar", command=self.mostrar)
-        self.button_mostrar.pack()
-
-    def mostrar(self):
-        self.listbox_bancos.delete(0, tk.END)
         bancos = self.banco.listar_bancos()
         for b in bancos:
             self.listbox_bancos.insert(tk.END, b)

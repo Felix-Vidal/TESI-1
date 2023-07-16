@@ -8,6 +8,7 @@ class Banco:
         self._contas = []
         self._caixa_geral = 0
         Banco._total_banco += 1
+        Banco._lista_bancos.append(self)
 
     def listar_contas(self):
         for conta in self._contas:
@@ -24,7 +25,3 @@ class Banco:
     def listar_bancos(cls):
         nomes_bancos = [banco._nome for banco in cls._lista_bancos]
         return nomes_bancos
-
-
-    def incluir_banco(banco):
-        Banco._lista_bancos.append(banco)
