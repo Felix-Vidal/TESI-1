@@ -25,3 +25,16 @@ class Banco:
     def listar_bancos(cls):
         bancos = [banco for banco in cls._lista_bancos]
         return bancos
+    
+    @classmethod
+    def atualizar_banco(cls, id, nome):
+        bancos = cls.listar_bancos()
+        for banco in bancos:
+            if(banco._num == id):
+                banco._nome = nome
+
+
+    
+                
+
+    

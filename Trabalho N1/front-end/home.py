@@ -24,7 +24,7 @@ class Home:
         # === Banco ===
         menu_banco = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Banco", menu=menu_banco)
-        menu_banco.add_command(label="Novo Banco", command=self.cadastrar_banco)
+        menu_banco.add_command(label="Cadastrar Banco", command=self.cadastrar_banco)
         menu_banco.add_command(label="Mostrar Bancos", command=self.mostrar_bancos)
         # menu_banco.add_command(label="Atualizar Banco",command= atualizar_banco )
 
@@ -40,7 +40,7 @@ class Home:
         # === Cliente ===
         menu_cliente = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Cliente", menu=menu_cliente)
-        menu_cliente.add_command(label="Criar Cliente")
+        menu_cliente.add_command(label="Cadastrar Cliente")
         menu_cliente.add_command(label="Mostrar Clientes")
 
         # === Operações ===
@@ -67,8 +67,6 @@ class Home:
         limpar_tela(self.frame)
         self.root.title("Cadastrar Bancos")
         cadastro = CadastroBanco(self.frame)
-        
-
 
     def mostrar_bancos(self):
         limpar_tela(self.frame)

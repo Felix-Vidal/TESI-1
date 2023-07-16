@@ -23,23 +23,24 @@ class CadastroBanco:
         else:
             messagebox.showerror("Erro", "Por favor, informe o nome do banco.")
 
-colunas_bancos = ('id','nome')
+
 class MostrarBancos:
+    colunas_bancos = ('id','nome')
     def __init__(self, frame, banco):
         self.root = frame
         self.banco = banco
     	
 
-        self.listbox_bancos = ttk.Treeview(frame, columns=colunas_bancos, show='headings')
-        self.listbox_bancos.pack()
+        self.listbox_bancos = ttk.Treeview(frame, columns=self.colunas_bancos, show='headings')
+        self.listbox_bancos.grid()
 
         #Cabeçalho
         self.listbox_bancos.heading('id', text='ID')
         self.listbox_bancos.heading('nome', text='Nome')
 
         #Colunas
-        self.listbox_bancos.column('id', minwidth=200, width=200)
-        self.listbox_bancos.column('nome', minwidth=200, width=200)
+        self.listbox_bancos.column('id', minwidth=15, width=30)
+        self.listbox_bancos.column('nome', minwidth=300, width=300)
 
         #Linhas
         bancos = self.banco.listar_bancos()
@@ -49,7 +50,55 @@ class MostrarBancos:
         #Barra de rolagem
         scb = tk.Scrollbar(self.root, orient=tk.VERTICAL,command=self.listbox_bancos.yview)
         scb.grid(row=0, column=1, sticky='ns')
-        self.tvw.config(yscrollcommand=scb.set)
+        self.listbox_bancos.config(yscrollcommand=scb.set)
+
+        #Botões
+        frm_botoes = tk.Frame(self.root)
+        frm_botoes.grid(row=1, column=0)
+
+        btn_editar = tk.Button(frm_botoes, text='Editar', command=self.editar)
+        btn_editar.grid(row=0, column=0)
+        btn_excluir = tk.Button(frm_botoes, text='Excluir')
+        btn_excluir.grid(row=0, column=1)
+
+    def editar(self):
+        item = self.listbox_bancos.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            valores = self.listbox_bancos.item(item, 'values')
+            self.top_editar = tk.Toplevel()
+            self.top_editar.grab_set()
+
+            lbl_id = tk.Label(self.top_editar, text='Nome:')
+            self.ent_id = tk.Entry(self.top_editar)
+            self.ent_id.insert('end', valores[0])
+
+            lbl_nome = tk.Label(self.top_editar, text='Nome:')
+            lbl_nome.grid(row=0, column=0)
+
+            self.ent_nome = tk.Entry(self.top_editar)
+            self.ent_nome.grid(row=0, column=1)
+            self.ent_nome.insert('end', valores[1])
+
+            btn_confirmar = tk.Button(self.top_editar,
+                                      text='Confirmar',
+                                      command=self.confirmar_edicao)
+            btn_confirmar.grid(row=3, column=0)
+
+    def confirmar_edicao(self):
+        id = int(self.ent_id.get())
+        nome = self.ent_nome.get()
+
+        selecionado = self.listbox_bancos.selection()
+        if nome == '':
+            messagebox.showinfo('Aviso', 'Por favor, todos os campos são obrigatórios.')
+        else:
+            Banco.atualizar_banco(id,nome)
+            self.listbox_bancos.item(selecionado, values=(id,nome))
+            self.top_editar.destroy()
+        
+
 
 
 
