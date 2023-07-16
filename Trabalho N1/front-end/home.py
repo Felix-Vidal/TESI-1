@@ -25,7 +25,7 @@ class Home:
         menu_banco = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Banco", menu=menu_banco)
         menu_banco.add_command(label="Novo Banco", command=self.cadastrar_banco)
-        menu_banco.add_command(label="Mostrar Banco", command=self.mostrar_bancos)
+        menu_banco.add_command(label="Mostrar Bancos", command=self.mostrar_bancos)
         # menu_banco.add_command(label="Atualizar Banco",command= atualizar_banco )
 
 
