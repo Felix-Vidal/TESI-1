@@ -2,15 +2,19 @@ import abc
 from historico import Historico
 
 class Conta(abc.ABC):
+    _lista_contas = []
     _taxa_base = 0.3
     _total_contas = 0
-    def __init__(self, cli, sal):
+    def __init__(self, cli, sal, banco):
         self._numero = Conta._total_contas + 1
+        self._id = Conta._total_contas
         self._titular = cli
         self._saldo = sal
+        self._banco = banco
         self._extrato = Historico()
         Conta._total_contas += 1
-        self._status = True
+        self._status = "Ativa"
+        Conta._lista_contas.append(self)
 
 
     @classmethod
@@ -91,3 +95,43 @@ class Conta(abc.ABC):
 
     def __str__(self):
         return f'{self.__class__.__name__} {self._numero}: {self._titular} Saldo:{self._saldo}'
+    
+    # Encerrar uma conta
+    def encerrar_conta(self):
+        if self.saldo == 0.0:
+            self._status = "Encerrada"
+            print("Conta encerrada com sucesso!")
+        else:
+            print("Não é possível encerrar a conta. O saldo não está zerado.")
+    
+    @property
+    def titular(self):
+        return self._titular
+
+    @titular.setter
+    def titular(self, value):
+        self._titular = value
+        
+    @property
+    def banco(self):
+        return self._banco
+    
+    @banco.setter
+    def banco(self, value):
+        self._banco = value
+        
+    @property
+    def id(self):
+        return self._id
+    
+    @classmethod
+    def verificar_conta_vinculada(cls, cli):
+        for conta in cls._lista_contas:
+            if conta.titular == cli:
+                return True
+        return False
+    
+    @classmethod
+    def remover_conta(cls, conta):
+        if conta in cls._lista_contas:
+            cls._lista_contas.remove(conta)
