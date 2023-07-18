@@ -70,11 +70,8 @@ class Cliente:
             cpf2 += '0' if verificador < 2 else str(11-verificador)
 
             if (cpf == cpf2):
-                print("CPF valido")
                 return original
             else:
-                print("CPF invalido para criar a conta")
-                print("Entre com outro CPF")
                 cpf = input()
 
     def validarCPF2(cpf):

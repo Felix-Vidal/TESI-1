@@ -116,14 +116,14 @@ class MostrarClientes:
             self.ent_endereco.grid(row=1, column=1)
             self.ent_endereco.insert('end', valores[2])
             
-            lbl_CPF = tk.Label(self.top_editar, text='Endereço:')
+            lbl_CPF = tk.Label(self.top_editar, text='CPF:')
             lbl_CPF.grid(row=2, column=0)
             
             self.ent_CPF = tk.Entry(self.top_editar)
             self.ent_CPF.grid(row=2, column=1)
             self.ent_CPF.insert('end', valores[3])
             
-            lbl_idade = tk.Label(self.top_editar, text='Endereço:')
+            lbl_idade = tk.Label(self.top_editar, text='Idade:')
             lbl_idade.grid(row=3, column=0)
             
             self.ent_idade = tk.Entry(self.top_editar)

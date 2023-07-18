@@ -7,7 +7,7 @@ class Conta(abc.ABC):
     _total_contas = 0
     def __init__(self, cli, sal, banco):
         self._numero = Conta._total_contas + 1
-        self._id = Conta._total_contas
+        self._id = Conta._total_contas + 1 
         self._titular = cli
         self._saldo = sal
         self._banco = banco
@@ -100,7 +100,6 @@ class Conta(abc.ABC):
     def encerrar_conta(self):
         if self.saldo == 0.0:
             self._status = "Encerrada"
-            print("Conta encerrada com sucesso!")
         else:
             print("Não é possível encerrar a conta. O saldo não está zerado.")
     
