@@ -3,6 +3,7 @@ from tkinter import messagebox, ttk
 from conta import Conta
 from cliente import Cliente
 
+
 class CadastroCliente:
     def __init__(self, frame):
         self.root = frame
@@ -37,8 +38,11 @@ class CadastroCliente:
         idade_cliente = self.entry_idade.get()
 
         if nome_cliente and endereco_cliente and cpf_cliente and idade_cliente:
-            novo_cliente = Cliente(nome_cliente, endereco_cliente, cpf_cliente, idade_cliente)
-            messagebox.showinfo("Cadastro de Cliente", "Cliente cadastrado com sucesso!")
+            if(Cliente.validarCPF(cpf_cliente)):
+                novo_cliente = Cliente(nome_cliente, endereco_cliente, cpf_cliente, idade_cliente)
+                messagebox.showinfo("Cadastro de Cliente", "Cliente cadastrado com sucesso!")
+            else:
+                messagebox.showerror("Erro", "Por favor, coloque um cpf valido.")
         else:
             messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
             

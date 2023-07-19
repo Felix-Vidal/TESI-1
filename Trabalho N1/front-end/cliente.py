@@ -10,7 +10,7 @@ class Cliente:
         self._num = Cliente._total_cliente + 1
         self._nome = n
         self._endereco = e
-        self._CPF = Cliente.validarCPF(cpf) #mudar para o segundo metodo troca para validarCPF2
+        self._CPF = cpf
         self._idade = i
         Cliente._total_cliente += 1
         Cliente._lista_clientes.append(self)
@@ -54,25 +54,27 @@ class Cliente:
         self._CPF = valor
     def get_nome(self):
         return self._nome
-        
-    def validarCPF(cpf):
-        while True:
-            
-            original = cpf
-            cpf = list(cpf)
-            cpf = reduce(lambda x,y: x+y, [n for n in cpf if n.isdigit()])
-            cpf2 = cpf[:9]
 
-            verificador = reduce(lambda x,y: x+y, [int(cpf[(10-i)])*i for i in range(10,1,-1)])%11
-            cpf2 += '0' if verificador < 2 else str(11-verificador)
+    @classmethod
+    def validarCPF(cls, cpf):
             
-            verificador = reduce(lambda x,y: x+y, [int(cpf2[(11-i)])*i for i in range(11,1,-1)])%11 
-            cpf2 += '0' if verificador < 2 else str(11-verificador)
+        original = cpf
+        cpf = list(cpf)
+        cpf = reduce(lambda x,y: x+y, [n for n in cpf if n.isdigit()])
+        if(len(cpf) != 11):
+            return False
+        cpf2 = cpf[:9]
 
-            if (cpf == cpf2):
-                return original
-            else:
-                cpf = input()
+        verificador = reduce(lambda x,y: x+y, [int(cpf[(10-i)])*i for i in range(10,1,-1)])%11
+        cpf2 += '0' if verificador < 2 else str(11-verificador)
+
+        verificador = reduce(lambda x,y: x+y, [int(cpf2[(11-i)])*i for i in range(11,1,-1)])%11
+        cpf2 += '0' if verificador < 2 else str(11-verificador)
+
+        if (cpf == cpf2):
+            return True
+        else:
+            return False
 
     def validarCPF2(cpf):
         while True:
