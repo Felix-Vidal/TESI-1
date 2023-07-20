@@ -18,6 +18,7 @@ class Login:
 
         self.entry_username = tk.Entry(self.root)
         self.entry_username.pack()
+        self.entry_username.focus()
 
         self.label_password = tk.Label(self.root, text="Password:")
         self.label_password.pack()
@@ -40,8 +41,4 @@ class Login:
 
     def open_home(self):
         limpar_tela(self.root)
-        TelaPricipal = Home(root)
-
-root = tk.Tk()
-TelaPricipal = Login(root)
-root.mainloop()
+        TelaPricipal = Home(self.root)
