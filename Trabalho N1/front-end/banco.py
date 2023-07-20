@@ -33,8 +33,5 @@ class Banco:
             if(banco._num == id):
                 banco._nome = nome
 
-
-    
-                
-
-    
+    def __str__(self):
+       return self._nome

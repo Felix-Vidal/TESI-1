@@ -96,33 +96,3 @@ class MostrarBancos:
             self.listbox_bancos.item(selecionado, values=(id,nome))
             self.top_editar.destroy()
         
-
-
-
-
-# class AtualizarBanco:
-#     def __init__(self, root, lista_bancos):  # Recebe a lista de bancos como argumento
-#         self.root = root
-#         self.lista_bancos = lista_bancos
-
-#         self.label_selecione = tk.Label(root, text="Selecione um banco:")
-#         self.label_selecione.pack()
-#         self.combobox_bancos = tk.Combobox(root, values=self.lista_bancos)  # Preenche a combobox com a lista de bancos
-#         self.combobox_bancos.pack()
-
-#         self.button_atualizar = tk.Button(root, text="Atualizar", command=self.atualizar)
-#         self.button_atualizar.pack()
-#     def atualizar(self):
-#         indice_selecionado = self.combobox_bancos.current()
-#         bancos = self.banco.listar_bancos()
-#         if 0 <= indice_selecionado < len(bancos):
-#             banco_selecionado = bancos[indice_selecionado]
-#             messagebox.showinfo("Atualização de Banco", f"Você selecionou o banco: {banco_selecionado._nome}")
-            
-#             # Obter os valores dos campos de atualização
-#             novo_nome = self.entry_nome.get()
-#             banco_selecionado._nome = novo_nome
-#             messagebox.showinfo("Atualização de Banco", "Banco atualizado com sucesso!")
-#             self.root.destroy()
-#         else:
-#             messagebox.showerror("Erro", "Selecione um banco válido.")
