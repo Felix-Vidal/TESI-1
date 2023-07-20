@@ -14,13 +14,13 @@ class CadastroConta:
         self.label_banco = tk.Label(self.root, text="Banco:")
         self.label_banco.pack()
         lista_bancos = Banco.listar_bancos()
-        self.combobox_banco = ttk.Combobox(self.root, values=lista_bancos)
+        self.combobox_banco = ttk.Combobox(self.root, values=lista_bancos,state="readonly")
         self.combobox_banco.pack()
 
         self.label_titular = tk.Label(self.root, text="Titular:")
         self.label_titular.pack()
         lista_clientes = Cliente.listar_clientes()
-        self.combobox_titular = ttk.Combobox(self.root, values=lista_clientes)
+        self.combobox_titular = ttk.Combobox(self.root, values=lista_clientes,state="readonly")
         self.combobox_titular.pack()
 
         self.label_saldo = tk.Label(self.root, text="Saldo:")
@@ -30,7 +30,7 @@ class CadastroConta:
 
         self.label_tipo = tk.Label(self.root, text="Tipo de Conta:")
         self.label_tipo.pack()
-        self.combobox_tipo = ttk.Combobox(self.root, values=["Corrente", "Poupança"])
+        self.combobox_tipo = ttk.Combobox(self.root, values=["Corrente", "Poupança"],state="readonly")
         self.combobox_tipo.pack()
 
         self.button_cadastrar = tk.Button(self.root, text="Cadastrar", command=self.cadastrar)

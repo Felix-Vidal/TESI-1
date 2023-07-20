@@ -11,7 +11,7 @@ class Login:
         self.root = root
 
         self.root.title("Login")
-        self.root.geometry("500x300")
+        self.root.geometry("600x300")
 
         self.label_username = tk.Label(self.root, text="Username:")
         self.label_username.pack()
@@ -42,3 +42,7 @@ class Login:
     def open_home(self):
         limpar_tela(self.root)
         TelaPricipal = Home(self.root)
+
+root = tk.Tk()
+TelaPricipal = Login(root)
+root.mainloop()
