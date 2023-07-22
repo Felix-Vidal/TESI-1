@@ -106,5 +106,8 @@ class MostrarBancos:
             if Banco.remover_banco(id):
                 for item in tupla:
                     self.listbox_bancos.delete(item)
+            elif Banco.remover_banco(id) == False:
+                messagebox.showwarning('Aviso', 'O banco possui contas vinculadas a ele e não pode ser excluído.')  
             else:
-                messagebox.showwarning('Aviso', 'Banco não encontrado')
+                messagebox.showerror('Erro', 'Banco não encontrado')
+                

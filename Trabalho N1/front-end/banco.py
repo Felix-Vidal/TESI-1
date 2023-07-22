@@ -43,7 +43,6 @@ class Banco:
         for banco in bancos:
             if banco._num == id:
                 if len(banco._contas) == 0:
-                    print(len(banco._contas))
                     Banco._lista_bancos.remove(banco)
                     return True
                 else:
