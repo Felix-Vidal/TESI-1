@@ -14,9 +14,14 @@ class Banco:
         for conta in self._contas:
             conta
 
-    def incluir_conta(self, conta):
-        self._contas.append(conta)
+    @classmethod
+    def incluir_conta(cls, id, conta):
+        bancos = Banco.listar_bancos()
+        for banco in bancos:
+            if(id == banco._num):
+                banco._contas.append(conta)
 
+    @classmethod
     def remover_conta(self, conta):
         self._contas.remove(conta)
 

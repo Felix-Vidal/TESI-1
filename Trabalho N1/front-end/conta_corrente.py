@@ -3,8 +3,8 @@ from conta import Conta
 class ContaCorrente(Conta):
     _lista_contas_corrente = []
     
-    def __init__(self, cli, sal, banco):
-        super().__init__(cli, sal, banco)
+    def __init__(self, cli, sal):
+        super().__init__(cli, sal)
         ContaCorrente._lista_contas_corrente.append(self)
 
     def valor_imposto(self):

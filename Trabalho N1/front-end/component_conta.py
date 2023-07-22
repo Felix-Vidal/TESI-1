@@ -39,19 +39,22 @@ class CadastroConta:
         self.button_cadastrar.pack()
 
     def cadastrar(self):
-        id = int(self.combobox_titular.get()[4])
-        banco = int(self.combobox_titular.get()[4])
+        id_titular = int(self.combobox_titular.get()[4])
+        id_banco = int(self.combobox_titular.get()[4])
         tipo = self.combobox_tipo.get()
         saldo = float(self.entry_saldo.get())
         
 
-        if id and banco and tipo:
-            cliente = Cliente.get_id(id)
+        if id_titular and id_banco and tipo:
+            cliente = Cliente.get_id(id_titular)
             if(cliente):
                 if tipo == "Corrente":
-                    nova_conta = ContaCorrente(cliente, saldo, banco)
+                    nova_conta = ContaCorrente(cliente, saldo)
+                    Banco.incluir_conta(id_banco, nova_conta)
+                    
                 else:
-                    nova_conta = ContaPoupanca(cliente, saldo, banco)
+                    nova_conta = ContaPoupanca(cliente, saldo)
+                    Banco.incluir_conta(id_banco, nova_conta)
                 messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
             else:
                 messagebox.showerror("Erro", "Cliente não encontrado.")
@@ -86,9 +89,12 @@ class MostrarContas:
         self.listbox_contas.column('status', minwidth=100, width=100)
 
         # Linhas
+        bancos = Banco.listar_bancos()
         contas = self.obter_contas_por_tipo(tipo_conta)
         for conta in contas:
-            self.listbox_contas.insert('', 'end', values=[conta.id, conta.titular, conta.saldo ,conta.banco, conta.__class__.__name__, conta.status])
+            for banco in bancos:
+                if conta in banco._contas:
+                    self.listbox_contas.insert('', 'end', values=[conta.id, conta.titular, conta.saldo ,banco._nome, conta.__class__.__name__, conta.status])
 
         # Barra de rolagem
         scb = tk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.listbox_contas.yview)
@@ -99,9 +105,9 @@ class MostrarContas:
         frm_botoes = tk.Frame(self.root)
         frm_botoes.grid(row=1, column=0)
 
-        btn_encerrar = tk.Button(frm_botoes, text='Encerrar', command=self.encerrar_conta)
+        btn_encerrar = tk.Button(frm_botoes, text='Editar')
         btn_encerrar.grid(row=0, column=0)
-        btn_excluir = tk.Button(frm_botoes, text='Excluir')
+        btn_excluir = tk.Button(frm_botoes, text='Encerrar', command=self.encerrar_conta)
         btn_excluir.grid(row=0, column=1)
 
     def obter_contas_por_tipo(self, tipo_conta):
@@ -115,32 +121,28 @@ class MostrarContas:
     
     def encerrar_conta(self):
         item = self.listbox_contas.selection()
-
         if item:
             id_conta = int(self.listbox_contas.item(item, "values")[0])
-
             if self.tipo_conta == "Corrente":
                 contas = ContaCorrente.obter_contas_corrente()
             elif self.tipo_conta == "Poupança":
                 contas = ContaPoupanca.obter_contas_poupanca()
 
-            conta_encerrar = None
             for conta in contas:
-                if conta.id == id_conta:
-                    conta_encerrar = conta
-                    break
-
-            if conta_encerrar:
-                if conta_encerrar.saldo == 0:
-                    conta_encerrar.encerrar_conta()
-                    messagebox.showinfo("Encerrar Conta", "Conta encerrada com sucesso!")
-                    self.listbox_contas.set(item, 'status', 'Encerrada')
-                else:
-                    messagebox.showerror("Erro", "A conta não pode ser encerrada pois possui saldo diferente de zero.")
-            else:
-                messagebox.showerror("Erro", "Conta não encontrada.")
-        else:
-            messagebox.showerror("Erro", "Nenhum item selecionado.")
+                if conta._num == id_conta:
+                    if conta.encerrar_conta(conta._num) == True:
+                        messagebox.showinfo("Encerrar Conta", "Conta encerrada com sucesso!")
+                        self.listbox_contas.set(item, 'status', 'Encerrada')
+                        return None
+                    if conta.encerrar_conta(conta._num) == "Encerrada":
+                        messagebox.showwarning("Encerrar Conta", "Conta ja está encerrada")
+                        return None
+                    else:
+                        messagebox.showerror("Erro", "A conta não pode ser encerrada pois possui saldo diferente de zero.")
+                        return None
+                
+            messagebox.showerror("Erro", "Conta não encontrada.")
+                
 
 
 

@@ -3,8 +3,8 @@ from conta import Conta
 class ContaPoupanca(Conta):
     _lista_contas_poupanca = []
     
-    def __init__(self, cli, sal, banco):
-        super().__init__(cli, sal, banco)
+    def __init__(self, cli, sal):
+        super().__init__(cli, sal)
         ContaPoupanca._lista_contas_poupanca.append(self)
 
     def atualiza(self, taxa):

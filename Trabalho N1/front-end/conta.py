@@ -1,16 +1,16 @@
 import abc
 from historico import Historico
 
+
 class Conta(abc.ABC):
     _lista_contas = []
     _taxa_base = 0.3
     _total_contas = 0
-    def __init__(self, cli, sal, banco):
-        self._numero = Conta._total_contas + 1
+    def __init__(self, cli, sal):
+        self._num = Conta._total_contas + 1
         self._id = Conta._total_contas + 1 
         self._titular = cli
         self._saldo = sal
-        self._banco = banco
         self._extrato = Historico()
         Conta._total_contas += 1
         self._status = "Ativa"
@@ -25,13 +25,14 @@ class Conta(abc.ABC):
     def atualiza(self, taxa):
         pass
 
-    def encerrar_conta(self):
-        if self._saldo == 0:
-            self._status = False
-        elif self._saldo > 0:
-            print(f'Vc pode sacar {self._saldo}')
-        else:
-            print(f'Vc precisa depositar {self._saldo}')
+    # def encerrar_conta(self):
+
+    #     if self._saldo == 0:
+    #         self._status = False
+    #     elif self._saldo > 0:
+    #         print(f'Vc pode sacar {self._saldo}')
+    #     else:
+    #         print(f'Vc precisa depositar {self._saldo}')
 
     #Método get para o status das contas
     @property
@@ -94,14 +95,23 @@ class Conta(abc.ABC):
         self._historico.imprime()
 
     def __str__(self):
-        return f'{self.__class__.__name__} {self._numero}: {self._titular} Saldo:{self._saldo}'
+        return f'{self.__class__.__name__} {self._num}: {self._titular} Saldo:{self._saldo}'
     
     # Encerrar uma conta
-    def encerrar_conta(self):
-        if self.saldo == 0.0:
-            self._status = "Encerrada"
-        else:
-            print("Não é possível encerrar a conta. O saldo não está zerado.")
+    @classmethod
+    def encerrar_conta(cls, id):
+        
+        for conta in cls._lista_contas:
+            if conta._num == id:
+                if conta._status == "Ativa":
+                    if conta._saldo == 0.0:
+                        conta._status = "Encerrada"
+                        return True
+                    else:
+                        print("Não é possível encerrar a conta. O saldo não está zerado.")
+                        return False
+                else:
+                    return "Encerrada"
     
     @property
     def titular(self):

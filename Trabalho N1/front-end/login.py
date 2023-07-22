@@ -11,7 +11,7 @@ class Login:
         self.root = root
 
         self.root.title("Login")
-        self.root.geometry("600x300")
+        self.root.geometry("700x350")
 
         self.label_username = tk.Label(self.root, text="Username:")
         self.label_username.pack()
