@@ -100,7 +100,6 @@ class Conta(abc.ABC):
     # Encerrar uma conta
     @classmethod
     def encerrar_conta(cls, id):
-        
         for conta in cls._lista_contas:
             if conta._num == id:
                 if conta._status == "Ativa":
@@ -112,6 +111,15 @@ class Conta(abc.ABC):
                         return False
                 else:
                     return "Encerrada"
+    @classmethod
+    def ativar_conta(cls, id):
+        for conta in cls._lista_contas:
+            if conta._num == id:
+                if conta._status == "Encerrada":
+                    conta._status = "Ativa"
+                    return True
+                else:
+                    return False
     
     @property
     def titular(self):

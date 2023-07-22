@@ -105,9 +105,9 @@ class MostrarContas:
         frm_botoes = tk.Frame(self.root)
         frm_botoes.grid(row=1, column=0)
 
-        btn_encerrar = tk.Button(frm_botoes, text='Editar')
+        btn_encerrar = tk.Button(frm_botoes, text='Ativar Conta', command=self.ativar_conta)
         btn_encerrar.grid(row=0, column=0)
-        btn_excluir = tk.Button(frm_botoes, text='Encerrar', command=self.encerrar_conta)
+        btn_excluir = tk.Button(frm_botoes, text='Encerrar Conta', command=self.encerrar_conta)
         btn_excluir.grid(row=0, column=1)
 
     def obter_contas_por_tipo(self, tipo_conta):
@@ -139,6 +139,27 @@ class MostrarContas:
                         return None
                     else:
                         messagebox.showerror("Erro", "A conta não pode ser encerrada pois possui saldo diferente de zero.")
+                        return None
+                
+            messagebox.showerror("Erro", "Conta não encontrada.")
+
+    def ativar_conta(self):
+        item = self.listbox_contas.selection()
+        if item:
+            id_conta = int(self.listbox_contas.item(item, "values")[0])
+            if self.tipo_conta == "Corrente":
+                contas = ContaCorrente.obter_contas_corrente()
+            elif self.tipo_conta == "Poupança":
+                contas = ContaPoupanca.obter_contas_poupanca()
+
+            for conta in contas:
+                if conta._num == id_conta:
+                    if conta.ativar_conta(conta._num) == True:
+                        messagebox.showinfo("Ativar Conta", "Conta Ativada com sucesso!")
+                        self.listbox_contas.set(item, 'status', 'Ativa')
+                        return None
+                    else:
+                        messagebox.showwarning("Ativar Conta", "Conta ja está Ativada")
                         return None
                 
             messagebox.showerror("Erro", "Conta não encontrada.")
