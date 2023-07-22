@@ -39,11 +39,11 @@ class Cliente:
         return self._nome
     
     @classmethod
-    def obter_cliente_por_nome(cls, n):
+    def get_id(cls, num):
         for cliente in cls._lista_clientes:
-            if cliente._nome == n:
+            if cliente._num == num:
                 return cliente
-        return None
+        return False
                 
     @property
     def CPF(self):

@@ -12,8 +12,7 @@ class Banco:
 
     def listar_contas(self):
         for conta in self._contas:
-            print(conta)
-            conta.extrato()
+            conta
 
     def incluir_conta(self, conta):
         self._contas.append(conta)
@@ -32,6 +31,18 @@ class Banco:
         for banco in bancos:
             if(banco._num == id):
                 banco._nome = nome
+
+    @classmethod
+    def remover_banco(cls, id):
+        bancos = cls.listar_bancos()
+        for banco in bancos:
+            if banco._num == id:
+                if len(banco._contas) == 0:
+                    print(len(banco._contas))
+                    Banco._lista_bancos.remove(banco)
+                    return True
+                else:
+                    return False
 
     def __str__(self):
        return self._nome

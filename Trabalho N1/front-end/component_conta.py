@@ -14,13 +14,15 @@ class CadastroConta:
         self.label_banco = tk.Label(self.root, text="Banco:")
         self.label_banco.pack()
         lista_bancos = Banco.listar_bancos()
-        self.combobox_banco = ttk.Combobox(self.root, values=lista_bancos,state="readonly")
+        bancos = [f"ID: {banco._num} Banco: {banco._nome}"for banco in lista_bancos]
+        self.combobox_banco = ttk.Combobox(self.root, values=bancos,state="readonly")
         self.combobox_banco.pack()
 
         self.label_titular = tk.Label(self.root, text="Titular:")
         self.label_titular.pack()
         lista_clientes = Cliente.listar_clientes()
-        self.combobox_titular = ttk.Combobox(self.root, values=lista_clientes,state="readonly")
+        titular = [f"ID: {titular._num} Titular: {titular._nome}"for titular in lista_clientes]
+        self.combobox_titular = ttk.Combobox(self.root, values=titular,state="readonly")
         self.combobox_titular.pack()
 
         self.label_saldo = tk.Label(self.root, text="Saldo:")
@@ -37,19 +39,22 @@ class CadastroConta:
         self.button_cadastrar.pack()
 
     def cadastrar(self):
-        titular = self.combobox_titular.get()
-        banco = self.combobox_banco.get()
+        id = int(self.combobox_titular.get()[4])
+        banco = int(self.combobox_titular.get()[4])
         tipo = self.combobox_tipo.get()
         saldo = float(self.entry_saldo.get())
         
 
-        if titular and banco and tipo:
-            cliente = Cliente.obter_cliente_por_nome(titular)
-            if tipo == "Corrente":
-                nova_conta = ContaCorrente(cliente, saldo, banco)
+        if id and banco and tipo:
+            cliente = Cliente.get_id(id)
+            if(cliente):
+                if tipo == "Corrente":
+                    nova_conta = ContaCorrente(cliente, saldo, banco)
+                else:
+                    nova_conta = ContaPoupanca(cliente, saldo, banco)
+                messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
             else:
-                nova_conta = ContaPoupanca(cliente, saldo, banco)
-            messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
+                messagebox.showerror("Erro", "Cliente não encontrado.")
         else:
             messagebox.showerror("Erro", "Por favor, preencha todos os campos.")
 

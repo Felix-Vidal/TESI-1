@@ -58,7 +58,7 @@ class MostrarBancos:
 
         btn_editar = tk.Button(frm_botoes, text='Editar', command=self.editar)
         btn_editar.grid(row=0, column=0)
-        btn_excluir = tk.Button(frm_botoes, text='Excluir')
+        btn_excluir = tk.Button(frm_botoes, text='Excluir', command=self.excluir)
         btn_excluir.grid(row=0, column=1)
 
     def editar(self):
@@ -95,4 +95,16 @@ class MostrarBancos:
             Banco.atualizar_banco(id,nome)
             self.listbox_bancos.item(selecionado, values=(id,nome))
             self.top_editar.destroy()
-        
+
+    
+    def excluir(self):
+        tupla = self.listbox_bancos.selection()
+        if len(tupla) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.listbox_bancos.item(tupla[0], "values")[0])
+            if Banco.remover_banco(id):
+                for item in tupla:
+                    self.listbox_bancos.delete(item)
+            else:
+                messagebox.showwarning('Aviso', 'Banco não encontrado')
