@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+from operacoes import SaqueHome, DepositoHome, TransferenciaFrame
+from conta_corrente import ContaCorrente
+from conta_poupanca import ContaPoupanca
 from component_banco import CadastroBanco, MostrarBancos
 from banco import Banco
 from component_conta import CadastroConta, MostrarContas
@@ -46,10 +49,10 @@ class Home:
         # === Operações ===
         menu_operacoes = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Operações", menu=menu_operacoes)
-        menu_operacoes.add_command(label="Transferência")
+        menu_operacoes.add_command(label="Transferência", command=self.operacao_transferencia)
         menu_operacoes.add_separator()
-        menu_operacoes.add_command(label="Depósito")
-        menu_operacoes.add_command(label="Saque")
+        menu_operacoes.add_command(label="Saque", command=self.operacao_saque)
+        menu_operacoes.add_command(label="Depósito", command=self.operacao_deposito)
         
 
         # === Sair ===
@@ -92,6 +95,22 @@ class Home:
         self.root.title("Mostrar Clientes")
         mostrar = MostrarClientes(self.frame)
         
+    def operacao_saque(self):
+        limpar_tela(self.frame)
+        self.root.title("Saque")
+        saque_home = SaqueHome(self.frame)
+        saque_home.pack()
+
+    def operacao_deposito(self):
+        limpar_tela(self.frame)
+        self.root.title("Depósito")
+        deposito_home = DepositoHome(self.frame)
+        deposito_home.pack()
+        
+    def operacao_transferencia(self):
+        limpar_tela(self.frame)
+        self.root.title("Realizar Transferência")
+        transferencia_frame = TransferenciaFrame(self.frame)
         
         
         

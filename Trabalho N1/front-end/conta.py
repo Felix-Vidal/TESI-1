@@ -70,7 +70,7 @@ class Conta(abc.ABC):
                 return False
             else:
                 self._saldo = self._saldo - valor
-                self._historico.transacoes.append(f'Saque de {valor}')
+                self._extrato._transacoes.append(f'Saque de {valor}')
                 return True
         else:
             print('Conta inativa não pode realizar saques')
@@ -78,7 +78,7 @@ class Conta(abc.ABC):
     def depositar(self, valor):
         if self.status:
             self._saldo += valor
-            self._historico.transacoes.append(f'Depósito de {valor}')
+            self._extrato._transacoes.append(f'Depósito de {valor}')
         else:
             print('Conta inativa não pode realizar depósitos')
 

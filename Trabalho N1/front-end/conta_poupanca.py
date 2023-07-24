@@ -8,8 +8,8 @@ class ContaPoupanca(Conta):
         ContaPoupanca._lista_contas_poupanca.append(self)
 
     def atualiza(self, taxa):
-        valor = self._saldo * taxa * 3
-        self.depositar(valor)
+        valor = self._saldo * taxa
+        self._saldo += valor
         return valor
     
     @classmethod
