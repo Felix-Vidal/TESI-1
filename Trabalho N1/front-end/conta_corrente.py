@@ -20,11 +20,12 @@ class ContaCorrente(Conta):
         if self.status:
             valor_desconto = valor * self._taxa_desconto
             valor_liquido = valor + valor_desconto
+            valor_liquido2 = self._saldo / (1 + valor_desconto)
             if self._saldo < valor_liquido:
-                return False
+                if self._saldo > valor_liquido2:
+                    return super().sacar(self.saldo - valor_liquido)
             else:
-                super().sacar(valor_liquido)
-                return True
+                return super().sacar(valor_liquido)
         else:
             print('Conta inativa não pode realizar saques')
 
