@@ -23,7 +23,7 @@ class ContaCorrente(Conta):
             valor_liquido2 = self._saldo / (1 + valor_desconto)
             if self._saldo < valor_liquido:
                 if self._saldo > valor_liquido2:
-                    return super().sacar(self.saldo - valor_liquido)
+                    return super().sacar(self.saldo - valor_liquido2)
             else:
                 return super().sacar(valor_liquido)
         else:
