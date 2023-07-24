@@ -47,7 +47,7 @@ class CadastroConta:
 
         if id_titular and id_banco and tipo:
             cliente = Cliente.get_id(id_titular)
-            if(cliente):
+            if(cliente):   
                 if tipo == "Corrente":
                     nova_conta = ContaCorrente(cliente, saldo)
                     Banco.incluir_conta(id_banco, nova_conta)
