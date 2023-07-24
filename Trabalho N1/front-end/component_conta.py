@@ -105,10 +105,11 @@ class MostrarContas:
         frm_botoes = tk.Frame(self.root)
         frm_botoes.grid(row=1, column=0)
 
-        btn_encerrar = tk.Button(frm_botoes, text='Ativar Conta', command=self.ativar_conta)
-        btn_encerrar.grid(row=0, column=0)
-        btn_excluir = tk.Button(frm_botoes, text='Encerrar Conta', command=self.encerrar_conta)
-        btn_excluir.grid(row=0, column=1)
+        btn_ativar = tk.Button(frm_botoes, text='Ativar Conta', command=self.ativar_conta)
+        btn_ativar.grid(row=0, column=0)
+        
+        btn_encerrar = tk.Button(frm_botoes, text='Encerrar Conta', command=self.encerrar_conta)
+        btn_encerrar.grid(row=0, column=1)
 
     def obter_contas_por_tipo(self, tipo_conta):
         contas = []
