@@ -71,6 +71,7 @@ class Conta(abc.ABC):
             else:
                 self._saldo = self._saldo - valor
                 self._extrato._transacoes.append(f'Saque de {valor}')
+                self._extrato.imprime()
                 return True
         else:
             print('Conta inativa não pode realizar saques')
@@ -87,12 +88,12 @@ class Conta(abc.ABC):
         if self.status and c_destino.status:
             self.sacar(valor)
             c_destino.depositar(valor)
-            self._historico.transacoes.append(f'Tranferência de {valor}')
+            self._extrato._transacoes.append(f'Tranferência de {valor}')
         else:
             print('Conta inativa não pode realizar transferências')
 
     def extrato(self):
-        self._historico.imprime()
+        self._extrato.imprime()
 
     def __str__(self):
         return f'{self.__class__.__name__} {self._num}: {self._titular} Saldo:{self._saldo}'

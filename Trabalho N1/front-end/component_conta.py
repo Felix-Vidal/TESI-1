@@ -14,14 +14,14 @@ class CadastroConta:
         self.label_banco = tk.Label(self.root, text="Banco:")
         self.label_banco.pack()
         lista_bancos = Banco.listar_bancos()
-        bancos = [f"ID: {banco._num} Banco: {banco._nome}"for banco in lista_bancos]
+        bancos = [f"ID: {banco._num} Banco: {banco._nome}" for banco in lista_bancos]
         self.combobox_banco = ttk.Combobox(self.root, values=bancos,state="readonly")
         self.combobox_banco.pack()
 
         self.label_titular = tk.Label(self.root, text="Titular:")
         self.label_titular.pack()
         lista_clientes = Cliente.listar_clientes()
-        titular = [f"ID: {titular._num} Titular: {titular._nome}"for titular in lista_clientes]
+        titular = [f"ID: {titular._num} Titular: {titular._nome}" for titular in lista_clientes]
         self.combobox_titular = ttk.Combobox(self.root, values=titular,state="readonly")
         self.combobox_titular.pack()
 
@@ -40,14 +40,14 @@ class CadastroConta:
 
     def cadastrar(self):
         id_titular = int(self.combobox_titular.get()[4])
-        id_banco = int(self.combobox_titular.get()[4])
+        id_banco = int(self.combobox_banco.get()[4])
         tipo = self.combobox_tipo.get()
         saldo = float(self.entry_saldo.get())
         
 
         if id_titular and id_banco and tipo:
             cliente = Cliente.get_id(id_titular)
-            if(cliente):   
+            if(cliente):
                 if tipo == "Corrente":
                     nova_conta = ContaCorrente(cliente, saldo)
                     Banco.incluir_conta(id_banco, nova_conta)

@@ -20,7 +20,6 @@ class ContaCorrente(Conta):
         if self.status:
             valor_desconto = valor * self._taxa_desconto
             valor_liquido = valor + valor_desconto
-            print(valor_desconto)
             if self._saldo < valor_liquido:
                 return False
             else:
