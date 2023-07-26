@@ -58,7 +58,7 @@ class CadastroConta:
                         messagebox.showerror("Erro", f"Cliente ja tem um conta corrente {self.combobox_banco.get()}.")
                     
                 else:
-                    if ContaPoupanca.verificar_conta_unica(cliente._CPF):
+                    if ContaPoupanca.verificar_conta_unica(cliente._CPF, id_banco):
                         nova_conta = ContaPoupanca(cliente, saldo)
                         Banco.incluir_conta(id_banco, nova_conta)
                         messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")

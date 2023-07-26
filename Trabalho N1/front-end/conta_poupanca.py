@@ -18,10 +18,10 @@ class ContaPoupanca(Conta):
         return cls._lista_contas_poupanca
     
     @classmethod
-    def verificar_conta_unica(cls, cpf):
-        for banco in Banco.listar_bancos():
-            for contas in banco._contas:
-                if isinstance(contas, ContaPoupanca):
-                    if contas._titular._CPF == cpf:
-                        return False
+    def verificar_conta_unica(cls, cpf, id_banco):
+        banco = Banco.id_get(id_banco)
+        for contas in banco._contas:
+            if isinstance(contas, ContaPoupanca):
+                if contas._titular._CPF == cpf:
+                    return False
         return True
