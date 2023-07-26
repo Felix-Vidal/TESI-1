@@ -15,7 +15,14 @@ class Cliente:
         Cliente._total_cliente += 1
         Cliente._lista_clientes.append(self)
         
-
+    @classmethod
+    def verificar_mesmo_cpf(cls, cpf):
+        clientes_cpf = [clientes._CPF for clientes in Cliente.listar_clientes()] 
+        if cpf in clientes_cpf:
+            return False
+        else:
+            return True
+        
     @classmethod
     def listar_clientes(cls):
         return cls._lista_clientes
