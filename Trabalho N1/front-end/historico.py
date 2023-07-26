@@ -5,7 +5,7 @@ class Historico:
         self._transacoes = []
 
     def adicionar_transacao(self, data, tipo_operacao, valor, saldo_final):
-        transacao = f"{data}, {tipo_operacao}, {valor}, Saldo Final: {saldo_final}"
+        transacao = f"{data}, {tipo_operacao}, {valor}, {saldo_final}"
         self._transacoes.append(transacao)
 
     def imprime(self):
@@ -19,7 +19,7 @@ class Historico:
 
     def gerar_relatorio(self, operacao, valor, saldo):
         data_hora = datetime.datetime.now()
-        registro = f"{data_hora:%d/%m/%Y %H:%M:%S},{operacao},{valor:.2f},{saldo:.2f}"
+        registro = f"{data_hora:%d/%m/%Y %H:%M:%S},{operacao},{valor:.2f}, Saldo Final: {saldo:.2f}"
         self._transacoes.append(registro)
 
     def salvar_relatorio(self, num_conta):

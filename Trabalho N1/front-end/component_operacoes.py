@@ -182,9 +182,12 @@ class TransferenciaFrame:
 
         if conta_origem is None or conta_destino is None:
             messagebox.showerror("Erro", "Conta de origem ou conta de destino não encontrada.")
+        elif conta_origem.status == "Encerrada":
+            messagebox.showwarning("Atenção", "Não é possível transferir de uma conta Encerrada.")
+        elif conta_destino.status == "Encerrada":
+            messagebox.showwarning("Atenção", "Não é possível transferir de uma conta Encerrada.")
         else:
-            if conta_origem.sacar(valor):
-                conta_destino.depositar(valor)
+            if conta_origem.transfere(conta_destino, valor):
                 messagebox.showinfo("Transferência", "Transferência realizada com sucesso!")
             else:
                 messagebox.showerror("Erro", "Saldo insuficiente para realizar a transferência.")

@@ -73,10 +73,10 @@ class Conta(abc.ABC):
                 self._saldo -= valor
                 data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 self._extrato.adicionar_transacao(data, "Saque", valor, self._saldo)
-                self._extrato.imprime()
                 return True
         else:
             print('Conta inativa não pode realizar saques')
+
 
     def depositar(self, valor):
         if self.status:
@@ -85,15 +85,38 @@ class Conta(abc.ABC):
             self._extrato.adicionar_transacao(data, "Depósito", valor, self._saldo)
         else:
             print('Conta inativa não pode realizar depósitos')
-
-    #Como fazer uma transferência de uma conta para outra?
-    def transfere(self, c_destino, valor):
-        if self.status and c_destino.status:
-            self.sacar(valor)
-            c_destino.depositar(valor)
-            self._extrato._transacoes.append(f'Tranferência de {valor}')
+            
+    def transfere_saida(self, valor):
+        if self.status:
+            if self._saldo < valor:
+                return False
+            else:
+                self._saldo -= valor
+                data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                self._extrato.adicionar_transacao(data, "Transferência - Saída", valor, self._saldo)
+                return True
         else:
-            print('Conta inativa não pode realizar transferências')
+            print('Conta inativa não pode realizar saques')
+            
+    def transfere_entrada(self, valor):
+        if self.status:
+            self._saldo += valor
+            data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self._extrato.adicionar_transacao(data, "Transferência - Entrada", valor, self._saldo)
+        else:
+            print('Conta inativa não pode realizar depósitos')
+
+    def transfere(self, c_destino, valor):
+            if self.status and c_destino.status:
+                if self.transfere_saida(valor):
+                    c_destino.transfere_entrada(valor)
+                    return True
+                else:
+                    print('Saldo insuficiente para realizar a transferência')
+                    return False
+            else:
+                print('Conta inativa não pode realizar transferências')
+                return False
 
     def extrato(self):
         self._extrato.imprime()

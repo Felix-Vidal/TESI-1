@@ -132,6 +132,7 @@ class MostrarClientes:
             self.ent_CPF = tk.Entry(self.top_editar)
             self.ent_CPF.grid(row=2, column=1)
             self.ent_CPF.insert('end', valores[3])
+            self.ent_CPF.config(state='readonly')
             
             lbl_idade = tk.Label(self.top_editar, text='Idade:')
             lbl_idade.grid(row=3, column=0)
