@@ -49,13 +49,21 @@ class CadastroConta:
             cliente = Cliente.get_id(id_titular)
             if(cliente):
                 if tipo == "Corrente":
-                    nova_conta = ContaCorrente(cliente, saldo)
-                    Banco.incluir_conta(id_banco, nova_conta)
+                    if ContaCorrente.verificar_conta_unica(cliente._CPF):
+                        nova_conta = ContaCorrente(cliente, saldo)
+                        Banco.incluir_conta(id_banco, nova_conta)
+                        messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
+                    else:
+                        messagebox.showerror("Erro", f"Cliente ja tem um conta corrente {self.combobox_banco.get()}.")
                     
                 else:
-                    nova_conta = ContaPoupanca(cliente, saldo)
-                    Banco.incluir_conta(id_banco, nova_conta)
-                messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
+                    if ContaPoupanca.verificar_conta_unica(cliente._CPF):
+                        nova_conta = ContaPoupanca(cliente, saldo)
+                        Banco.incluir_conta(id_banco, nova_conta)
+                        messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
+                    else:
+                        messagebox.showerror("Erro", f"Cliente ja tem um conta poupança {self.combobox_banco.get()}.")
+                        
             else:
                 messagebox.showerror("Erro", "Cliente não encontrado.")
         else:

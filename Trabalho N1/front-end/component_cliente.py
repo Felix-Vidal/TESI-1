@@ -38,9 +38,15 @@ class CadastroCliente:
         idade_cliente = self.entry_idade.get()
 
         if nome_cliente and endereco_cliente and cpf_cliente and idade_cliente:
-            if(Cliente.validarCPF(cpf_cliente)):
-                novo_cliente = Cliente(nome_cliente, endereco_cliente, cpf_cliente, idade_cliente)
-                messagebox.showinfo("Cadastro de Cliente", "Cliente cadastrado com sucesso!")
+            if (Cliente.validarCPF(cpf_cliente)):
+                if Cliente.verificar_mesmo_cpf(cpf_cliente):
+                    if int(idade_cliente) >= 16:
+                        novo_cliente = Cliente(nome_cliente, endereco_cliente, cpf_cliente, idade_cliente)
+                        messagebox.showinfo("Cadastro de Cliente", "Cliente cadastrado com sucesso!")
+                    else:
+                        messagebox.showwarning('Aviso', 'Idade invalida, idades menores que 16 anos são invalidas')
+                else:
+                    messagebox.showerror("Erro", "O CPF ja existe no sistema.")
             else:
                 messagebox.showerror("Erro", "Por favor, coloque um cpf valido.")
         else:
