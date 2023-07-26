@@ -10,6 +10,7 @@ class CadastroConta:
 
     def __init__(self, frame):
         self.root = frame
+        self.root.configure(bg="#edebeb")
         
         self.label_banco = tk.Label(self.root, text="Banco:")
         self.label_banco.pack()
@@ -36,7 +37,7 @@ class CadastroConta:
         self.combobox_tipo.pack()
 
         self.button_cadastrar = tk.Button(self.root, text="Cadastrar", command=self.cadastrar)
-        self.button_cadastrar.pack()
+        self.button_cadastrar.pack(pady=5)
 
     def cadastrar(self):
         id_titular = int(self.combobox_titular.get()[4])
@@ -75,26 +76,27 @@ class MostrarContas:
 
     def __init__(self, frame, tipo_conta):
         self.root = frame
+        self.root.configure(bg="#edebeb")
         self.tipo_conta = tipo_conta
 
         self.listbox_contas = ttk.Treeview(frame, columns=self.colunas_contas, show='headings')
         self.listbox_contas.grid()
 
         # Cabeçalho
-        self.listbox_contas.heading('id', text='ID')
-        self.listbox_contas.heading('titular', text='Titular')
-        self.listbox_contas.heading('saldo', text='Saldo')
-        self.listbox_contas.heading('banco', text='Banco')
-        self.listbox_contas.heading('tipo', text='Tipo de Conta')
-        self.listbox_contas.heading('status', text='Status')
+        self.listbox_contas.heading('id', text='ID',anchor='center')
+        self.listbox_contas.heading('titular', text='Titular', anchor='center')
+        self.listbox_contas.heading('saldo', text='Saldo',anchor='center')
+        self.listbox_contas.heading('banco', text='Banco',anchor='center')
+        self.listbox_contas.heading('tipo', text='Tipo de Conta',anchor='center')
+        self.listbox_contas.heading('status', text='Status',anchor='center')
 
         # Colunas
-        self.listbox_contas.column('id', minwidth=50, width=50)
-        self.listbox_contas.column('titular', minwidth=150, width=150)
-        self.listbox_contas.column('saldo', minwidth=100, width=100)
-        self.listbox_contas.column('banco', minwidth=150, width=150)
-        self.listbox_contas.column('tipo', minwidth=100, width=100)
-        self.listbox_contas.column('status', minwidth=100, width=100)
+        self.listbox_contas.column('id', minwidth=50, width=50,anchor='center')
+        self.listbox_contas.column('titular', minwidth=150, width=150,anchor='center')
+        self.listbox_contas.column('saldo', minwidth=100, width=100,anchor='center')
+        self.listbox_contas.column('banco', minwidth=150, width=150,anchor='center')
+        self.listbox_contas.column('tipo', minwidth=100, width=100,anchor='center')
+        self.listbox_contas.column('status', minwidth=100, width=100,anchor='center')
 
         # Linhas
         bancos = Banco.listar_bancos()
@@ -114,13 +116,13 @@ class MostrarContas:
         frm_botoes.grid(row=1, column=0)
 
         btn_ativar = tk.Button(frm_botoes, text='Ativar Conta', command=self.ativar_conta)
-        btn_ativar.grid(row=0, column=0)
+        btn_ativar.grid(row=0, column=0, padx=3, pady=5)
         
         btn_encerrar = tk.Button(frm_botoes, text='Encerrar Conta', command=self.encerrar_conta)
-        btn_encerrar.grid(row=0, column=1)
+        btn_encerrar.grid(row=0, column=1, padx=3, pady=5)
         
         btn_gerar_relatorio = tk.Button(frm_botoes, text='Gerar Relatório', command=self.gerar_relatorio)
-        btn_gerar_relatorio.grid(row=0, column=2)
+        btn_gerar_relatorio.grid(row=0, column=2, padx=3, pady=5)
 
     def obter_contas_por_tipo(self, tipo_conta):
         contas = []
@@ -199,6 +201,7 @@ class MostrarContas:
             widget.destroy()
             
     def mostrar_relatorio(self, conta):
+        self.root.configure(bg="#edebeb")
         for widget in self.root.winfo_children():
             widget.destroy()
 
@@ -206,10 +209,10 @@ class MostrarContas:
         report_frame.pack(fill='both', expand=True)
 
         report_tree = ttk.Treeview(report_frame, columns=('data', 'tipo_operacao', 'valor', 'saldo_final'), show='headings')
-        report_tree.heading('data', text='Data')
-        report_tree.heading('tipo_operacao', text='Tipo de Operação')
-        report_tree.heading('valor', text='Valor')
-        report_tree.heading('saldo_final', text='Saldo Final')
+        report_tree.heading('data', text='Data', anchor='center')
+        report_tree.heading('tipo_operacao', text='Tipo de Operação', anchor='center')
+        report_tree.heading('valor', text='Valor', anchor='center')
+        report_tree.heading('saldo_final', text='Saldo Final', anchor='center')
         report_tree.grid(row=0, column=0, sticky='nsew')
 
         h_scrollbar = ttk.Scrollbar(report_frame, orient=tk.HORIZONTAL, command=report_tree.xview)
@@ -223,13 +226,13 @@ class MostrarContas:
 
         for transacao in conta._extrato._transacoes:
             data, tipo_operacao, valor, saldo_final = transacao.split(", ")
-            report_tree.insert('', 'end', values=(data, tipo_operacao, valor, saldo_final))
+            report_tree.insert('', 'end', values=(data, tipo_operacao, valor, saldo_final), anchor='center')
 
         saldo_label = tk.Label(report_frame, text=f"Saldo Final: {conta._saldo}")
         saldo_label.grid(row=2, column=0, columnspan=2)
 
         salvar_button = tk.Button(report_frame, text="Salvar Relatório", command=lambda: self.salvar_relatorio(conta))
-        salvar_button.grid(row=3, column=0, columnspan=2)
+        salvar_button.grid(row=3, column=0, columnspan=2, pady=5)
 
     def salvar_relatorio(self, conta):
         filename = f"relatorio_conta_{conta._num}.txt"

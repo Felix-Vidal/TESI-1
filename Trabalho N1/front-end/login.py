@@ -11,7 +11,23 @@ class Login:
         self.root = root
 
         self.root.title("Login")
+        self.root.configure(bg="#edebeb")
         self.root.geometry("700x350")
+        
+        # Calculate screen width and height
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        window_width = 700
+        window_height = 350
+
+        # Calculate x and y coordinates to center the window
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
+        
+        self.root.geometry(f"700x350+{x}+{y}")
+
+        
 
         self.label_username = tk.Label(self.root, text="Username:")
         self.label_username.pack()
@@ -27,7 +43,7 @@ class Login:
         self.entry_password.pack()
 
         self.button_login = tk.Button(self.root, text="Login", command=self.login)
-        self.button_login.pack()
+        self.button_login.pack(pady=5)
 
     def login(self):
         username = self.entry_username.get()

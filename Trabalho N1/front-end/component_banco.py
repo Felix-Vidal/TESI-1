@@ -6,6 +6,7 @@ class CadastroBanco:
 
     def __init__(self, frame):
         self.root = frame
+        self.root.configure(bg="#edebeb")
 
         self.label_nome = tk.Label(self.root, text="Nome do Banco:")
         self.label_nome.pack()
@@ -13,7 +14,7 @@ class CadastroBanco:
         self.entry_nome.pack()
 
         self.button_cadastrar = tk.Button(self.root, text="Cadastrar", command=self.cadastrar)
-        self.button_cadastrar.pack()
+        self.button_cadastrar.pack(pady=5)
 
     def cadastrar(self):
         nome_banco = self.entry_nome.get()
@@ -32,18 +33,19 @@ class MostrarBancos:
     def __init__(self, frame, banco):
         self.root = frame
         self.banco = banco
+        self.root.configure(bg="#edebeb")
     	
 
         self.listbox_bancos = ttk.Treeview(frame, columns=self.colunas_bancos, show='headings')
         self.listbox_bancos.grid()
 
         #Cabeçalho
-        self.listbox_bancos.heading('id', text='ID')
-        self.listbox_bancos.heading('nome', text='Nome')
+        self.listbox_bancos.heading('id', text='ID', anchor='center')
+        self.listbox_bancos.heading('nome', text='Nome', anchor='center')
 
         #Colunas
-        self.listbox_bancos.column('id', minwidth=15, width=30)
-        self.listbox_bancos.column('nome', minwidth=300, width=300)
+        self.listbox_bancos.column('id', minwidth=15, width=30, anchor='center')
+        self.listbox_bancos.column('nome', minwidth=300, width=300, anchor='center')
 
         #Linhas
         bancos = self.banco.listar_bancos()
@@ -60,9 +62,9 @@ class MostrarBancos:
         frm_botoes.grid(row=1, column=0)
 
         btn_editar = tk.Button(frm_botoes, text='Editar', command=self.editar)
-        btn_editar.grid(row=0, column=0)
+        btn_editar.grid(row=0, column=0, padx=5, pady=5)
         btn_excluir = tk.Button(frm_botoes, text='Excluir', command=self.excluir)
-        btn_excluir.grid(row=0, column=1)
+        btn_excluir.grid(row=0, column=1, padx=5, pady=5)
 
     def editar(self):
         item = self.listbox_bancos.selection()

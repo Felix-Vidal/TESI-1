@@ -6,7 +6,7 @@ from banco import Banco
 
 class SaqueFrame(tk.Frame):
     def __init__(self, parent, tipo_conta):
-        super().__init__(parent)
+        super().__init__(parent, bg="#edebeb")
 
         self.tipo_conta = tipo_conta
 
@@ -21,7 +21,7 @@ class SaqueFrame(tk.Frame):
         self.entry_valor.pack()
 
         self.button_sacar = tk.Button(self, text="Sacar", command=self.sacar)
-        self.button_sacar.pack()
+        self.button_sacar.pack(pady=5)
 
     def obter_contas(self):
         if self.tipo_conta == "Corrente":
@@ -56,7 +56,7 @@ class SaqueFrame(tk.Frame):
 
 class SaqueHome(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, bg="#edebeb")
 
         self.label_tipo_conta = tk.Label(self, text="Selecione o tipo de conta:")
         self.label_tipo_conta.pack()
@@ -64,7 +64,7 @@ class SaqueHome(tk.Frame):
         self.combobox_tipo_conta.pack()
 
         self.button_selecionar = tk.Button(self, text="Selecionar", command=self.selecionar_conta)
-        self.button_selecionar.pack()
+        self.button_selecionar.pack(pady=5)
 
     def selecionar_conta(self):
         tipo_conta = self.combobox_tipo_conta.get()
@@ -76,7 +76,7 @@ class SaqueHome(tk.Frame):
 
 class DepositoFrame(tk.Frame):
     def __init__(self, parent, tipo_conta):
-        super().__init__(parent)
+        super().__init__(parent,bg="#edebeb")
 
         self.tipo_conta = tipo_conta
 
@@ -91,7 +91,7 @@ class DepositoFrame(tk.Frame):
         self.entry_valor.pack()
 
         self.button_depositar = tk.Button(self, text="Depositar", command=self.depositar)
-        self.button_depositar.pack()
+        self.button_depositar.pack(pady=5)
 
     def obter_contas(self):
         if self.tipo_conta == "Corrente":
@@ -124,7 +124,7 @@ class DepositoFrame(tk.Frame):
 
 class DepositoHome(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent,bg="#edebeb")
 
         self.label_tipo_conta = tk.Label(self, text="Selecione o tipo de conta:")
         self.label_tipo_conta.pack()
@@ -132,7 +132,7 @@ class DepositoHome(tk.Frame):
         self.combobox_tipo_conta.pack()
 
         self.button_selecionar = tk.Button(self, text="Selecionar", command=self.selecionar_conta)
-        self.button_selecionar.pack()
+        self.button_selecionar.pack(pady=5)
 
     def selecionar_conta(self):
         tipo_conta = self.combobox_tipo_conta.get()
@@ -144,6 +144,7 @@ class DepositoHome(tk.Frame):
 class TransferenciaFrame:
     def __init__(self, root):
         self.root = root
+        self.root.configure(bg="#edebeb")
 
         self.label_conta_origem = tk.Label(self.root, text="Conta de Origem:")
         self.label_conta_origem.pack()
@@ -162,7 +163,7 @@ class TransferenciaFrame:
         self.entry_valor.pack()
 
         self.button_transferir = tk.Button(self.root, text="Transferir", command=self.transferir)
-        self.button_transferir.pack()
+        self.button_transferir.pack(pady=5)
 
     def obter_lista_contas(self):
         contas = []

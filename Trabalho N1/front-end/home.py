@@ -19,6 +19,7 @@ class Home:
         self.root = root
         # Configuração da janela principal
         self.root.title("Sistema Bancário")
+        self.root.configure(bg="#edebeb")
 
         #  barra de menus
         menu_bar = tk.Menu(self.root)

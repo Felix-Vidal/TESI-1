@@ -7,6 +7,7 @@ from cliente import Cliente
 class CadastroCliente:
     def __init__(self, frame):
         self.root = frame
+        self.root.configure(bg="#edebeb")
 
         self.label_nome = tk.Label(self.root, text="Nome do Cliente:")
         self.label_nome.pack()
@@ -29,7 +30,7 @@ class CadastroCliente:
         self.entry_idade.pack()
 
         self.button_cadastrar = tk.Button(self.root, text="Cadastrar", command=self.cadastrar)
-        self.button_cadastrar.pack()
+        self.button_cadastrar.pack(pady=5)
 
     def cadastrar(self):
         nome_cliente = self.entry_nome.get()
@@ -58,24 +59,25 @@ class MostrarClientes:
 
     def __init__(self, frame):
         self.root = frame
+        self.root.configure(bg="#edebeb")
         self.clientes = Cliente.listar_clientes()  # Obter a lista de clientes
 
         self.listbox_clientes = ttk.Treeview(frame, columns=self.colunas_clientes, show='headings')
         self.listbox_clientes.grid()
 
         # Cabeçalho
-        self.listbox_clientes.heading('id', text='ID')
-        self.listbox_clientes.heading('nome', text='Nome')
-        self.listbox_clientes.heading('endereco', text='Endereço')
-        self.listbox_clientes.heading('cpf', text='CPF')
-        self.listbox_clientes.heading('idade', text='Idade')
+        self.listbox_clientes.heading('id', text='ID', anchor='center')
+        self.listbox_clientes.heading('nome', text='Nome',anchor='center')
+        self.listbox_clientes.heading('endereco', text='Endereço', anchor='center')
+        self.listbox_clientes.heading('cpf', text='CPF', anchor='center')
+        self.listbox_clientes.heading('idade', text='Idade',anchor='center')
 
         # Colunas
-        self.listbox_clientes.column('id', minwidth=15, width=30)
-        self.listbox_clientes.column('nome', minwidth=150, width=150)
-        self.listbox_clientes.column('endereco', minwidth=150, width=150)
-        self.listbox_clientes.column('cpf', minwidth=100, width=100)
-        self.listbox_clientes.column('idade', minwidth=50, width=50)
+        self.listbox_clientes.column('id', minwidth=15, width=30, anchor='center')
+        self.listbox_clientes.column('nome', minwidth=150, width=150, anchor='center')
+        self.listbox_clientes.column('endereco', minwidth=150, width=150, anchor='center')
+        self.listbox_clientes.column('cpf', minwidth=100, width=100, anchor='center')
+        self.listbox_clientes.column('idade', minwidth=50, width=50, anchor='center')
 
         # Linhas
         self.carregar_clientes()
@@ -90,9 +92,9 @@ class MostrarClientes:
         frm_botoes.grid(row=1, column=0)
 
         btn_editar = tk.Button(frm_botoes, text='Editar', command=self.editar)
-        btn_editar.grid(row=0, column=0)
+        btn_editar.grid(row=0, column=0, padx=5, pady=5)
         btn_excluir = tk.Button(frm_botoes, text='Excluir', command=self.excluir)
-        btn_excluir.grid(row=0, column=1)
+        btn_excluir.grid(row=0, column=1, padx=5, pady=5)
 
     def carregar_clientes(self):
         for cliente in self.clientes:
