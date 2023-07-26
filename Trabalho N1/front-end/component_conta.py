@@ -226,7 +226,7 @@ class MostrarContas:
 
         for transacao in conta._extrato._transacoes:
             data, tipo_operacao, valor, saldo_final = transacao.split(", ")
-            report_tree.insert('', 'end', values=(data, tipo_operacao, valor, saldo_final), anchor='center')
+            report_tree.insert('', 'end', values=(data, tipo_operacao, valor, saldo_final))
 
         saldo_label = tk.Label(report_frame, text=f"Saldo Final: {conta._saldo}")
         saldo_label.grid(row=2, column=0, columnspan=2)
