@@ -1,4 +1,5 @@
 import abc
+import datetime
 from historico import Historico
 
 
@@ -69,8 +70,9 @@ class Conta(abc.ABC):
             if self._saldo < valor:
                 return False
             else:
-                self._saldo = self._saldo - valor
-                self._extrato._transacoes.append(f'Saque de {valor}')
+                self._saldo -= valor
+                data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                self._extrato.adicionar_transacao(data, "Saque", valor, self._saldo)
                 self._extrato.imprime()
                 return True
         else:
@@ -79,7 +81,8 @@ class Conta(abc.ABC):
     def depositar(self, valor):
         if self.status:
             self._saldo += valor
-            self._extrato._transacoes.append(f'Depósito de {valor}')
+            data = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self._extrato.adicionar_transacao(data, "Depósito", valor, self._saldo)
         else:
             print('Conta inativa não pode realizar depósitos')
 

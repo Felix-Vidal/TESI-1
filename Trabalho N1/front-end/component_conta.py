@@ -110,6 +110,9 @@ class MostrarContas:
         
         btn_encerrar = tk.Button(frm_botoes, text='Encerrar Conta', command=self.encerrar_conta)
         btn_encerrar.grid(row=0, column=1)
+        
+        btn_gerar_relatorio = tk.Button(frm_botoes, text='Gerar Relatório', command=self.gerar_relatorio)
+        btn_gerar_relatorio.grid(row=0, column=2)
 
     def obter_contas_por_tipo(self, tipo_conta):
         contas = []
@@ -164,6 +167,71 @@ class MostrarContas:
                         return None
                 
             messagebox.showerror("Erro", "Conta não encontrada.")
+            
+    def gerar_relatorio(self):
+        item = self.listbox_contas.selection()
+        if item:
+            id_conta = int(self.listbox_contas.item(item, "values")[0])
+            if self.tipo_conta == "Corrente":
+                contas = ContaCorrente.obter_contas_corrente()
+            elif self.tipo_conta == "Poupança":
+                contas = ContaPoupanca.obter_contas_poupanca()
+
+            for conta in contas:
+                if conta._num == id_conta:
+                    self.limpar_frame()
+                    self.mostrar_relatorio(conta)
+
+                    return
+
+            messagebox.showerror("Erro", "Conta não encontrada.")
+
+    def limpar_frame(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+            
+    def mostrar_relatorio(self, conta):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        report_frame = tk.Frame(self.root)
+        report_frame.pack(fill='both', expand=True)
+
+        report_tree = ttk.Treeview(report_frame, columns=('data', 'tipo_operacao', 'valor', 'saldo_final'), show='headings')
+        report_tree.heading('data', text='Data')
+        report_tree.heading('tipo_operacao', text='Tipo de Operação')
+        report_tree.heading('valor', text='Valor')
+        report_tree.heading('saldo_final', text='Saldo Final')
+        report_tree.grid(row=0, column=0, sticky='nsew')
+
+        h_scrollbar = ttk.Scrollbar(report_frame, orient=tk.HORIZONTAL, command=report_tree.xview)
+        v_scrollbar = ttk.Scrollbar(report_frame, orient=tk.VERTICAL, command=report_tree.yview)
+        report_tree.configure(xscrollcommand=h_scrollbar.set, yscrollcommand=v_scrollbar.set)
+        h_scrollbar.grid(row=1, column=0, sticky='ew')
+        v_scrollbar.grid(row=0, column=1, sticky='ns')
+
+        report_frame.grid_rowconfigure(0, weight=1)
+        report_frame.grid_columnconfigure(0, weight=1)
+
+        for transacao in conta._extrato._transacoes:
+            data, tipo_operacao, valor, saldo_final = transacao.split(", ")
+            report_tree.insert('', 'end', values=(data, tipo_operacao, valor, saldo_final))
+
+        saldo_label = tk.Label(report_frame, text=f"Saldo Final: {conta._saldo}")
+        saldo_label.grid(row=2, column=0, columnspan=2)
+
+        salvar_button = tk.Button(report_frame, text="Salvar Relatório", command=lambda: self.salvar_relatorio(conta))
+        salvar_button.grid(row=3, column=0, columnspan=2)
+
+    def salvar_relatorio(self, conta):
+        filename = f"relatorio_conta_{conta._num}.txt"
+        with open(filename, "w") as file:
+            file.write(f"Extrato da Conta {conta._num}:\n")
+            for transacao in conta._extrato._transacoes:
+                file.write(f"{transacao}\n")
+            file.write(f"Saldo Final: {conta._saldo}\n")
+
+        messagebox.showinfo("Relatório Salvo", f"O relatório da conta {conta._num} foi salvo com sucesso!")
                 
 
 

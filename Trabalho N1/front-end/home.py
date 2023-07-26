@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from operacoes import SaqueHome, DepositoHome, TransferenciaFrame
+from component_operacoes import SaqueHome, DepositoHome, TransferenciaFrame
 from conta_corrente import ContaCorrente
 from conta_poupanca import ContaPoupanca
 from component_banco import CadastroBanco, MostrarBancos
