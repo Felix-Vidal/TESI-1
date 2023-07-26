@@ -17,6 +17,11 @@ class Banco:
             return True
         else:
             return False
+    @classmethod
+    def id_get(cls, id):
+        for banco in cls.listar_bancos():
+            if banco._num == id:
+                return banco 
 
 
     def listar_contas(self):

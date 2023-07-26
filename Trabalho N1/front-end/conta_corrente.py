@@ -24,19 +24,19 @@ class ContaCorrente(Conta):
             valor_liquido2 = self._saldo / (1 + valor_desconto)
             if self._saldo < valor_liquido:
                 if self._saldo > valor_liquido2:
-                    return super().sacar(self.saldo - valor_liquido2)
+                    return super().sacar(self.saldo)
             else:
                 return super().sacar(valor_liquido)
         else:
             print('Conta inativa não pode realizar saques')
 
     @classmethod
-    def verificar_conta_unica(cls, cpf):
-        for banco in Banco.listar_bancos():
-            for contas in banco._contas:
-                if isinstance(contas, ContaCorrente):
-                    if contas._titular._CPF == cpf:
-                        return False
+    def verificar_conta_unica(cls, cpf, id_banco):
+        banco = Banco.id_get(id_banco)
+        for contas in banco._contas:
+            if isinstance(contas, ContaCorrente):
+                if contas._titular._CPF == cpf:
+                    return False
         return True
             
                 

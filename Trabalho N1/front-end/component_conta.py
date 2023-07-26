@@ -50,7 +50,7 @@ class CadastroConta:
             cliente = Cliente.get_id(id_titular)
             if(cliente):
                 if tipo == "Corrente":
-                    if ContaCorrente.verificar_conta_unica(cliente._CPF):
+                    if ContaCorrente.verificar_conta_unica(cliente._CPF, id_banco):
                         nova_conta = ContaCorrente(cliente, saldo)
                         Banco.incluir_conta(id_banco, nova_conta)
                         messagebox.showinfo("Cadastro de Conta", "Conta cadastrada com sucesso!")
