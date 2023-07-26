@@ -1,4 +1,5 @@
 from conta import Conta
+from banco import Banco
 
 class ContaCorrente(Conta):
     _lista_contas_corrente = []
@@ -15,7 +16,7 @@ class ContaCorrente(Conta):
         valor_juros = self._saldo * taxa
         self._saldo += valor_juros
         return valor_juros
-    
+
     def sacar(self, valor):
         if self.status:
             valor_desconto = valor * self._taxa_desconto
@@ -28,6 +29,17 @@ class ContaCorrente(Conta):
                 return super().sacar(valor_liquido)
         else:
             print('Conta inativa não pode realizar saques')
+
+    @classmethod
+    def verificar_conta_unica(cls, cpf):
+        for banco in Banco.listar_bancos():
+            for contas in banco._contas:
+                if isinstance(contas, ContaCorrente):
+                    if contas._titular._CPF == cpf:
+                        return False
+        return True
+            
+                
 
     def depositar(self, valor):
         if self.status:

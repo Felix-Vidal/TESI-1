@@ -39,7 +39,6 @@ class CadastroCliente:
 
         if nome_cliente and endereco_cliente and cpf_cliente and idade_cliente:
             if (Cliente.validarCPF(cpf_cliente)):
-                
                 if Cliente.verificar_mesmo_cpf(cpf_cliente):
                     if int(idade_cliente) >= 16:
                         novo_cliente = Cliente(nome_cliente, endereco_cliente, cpf_cliente, idade_cliente)

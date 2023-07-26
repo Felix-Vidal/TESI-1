@@ -1,4 +1,5 @@
 from conta import Conta
+from banco import Banco
 
 class ContaPoupanca(Conta):
     _lista_contas_poupanca = []
@@ -15,3 +16,12 @@ class ContaPoupanca(Conta):
     @classmethod
     def obter_contas_poupanca(cls):
         return cls._lista_contas_poupanca
+    
+    @classmethod
+    def verificar_conta_unica(cls, cpf):
+        for banco in Banco.listar_bancos():
+            for contas in banco._contas:
+                if isinstance(contas, ContaPoupanca):
+                    if contas._titular._CPF == cpf:
+                        return False
+        return True
