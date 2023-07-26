@@ -18,8 +18,11 @@ class CadastroBanco:
     def cadastrar(self):
         nome_banco = self.entry_nome.get()
         if nome_banco:
-            novo_banco = Banco(nome_banco)
-            messagebox.showinfo("Cadastro de Banco", "Banco cadastrado com sucesso!")
+            if Banco.verificar_banco_nome(nome_banco):
+                novo_banco = Banco(nome_banco)
+                messagebox.showinfo("Cadastro de Banco", "Banco cadastrado com sucesso!")
+            else:
+                messagebox.showerror("Erro", "Banco ja registrado.")
         else:
             messagebox.showerror("Erro", "Por favor, informe o nome do banco.")
 

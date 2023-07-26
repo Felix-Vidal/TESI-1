@@ -10,6 +10,15 @@ class Banco:
         Banco._total_banco += 1
         Banco._lista_bancos.append(self)
 
+    @classmethod
+    def verificar_banco_nome(cls, nome):
+        bancos_nomes  = [banco._nome for banco in cls.listar_bancos()]
+        if nome not in bancos_nomes:
+            return True
+        else:
+            return False
+
+
     def listar_contas(self):
         for conta in self._contas:
             conta
