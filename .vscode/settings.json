@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./Trabalho N1/api/model"
+        "./Trabalho N1/api/model",
+        "./Trabalho N2/model"
     ]
 }
