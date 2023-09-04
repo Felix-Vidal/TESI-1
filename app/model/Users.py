@@ -1,10 +1,10 @@
 import sqlalchemy
-
-from ERole import ERole
-engine = sqlalchemy.create_engine("sqlite:///sgad.db")
-
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, String, Enum
+from model.ERole import ERole
+engine = sqlalchemy.create_engine("sqlite:///sgad.db", echo=True)
+
+
 
 Base = declarative_base()
 

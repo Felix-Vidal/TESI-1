@@ -1,5 +1,5 @@
-from DaoUsers import DaoUsers
-from ModelUsers import Users
+from dao.DaoUsers import DaoUsers
+from model.Users import Users
 
 
 user = Users(userName="admin", fullName="admin", password="admin" , role="ROLE_ADMIN")
