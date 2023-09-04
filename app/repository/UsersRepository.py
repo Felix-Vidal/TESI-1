@@ -1,23 +1,23 @@
 # conect BD
-from app.model.Blocks import Blocks
+from model.Users import Users
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
 
-class DaoUsers():
+class UsersRepository():
 
-    def registros():
+    def gets():
         engine = sqlalchemy.create_engine("sqlite:///sgad.db")
         Session = sessionmaker(bind=engine)
         session = Session()
-        return session.query(Blocks)
+        return session.query(Users)
 
 
-    def registro(id):
+    def get(id):
         engine = sqlalchemy.create_engine("sqlite:///sgad.db")
         Session = sessionmaker(bind=engine)
         session = Session()
-        return session.query(Blocks).filter_by(id=id).filter()
+        return session.query(Users).filter_by(id=id).filter()
 
     def inserir(object):
         engine = sqlalchemy.create_engine("sqlite:///sgad.db")
@@ -30,9 +30,12 @@ class DaoUsers():
         engine = sqlalchemy.create_engine("sqlite:///sgad.db")
         Session = sessionmaker(bind=engine)
         session = Session()
-        session.query(Blocks).filter_by(id=object.id).filter().update({
+        session.query(Users).filter_by(id=object.id).filter().update({
 
-                "name": object.name
+                "userName": object.userName,
+                "fullName": object.fullName,
+                "password": object.password,
+                "role": object.role
             
         })
         session.commit()
@@ -41,7 +44,7 @@ class DaoUsers():
         engine = sqlalchemy.create_engine("sqlite:///sgad.db")
         Session = sessionmaker(bind=engine)
         session = Session()
-        registro = session.query(Blocks).filter_by(id=id).filter()
+        registro = session.query(Users).filter_by(id=id).filter()
         session.delete(registro)
         session.commit()
         
