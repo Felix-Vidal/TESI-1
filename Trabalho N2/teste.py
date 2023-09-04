@@ -1,12 +1,12 @@
-from DaoUser import DaoUser
-from ModelUser import User
+from DaoUsers import DaoUsers
+from ModelUsers import Users
 
 
-user = User(userName="admin", fullName="admin", password="admin" , role="ROLE_ADMIN")
+user = Users(userName="admin", fullName="admin", password="admin" , role="ROLE_ADMIN")
 
-DaoUser.inserir(user)
-DaoUser.update(User(userName="admin teste 2", fullName="admin", password="admin" , role="ROLE_ADMIN", id="1"))
-registros = DaoUser.registros()
+DaoUsers.inserir(user)
+DaoUsers.update(Users(userName="admin teste 2", fullName="admin", password="admin" , role="ROLE_ADMIN", id="1"))
+registros = DaoUsers.registros()
 for i in registros:
     print(i.userName)
 
