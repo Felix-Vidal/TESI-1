@@ -58,7 +58,7 @@ class Login:
         limpar_tela(self.root)
         TelaPricipal = Home(self.root)
 
-root = ttk.Window()
+root = ttk.Window(themename="cyborg")
 TelaPricipal = Login(root)
 
 root.mainloop()
