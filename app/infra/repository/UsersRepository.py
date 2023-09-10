@@ -14,6 +14,11 @@ class UsersRepository():
         with DBConnectionHandler() as db:
             data = db.session.query(Users).filter(Users.id == id).first()
             return data
+        
+    def getUserName(self, userName):
+        with DBConnectionHandler() as db:
+            data = db.session.query(Users).filter(Users.userName == userName).first()
+            return data
 
     def inserir(self, userName, fullName, password, role):
         with DBConnectionHandler() as db:
