@@ -1,12 +1,8 @@
-import sqlalchemy
-from sqlalchemy.orm import declarative_base
+from infra.config.base import Base
+from infra.config.connection import DBConnectionHandler
 from sqlalchemy import Column, Integer, String, Enum
-from model.ERole import ERole
-engine = sqlalchemy.create_engine("sqlite:///sgad.db", echo=True)
+from infra.entities.ERole import ERole
 
-
-
-Base = declarative_base()
 
 class Users(Base):
     __tablename__ = "users" 
@@ -17,4 +13,7 @@ class Users(Base):
     password = Column(String(50))
     role = Column(Enum(ERole))
 
-Base.metadata.create_all(engine)
+with DBConnectionHandler() as db:
+    Base.metadata.create_all(db.get_engine())
+
+

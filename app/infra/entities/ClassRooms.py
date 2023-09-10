@@ -1,20 +1,18 @@
-import sqlalchemy
-
-from ERoom import ERoom
-engine = sqlalchemy.create_engine("sqlite:///sgad.db", echo=True)
-
-from sqlalchemy.orm import declarative_base
+from infra.config.base import Base
+from infra.config.connection import DBConnectionHandler
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from ERoom import ERoom
 
-Base = declarative_base()
 
 class ClassRooms(Base):
     __tablename__ = "classRooms" 
 
     id = Column(Integer, primary_key=True)
-    number = Column(Integer)
+    name = Column(String(50))
     capacity = Column(Integer)
     block = Column(Integer, ForeignKey("blocks.name"))
     typeRoom = Column(Enum(ERoom))
 
-Base.metadata.create_all(engine)
+
+with DBConnectionHandler() as db:
+    Base.metadata.create_all(db.get_engine())

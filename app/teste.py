@@ -1,11 +1,9 @@
-from repository.UsersRepository import UsersRepository
-from model.Users import Users
+from infra.repository.UsersRepository import UsersRepository
 
+repo = UsersRepository
 
-user = Users(userName="admin", fullName="admin", password="admin" , role="ROLE_ADMIN")
-
-UsersRepository.inserir(user)
-UsersRepository.update(Users(userName="admin teste 2", fullName="admin", password="admin" , role="ROLE_ADMIN", id="1"))
-registros = UsersRepository.gets()
-for i in registros:
-    print(i.userName)
+UsersRepository.inserir(UsersRepository, "admin", "admin", "admin", "ROLE_ADMIN")
+UsersRepository.inserir(UsersRepository, "felix", "admin", "admin", "ROLE_USER")
+UsersRepository.update(UsersRepository, 2, "top", "top", "toptop", "ROLE_USER")
+for i in repo.gets(repo):
+    print(f"{i.userName} {i.role}")
