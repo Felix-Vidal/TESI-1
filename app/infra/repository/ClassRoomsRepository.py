@@ -2,23 +2,23 @@ from infra.config.connection import DBConnectionHandler
 from infra.entities.ClassRooms import ClassRooms
 
 class ClassRoomsRepository:
-    def gets(self):
+    def gets():
         with DBConnectionHandler() as db:
             data = db.session.query(ClassRooms).all()
             return data
 
-    def get(self, id):
+    def get(id):
         with DBConnectionHandler() as db:
             data = db.session.query(ClassRooms).filter(ClassRooms.id == id).first()
             return data
 
-    def inserir(self, name, email, telephone, typeRequester):
+    def inserir(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
             data_isert = ClassRooms(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
             db.session.add(data_isert)
             db.session.commit()
 
-    def update(self, id, name, email, telephone, typeRequester):
+    def update(id, name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
             db.session.query(ClassRooms).filter(ClassRooms.id == id).update({
 
@@ -30,7 +30,7 @@ class ClassRoomsRepository:
             })
             db.session.commit()
 
-    def delete(self, id):
+    def delete(id):
         with DBConnectionHandler() as db:
             db.session.query(ClassRooms).filter(ClassRooms.id == id).delete()
             db.session.commit()
