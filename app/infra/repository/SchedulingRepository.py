@@ -1,36 +1,35 @@
 from infra.config.connection import DBConnectionHandler
-from infra.entities.Scheduling import Scheduling
+from infra.entities.Schedulings import Schedulings
 class SchedulingRepository:
 
     def gets():
         with DBConnectionHandler() as db:
-            data = db.session.query(Scheduling).all()
+            data = db.session.query(Schedulings).all()
             return data
 
     def get(id):
         with DBConnectionHandler() as db:
-            data = db.session.query(Scheduling).filter(Scheduling.id == id).first()
+            data = db.session.query(Schedulings).filter(Schedulings.id == id).first()
             return data
 
-    def inserir(name, capacity, block, typeRoom):
+    def inserir(requester, classRoom, dataTime):
         with DBConnectionHandler() as db:
-            data_isert = Scheduling(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
+            data_isert = Schedulings(requester=requester, classRoom=classRoom, dateTime=dataTime)
             db.session.add(data_isert)
             db.session.commit()
 
-    def update(id, name, capacity, block, typeRoom):
+    def update(id, requester, classRoom, dateTime):
         with DBConnectionHandler() as db:
-            db.session.query(Scheduling).filter(Scheduling.id == id).update({
+            db.session.query(Schedulings).filter(Schedulings.id == id).update({
 
-                "number":name, 
-                "capacity":capacity, 
-                "block":block, 
-                "typeRoom":typeRoom
+                "requester":requester, 
+                "classRoom":classRoom, 
+                "dateTime":dateTime
                 
             })
             db.session.commit()
 
     def delete(id):
         with DBConnectionHandler() as db:
-            db.session.query(Scheduling).filter(Scheduling.id == id).delete()
+            db.session.query(Schedulings).filter(Schedulings.id == id).delete()
             db.session.commit()

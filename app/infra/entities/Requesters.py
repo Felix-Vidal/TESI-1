@@ -1,10 +1,10 @@
 from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
 from sqlalchemy import Column, Integer, String, Enum
-from app.infra.entities.ERequester import ERequester
+from infra.entities.ERequester import ERequester
 
-class Requester(Base):
-    __tablename__ = "requester" 
+class Requesters(Base):
+    __tablename__ = "requesters" 
 
     id = Column(Integer, primary_key=True)
     name = Column(String(50))

@@ -1,37 +1,37 @@
 from infra.config.connection import DBConnectionHandler
-from infra.entities.Requester import Requester
+from infra.entities.Requesters import Requesters
 
 class RequesterRepository:
 
     def gets():
         with DBConnectionHandler() as db:
-            data = db.session.query(Requester).all()
+            data = db.session.query(Requesters).all()
             return data
 
     def get(id):
         with DBConnectionHandler() as db:
-            data = db.session.query(Requester).filter(Requester.id == id).first()
+            data = db.session.query(Requesters).filter(Requesters.id == id).first()
             return data
 
-    def inserir(name, capacity, block, typeRoom):
+    def inserir(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
-            data_isert = Requester(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
+            data_isert = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
             db.session.add(data_isert)
             db.session.commit()
 
-    def update(id, name, capacity, block, typeRoom):
+    def update(id, name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
-            db.session.query(Requester).filter(Requester.id == id).update({
+            db.session.query(Requesters).filter(Requesters.id == id).update({
 
-                "number":name, 
-                "capacity":capacity, 
-                "block":block, 
-                "typeRoom":typeRoom
+                "name":name, 
+                "email":email, 
+                "telephone":telephone, 
+                "typeRequester":typeRequester
                 
             })
             db.session.commit()
 
     def delete(id):
         with DBConnectionHandler() as db:
-            db.session.query(Requester).filter(Requester.id == id).delete()
+            db.session.query(Requesters).filter(Requesters.id == id).delete()
             db.session.commit()
