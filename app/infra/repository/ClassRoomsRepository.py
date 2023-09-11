@@ -1,10 +1,11 @@
 from infra.config.connection import DBConnectionHandler
 from infra.entities.ClassRooms import ClassRooms
+from infra.entities.Blocks import Blocks
 
 class ClassRoomsRepository:
     def gets():
         with DBConnectionHandler() as db:
-            data = db.session.query(ClassRooms).all()
+            data = db.session.query(ClassRooms,  Blocks).join(ClassRooms, Blocks.id == ClassRooms.block).all()
             return data
 
     def get(id):
@@ -12,20 +13,20 @@ class ClassRoomsRepository:
             data = db.session.query(ClassRooms).filter(ClassRooms.id == id).first()
             return data
 
-    def inserir(name, email, telephone, typeRequester):
+    def inserir(name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:
-            data_isert = ClassRooms(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
+            data_isert = ClassRooms(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
             db.session.add(data_isert)
             db.session.commit()
 
-    def update(id, name, email, telephone, typeRequester):
+    def update(id, name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:
             db.session.query(ClassRooms).filter(ClassRooms.id == id).update({
 
                 "name":name, 
-                "email":email, 
-                "telephone":telephone, 
-                "typeRequester":typeRequester
+                "capacity":capacity, 
+                "block":block, 
+                "typeRoom":typeRoom
                 
             })
             db.session.commit()
