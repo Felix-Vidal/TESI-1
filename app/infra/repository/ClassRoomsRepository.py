@@ -13,7 +13,7 @@ class ClassRoomsRepository:
             data = db.session.query(ClassRooms).filter(ClassRooms.id == id).first()
             return data
 
-    def inserir(name, capacity, block, typeRoom):
+    def insert(name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:
             data_isert = ClassRooms(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
             db.session.add(data_isert)

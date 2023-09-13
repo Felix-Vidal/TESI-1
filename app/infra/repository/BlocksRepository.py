@@ -14,7 +14,7 @@ class BlocksRepository():
             data = db.session.query(Blocks).filter(Blocks.id == id).first()
             return data
 
-    def inserir(name):
+    def insert(name):
         with DBConnectionHandler() as db:
             data_isert = Blocks(name=name)
             db.session.add(data_isert)

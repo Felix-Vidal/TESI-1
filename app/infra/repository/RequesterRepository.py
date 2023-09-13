@@ -13,7 +13,7 @@ class RequesterRepository:
             data = db.session.query(Requesters).filter(Requesters.id == id).first()
             return data
 
-    def inserir(name, email, telephone, typeRequester):
+    def insert(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
             data_isert = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
             db.session.add(data_isert)

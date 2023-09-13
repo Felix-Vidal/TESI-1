@@ -15,7 +15,7 @@ class SchedulingRepository:
             data = db.session.query(Schedulings).filter(Schedulings.id == id).first()
             return data
 
-    def inserir(requester, classRoom, dataTime):
+    def insert(requester, classRoom, dataTime):
         with DBConnectionHandler() as db:
             data_isert = Schedulings(requester=requester, classRoom=classRoom, dateTime=dataTime)
             db.session.add(data_isert)
