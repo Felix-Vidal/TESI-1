@@ -19,11 +19,12 @@ class UsersRepository():
         with DBConnectionHandler() as db:
             data = db.session.query(Users).filter(Users.userName == userName).first()
             return data
+    
 
     def insert(userName, fullName, password, role):
         with DBConnectionHandler() as db:
-            data_isert = Users(userName=userName, fullName=fullName, password=password, role=role)
-            db.session.add(data_isert)
+            data= Users(userName=userName, fullName=fullName, password=password, role=role)
+            db.session.add(data)
             db.session.commit()
 
     def update(id, userName, fullName, password, role):

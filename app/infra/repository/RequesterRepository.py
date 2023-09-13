@@ -15,8 +15,8 @@ class RequesterRepository:
 
     def insert(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
-            data_isert = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
-            db.session.add(data_isert)
+            data = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
+            db.session.add(data)
             db.session.commit()
 
     def update(id, name, email, telephone, typeRequester):

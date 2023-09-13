@@ -10,7 +10,7 @@ class ClassRoomsRepository:
 
     def get(id):
         with DBConnectionHandler() as db:
-            data = db.session.query(ClassRooms).filter(ClassRooms.id == id).first()
+            data = db.session.query(ClassRooms,  Blocks).join(ClassRooms, Blocks.id == ClassRooms.block).filter(ClassRooms.id == id).first()
             return data
 
     def insert(name, capacity, block, typeRoom):

@@ -16,8 +16,8 @@ class BlocksRepository():
 
     def insert(name):
         with DBConnectionHandler() as db:
-            data_isert = Blocks(name=name)
-            db.session.add(data_isert)
+            data = Blocks(name=name)
+            db.session.add(data)
             db.session.commit()
 
     def update(id, name):
