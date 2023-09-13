@@ -5,12 +5,12 @@ from infra.entities.Blocks import Blocks
 class ClassRoomsRepository:
     def gets():
         with DBConnectionHandler() as db:
-            data = db.session.query(ClassRooms,  Blocks).join(ClassRooms, Blocks.id == ClassRooms.block).all()
+            data = db.session.query(ClassRooms,  Blocks).join(Blocks, Blocks.id == ClassRooms.block).all()
             return data
 
     def get(id):
         with DBConnectionHandler() as db:
-            data = db.session.query(ClassRooms,  Blocks).join(ClassRooms, Blocks.id == ClassRooms.block).filter(ClassRooms.id == id).first()
+            data = db.session.query(ClassRooms,  Blocks).join(Blocks, Blocks.id == ClassRooms.block).filter(ClassRooms.id == id).first()
             return data
 
     def insert(name, capacity, block, typeRoom):
