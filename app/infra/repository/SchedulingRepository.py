@@ -1,10 +1,13 @@
 from infra.config.connection import DBConnectionHandler
 from infra.entities.Schedulings import Schedulings
+from infra.entities.Requesters import Requesters
+from infra.entities.ClassRooms import ClassRooms
+from infra.entities.Blocks import Blocks
 class SchedulingRepository:
 
     def gets():
         with DBConnectionHandler() as db:
-            data = db.session.query(Schedulings).all()
+            data = db.session.query(Schedulings, Requesters, ClassRooms, Blocks).join(Schedulings, Requesters.id == Schedulings.requester).join(ClassRooms, ClassRooms.id == Schedulings.classRoom).join(Blocks, Blocks.id == ClassRooms.block).all()
             return data
 
     def get(id):

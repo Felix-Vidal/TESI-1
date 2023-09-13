@@ -1,7 +1,9 @@
 from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
-from sqlalchemy import Column, Integer, String, Enum
 from infra.entities.ERequester import ERequester
+
+from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy.orm import aliased
 
 class Requesters(Base):
     __tablename__ = "requesters" 

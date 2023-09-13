@@ -46,8 +46,7 @@ print("==========================================")
 for requester in RequesterRepository.gets():
     print(f"ID: {requester.id} Name: {requester.name} Email: {requester.email} Telephone: {requester.telephone} Requester:{requester.typeRequester}")
 print("==========================================", end="\n\n")
-datatime = datetime(2023, 9, 11, 12, 0, 0)
-print(datatime)
+
 SchedulingRepository.inserir(1,1, datetime(2023, 9, 11, 12, 0, 0))
 
 SchedulingRepository.inserir(1,1, datetime(2023, 9, 11, 13, 0, 0))
@@ -55,6 +54,6 @@ SchedulingRepository.inserir(1,1, datetime(2023, 9, 11, 13, 0, 0))
 print("\t\tScheduling")
 
 print("==========================================")
-for i in SchedulingRepository.gets():
-    print(f"ID {i.id} ClassRoom: {i.classRoom} Requester: {i.requester} Data: {i.dateTime}")
+for scheduling, requester, classRoom, block in SchedulingRepository.gets():
+    print(f"Scheduling: ID {scheduling.id} Data: {scheduling.dateTime} \nRequester: ID:{requester.id} Name: {requester.name} \nClassRoom: ID: {classRoom.id} name:{classRoom.name} capacity:{classRoom.capacity} name the block: {block.name} TypeRoom: {classRoom.typeRoom} \n")
 print("==========================================", end="\n\n")
