@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 from tkinter import messagebox
-from app.home import Home
+from home import Home
 from infra.repository.UsersRepository import UsersRepository
 
 def limpar_tela(frame):
