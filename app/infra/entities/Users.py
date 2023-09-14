@@ -13,7 +13,15 @@ class Users(Base):
     password = Column(String(50))
     role = Column(Enum(ERole))
 
+def create_admin_user(session):
+    admin_user = session.query(Users).filter_by(userName='admin').first()
+    if not admin_user:
+        admin_data = Users(userName='admin', fullName='Admin User', password='admin', role=ERole.ROLE_ADMIN)
+        session.add(admin_data)
+        session.commit()
+
 with DBConnectionHandler() as db:
     Base.metadata.create_all(db.get_engine())
+    create_admin_user(db.session)
 
 

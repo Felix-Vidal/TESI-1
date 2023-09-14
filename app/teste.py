@@ -4,9 +4,11 @@ from infra.repository.ClassRoomsRepository import ClassRoomsRepository
 from infra.repository.RequesterRepository import RequesterRepository
 from infra.repository.SchedulingRepository import SchedulingRepository
 from datetime import datetime
-UsersRepository.insert("admin", "admin", "admin", "ROLE_ADMIN")
+
+# admin da sendo colocado automaticamente no banco
 UsersRepository.insert("felix", "Joao Felix", "felix", "ROLE_USER")
-UsersRepository.insert("mario", "Mario Dantas", "mario", "ROLE_USER")
+print(UsersRepository.insert("mario", "Mario Dantas", "mario", "ROLE_USER"))
+print(UsersRepository.insert("mario", "Mario Dantas", "mario", "ROLE_USER"))
 
 print("\t\tUser")
 

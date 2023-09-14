@@ -23,9 +23,12 @@ class UsersRepository():
 
     def insert(userName, fullName, password, role):
         with DBConnectionHandler() as db:
-            data= Users(userName=userName, fullName=fullName, password=password, role=role)
-            db.session.add(data)
-            db.session.commit()
+            if UsersRepository.getUserName(userName) ==  None:
+                data= Users(userName=userName, fullName=fullName, password=password, role=role)
+                db.session.add(data)
+                db.session.commit()
+            else:
+                return False
 
     def update(id, userName, fullName, password, role):
         with DBConnectionHandler() as db:
