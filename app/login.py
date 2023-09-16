@@ -9,21 +9,8 @@ def limpar_tela(frame):
 
 class Login:
     def __init__(self, root):
-        self.root = root
-
+        self.root = root    
         self.root.title("Login")
-        
-        # Calculate screen width and height
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-
-        window_width = 1300
-        window_height = 600
-
-        # Calculate x and y coordinates to center the window
-        x = (screen_width - window_width) // 2
-        y = (screen_height - window_height) // 2
-        self.root.geometry(f"1300x600+{x}+{y}")
 
         self.frameMain = ttk.Frame(self.root)
         self.frameMain.pack(expand=True, fill="both", pady=150)
@@ -63,8 +50,3 @@ class Login:
     def open_home(self):
         limpar_tela(self.root)
         TelaPricipal = Home(self.root)
-
-
-root = ttk.Window(themename="cyborg")
-TelaPricipal = Login(root)
-root.mainloop()

@@ -53,6 +53,7 @@ SchedulingRepository.insert(1,1, datetime(2023, 9, 11, 12, 0, 0))
 
 SchedulingRepository.insert(1,1, datetime(2023, 9, 11, 13, 0, 0))
 SchedulingRepository.insert(1,1, datetime(2023, 9, 11, 13, 0, 0)) #variavel nao pode entrar no banco de dados por causa do horario
+
 print("\t\tScheduling")
 
 print("==========================================")
