@@ -1,14 +1,14 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.repository.UsersRepository import UsersRepository
 
 from userFrom import UserForm
-from userList import UserList
 
 def limpar_tela(frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-class Home:
+class UserList:
     
     def __init__(self, root):
 
@@ -34,7 +34,7 @@ class Home:
         self.btn_user.pack(pady=(10, 5))
         self.user_menu = tk.Menu(self.btn_user, tearoff=0)
         self.user_menu.add_command(label="Cadastrar", command=self.cadastrar_usuarios)
-        self.user_menu.add_command(label="Listar", command=self.listar_usuarios)
+        self.user_menu.add_command(label="Listar", command=self.exibir_lista_usuarios)
         self.btn_user["menu"] = self.user_menu
         
         self.btn_room = ttk.Menubutton(self.sidebar, text="Salas", style="Outline.TMenubutton")
@@ -62,19 +62,35 @@ class Home:
         self.main_content = ttk.Frame(root)
         self.main_content.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.main_content, padding=(10, 20, 10, 5))
+        # Botão para exibir a lista de usuários
+        self.btn_list_users = ttk.Button(self.main_content, text="Exibir Lista de Usuários", style="Outline.TButton", command=self.exibir_lista_usuarios)
+        self.btn_list_users.pack(pady=10)
+        
+      # Treeview no conteúdo principal
+        self.treeview = ttk.Treeview(self.root, columns=("ID", "UserName", "FullName", "Role"), padding=(10, 20, 10, 5))
+        self.treeview.heading("#1", text="ID")
+        self.treeview.heading("#2", text="UserName")
+        self.treeview.heading("#3", text="FullName")
+        self.treeview.heading("#4", text="Role")
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    
+    def exibir_lista_usuarios(self):
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+        # Buscar usuários do banco de dados
+        users = UsersRepository.gets()
+        
+        print("Exibindo lista de usuários")
+
+        # Preencher a Treeview com os usuários
+        for user in users:
+            self.treeview.insert("", "end", values=(user.id, user.userName, user.fullName, user.role.name))
+            print(f"ID: {user.id}, UserName: {user.userName}, FullName: {user.fullName}, Role: {user.role.name}")
+
+
     def cadastrar_usuarios(self):
         limpar_tela(self.root)
         self.root.title("Usuários")
         user = UserForm(self.root)
-        
-    def listar_usuarios(self):
-        limpar_tela(self.root)
-        self.root.title("Usuários")
-        user = UserList(self.root)
-
 
