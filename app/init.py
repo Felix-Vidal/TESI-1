@@ -30,7 +30,7 @@ class Init:
         self.frameMain = ttk.Frame(self.root)
         self.frameMain.pack(expand=True, fill="both", pady=(150,0))
         font = ("", 20)
-        self.logo_path = "app/img/init.png"
+        self.logo_path = "img/init.png"
         self.logo = Image.open(self.logo_path)
         self.logo = self.logo.resize((170, 170)) 
         self.logo_tk = ImageTk.PhotoImage(self.logo)

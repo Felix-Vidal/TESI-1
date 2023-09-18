@@ -83,53 +83,53 @@ class Home:
 
     
     def cadastrar_usuarios(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Usuários")
-        user = UserForm(self.root)
+        user = UserForm(self.root, self.main_content)
         
     def listar_usuarios(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Usuários")
-        user = UserList(self.root)
+        user = UserList(self.root, self.main_content)
         
     def cadastrar_blocos(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Blocos")
-        block = BlockForm(self.root)
+        block = BlockForm(self.root, self.main_content)
         
     def listar_blocos(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Blocos")
-        block = BlockList(self.root)
+        block = BlockList(self.root, self.main_content)
 
     
     def cadastrar_classrooms(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Salas")
-        block = ClassRoomForm(self.root)
+        block = ClassRoomForm(self.root, self.main_content)
         
     def listar_classrooms(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Salas")
-        classroom = ClassRoomList(self.root)
+        classroom = ClassRoomList(self.root, self.main_content)
         
     def cadastrar_requesters(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Requesters")
-        requester = RequesterForm(self.root)
+        requester = RequesterForm(self.root, self.main_content)
         
     def listar_requesters(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Requester")
-        requester = RequesterList(self.root)
+        requester = RequesterList(self.root, self.main_content)
         
     def cadastrar_schedules(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Schedule")
-        schedule = ScheduleForm(self.root)
+        schedule = ScheduleForm(self.root, self.main_content)
         
     def listar_schedules(self):
-        limpar_tela(self.root)
+        limpar_tela(self.main_content)
         self.root.title("Schedule")
-        schedule = ScheduleList(self.root)
+        schedule = ScheduleList(self.root, self.main_content)
 
