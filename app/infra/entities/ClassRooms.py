@@ -2,6 +2,7 @@ from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from infra.entities.ERoom import ERoom
+from infra.entities.Blocks import Blocks
 
 
 class ClassRooms(Base):

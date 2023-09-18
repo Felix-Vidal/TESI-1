@@ -18,6 +18,7 @@ class RequesterRepository:
             data = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
             db.session.add(data)
             db.session.commit()
+            return True
 
     def update(id, name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:

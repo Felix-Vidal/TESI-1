@@ -1,5 +1,8 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.repository.SchedulingRepository import SchedulingRepository
+from infra.repository.BlocksRepository import BlocksRepository
+from infra.repository.ClassRoomsRepository import ClassRoomsRepository
 from userForm import UserForm
 from infra.repository.UsersRepository import UsersRepository
 
@@ -8,7 +11,7 @@ def limpar_tela(frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-class UserList:
+class ScheduleList:
     
     def __init__(self, root):
 
@@ -33,8 +36,8 @@ class UserList:
         self.btn_user = ttk.Menubutton(self.sidebar, text="Usuarios", style="Outline.TMenubutton")
         self.btn_user.pack(pady=(10, 5))
         self.user_menu = tk.Menu(self.btn_user, tearoff=0)
-        self.user_menu.add_command(label="Cadastrar", command=self.cadastrar_usuarios)
-        self.user_menu.add_command(label="Listar", command=self.exibir_lista_usuarios)
+        self.user_menu.add_command(label="Cadastrar")
+        self.user_menu.add_command(label="Listar")
         self.btn_user["menu"] = self.user_menu
         
         self.btn_room = ttk.Menubutton(self.sidebar, text="Salas", style="Outline.TMenubutton")
@@ -62,35 +65,32 @@ class UserList:
         self.main_content = ttk.Frame(root)
         self.main_content.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Botão para exibir a lista de usuários
-        self.btn_list_users = ttk.Button(self.main_content, text="Exibir Lista de Usuários", style="Outline.TButton", command=self.exibir_lista_usuarios)
-        self.btn_list_users.pack(pady=10)
-        
-      # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.root, columns=("ID", "UserName", "FullName", "Role"), padding=(10, 20, 10, 5))
+        # Create a Treeview to display the scheduling list
+        self.treeview = ttk.Treeview(self.main_content, columns=("ID", "Requester", "Classroom", "Date and Time"), padding=(10, 20, 10, 5))
         self.treeview.heading("#1", text="ID")
-        self.treeview.heading("#2", text="UserName")
-        self.treeview.heading("#3", text="FullName")
-        self.treeview.heading("#4", text="Role")
+        self.treeview.heading("#2", text="Requester")
+        self.treeview.heading("#3", text="Classroom")
+        self.treeview.heading("#4", text="Date and Time")
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    def exibir_lista_usuarios(self):
+        # Button to refresh and display the scheduling list
+        self.refresh_button = ttk.Button(self.main_content, text="Refresh Scheduling List", style="Outline.TButton", command=self.display_scheduling_list)
+        self.refresh_button.pack(pady=10)
+
+    def display_scheduling_list(self):
+        # Clear the current entries in the Treeview
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Buscar usuários do banco de dados
-        users = UsersRepository.gets()
-        
-        print("Exibindo lista de usuários")
+        # Retrieve the list of schedulings from the repository
+        schedulings = SchedulingRepository.gets()
 
-        # Preencher a Treeview com os usuários
-        for user in users:
-            self.treeview.insert("", "end", values=(user.id, user.userName, user.fullName, user.role.name))
-            print(f"ID: {user.id}, UserName: {user.userName}, FullName: {user.fullName}, Role: {user.role.name}")
+        print("Displaying scheduling list")
 
-
-    def cadastrar_usuarios(self):
-        limpar_tela(self.root)
-        self.root.title("Usuários")
-        user = UserForm(self.root)
-
+        # Populate the Treeview with the scheduling data
+        for scheduling in schedulings:
+            requester_name = scheduling[1].name if scheduling[1] else "N/A"
+            classroom_name = scheduling[2].name if scheduling[2] else "N/A"
+            datetime_str = str(scheduling[0].dateTime)
+            self.treeview.insert("", "end", values=(scheduling[0].id, requester_name, classroom_name, datetime_str))
+            print(f"ID: {scheduling[0].id}, Requester: {requester_name}, Classroom: {classroom_name}, Date and Time: {datetime_str}")

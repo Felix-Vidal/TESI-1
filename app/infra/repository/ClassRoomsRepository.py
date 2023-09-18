@@ -12,12 +12,21 @@ class ClassRoomsRepository:
         with DBConnectionHandler() as db:
             data = db.session.query(ClassRooms,  Blocks).join(Blocks, Blocks.id == ClassRooms.block).filter(ClassRooms.id == id).first()
             return data
+        
+    def getName(name):
+        with DBConnectionHandler() as db:
+            data = db.session.query(ClassRooms).filter(ClassRooms.name == name).first()
+            return data
 
     def insert(name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:
-            data_isert = ClassRooms(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
-            db.session.add(data_isert)
-            db.session.commit()
+            if ClassRoomsRepository.getName(name) ==  None:
+                data = ClassRooms(name=name, capacity=capacity, block=block, typeRoom=typeRoom)
+                db.session.add(data)
+                db.session.commit()
+                return True
+            else:
+                return False
 
     def update(id, name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:

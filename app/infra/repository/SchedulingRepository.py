@@ -35,6 +35,7 @@ class SchedulingRepository:
                 data = Schedulings(requester=requester, classRoom=classRoom, dateTime=dateTime)
                 db.session.add(data)
                 db.session.commit()
+                return True
             else:
                 return False
     

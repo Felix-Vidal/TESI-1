@@ -1,14 +1,18 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
-from userForm import UserForm
-from infra.repository.UsersRepository import UsersRepository
+from blockList import BlockList
 
+from infra.repository.BlocksRepository import BlocksRepository
+
+
+
+# from app.home import Home
 
 def limpar_tela(frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-class UserList:
+class BlockForm:
     
     def __init__(self, root):
 
@@ -29,12 +33,15 @@ class UserList:
         self.title_label = ttk.Label(self.sidebar, text="SGAS",font="-size 24 -weight bold",  style="TLabel", padding=(10, 20, 10, 5))
         self.title_label.pack(fill=tk.X)
         
+        # self.btn_voltar = ttk.Button(self.sidebar, text="Voltar", style="Outline.TButton")
+        # self.btn_voltar.pack(pady=(5)) #por algum motivo n aparece embaixo dos menubutton
+        
         # Menubuttons na barra lateral com estilo "OUTLINE"
         self.btn_user = ttk.Menubutton(self.sidebar, text="Usuarios", style="Outline.TMenubutton")
         self.btn_user.pack(pady=(10, 5))
         self.user_menu = tk.Menu(self.btn_user, tearoff=0)
-        self.user_menu.add_command(label="Cadastrar", command=self.cadastrar_usuarios)
-        self.user_menu.add_command(label="Listar", command=self.exibir_lista_usuarios)
+        self.user_menu.add_command(label="Cadastrar")
+        self.user_menu.add_command(label="Listar")
         self.btn_user["menu"] = self.user_menu
         
         self.btn_room = ttk.Menubutton(self.sidebar, text="Salas", style="Outline.TMenubutton")
@@ -48,7 +55,7 @@ class UserList:
         self.btn_block.pack(pady=5)
         self.block_menu = tk.Menu(self.btn_block, tearoff=0)
         self.block_menu.add_command(label="Cadastrar")
-        self.block_menu.add_command(label="Listar")
+        self.block_menu.add_command(label="Listar", command=self.listar_blocos)
         self.btn_block["menu"] = self.block_menu
         
         self.btn_request = ttk.Menubutton(self.sidebar, text="Requisições", style="Outline.TMenubutton")
@@ -58,39 +65,56 @@ class UserList:
         self.request_menu.add_command(label="Listar")
         self.btn_request["menu"] = self.request_menu
         
-        # Conteúdo principal
         self.main_content = ttk.Frame(root)
         self.main_content.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Botão para exibir a lista de usuários
-        self.btn_list_users = ttk.Button(self.main_content, text="Exibir Lista de Usuários", style="Outline.TButton", command=self.exibir_lista_usuarios)
-        self.btn_list_users.pack(pady=10)
+        # Create a frame to hold the user form
+        self.block_form_frame = ttk.Frame(self.main_content)
+        self.block_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
         
-      # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.root, columns=("ID", "UserName", "FullName", "Role"), padding=(10, 20, 10, 5))
-        self.treeview.heading("#1", text="ID")
-        self.treeview.heading("#2", text="UserName")
-        self.treeview.heading("#3", text="FullName")
-        self.treeview.heading("#4", text="Role")
+        self.treeview = ttk.Treeview(self.main_content, padding=(10, 20, 10, 5))
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    def exibir_lista_usuarios(self):
-        for item in self.treeview.get_children():
-            self.treeview.delete(item)
+        # Create the user form
+        self.create_block_form()
 
-        # Buscar usuários do banco de dados
-        users = UsersRepository.gets()
+    def register_block(self):
         
-        print("Exibindo lista de usuários")
+        # Retrieve user input from the form
+        name = self.name_entry.get()
+        
+        # Validate input (you can add more validation if needed)
+        if not name:
+            messagebox.showerror("Error", "Please fill in all fields.")
+            return
 
-        # Preencher a Treeview com os usuários
-        for user in users:
-            self.treeview.insert("", "end", values=(user.id, user.userName, user.fullName, user.role.name))
-            print(f"ID: {user.id}, UserName: {user.userName}, FullName: {user.fullName}, Role: {user.role.name}")
+        # Insert the user into the database
+        success = BlocksRepository.insert(name)
+        if success:
+            messagebox.showinfo("Success", "Block registered successfully.")
+        else:
+            messagebox.showerror("Error", "Block is already taken.")
 
+    def create_block_form(self):
+       
+        # Create a frame to hold the block form
+        self.block_form_frame = ttk.Frame(self.main_content)
+        self.block_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-    def cadastrar_usuarios(self):
+        # Create and place the form widgets
+        ttk.Label(self.block_form_frame, text="Name:").grid(row=0, column=0, padx=5, pady=5)
+        self.name_entry = ttk.Entry(self.block_form_frame)
+        self.name_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        register_button = ttk.Button(self.block_form_frame, text="Register", style="Outline.TButton", command=self.register_block)
+        register_button.grid(row=4, column=0, columnspan=2, pady=10)
+        
+    def listar_blocos(self):
         limpar_tela(self.root)
-        self.root.title("Usuários")
-        user = UserForm(self.root)
-
+        self.root.title("Blocos")
+        block = BlockList(self.root)
+    # def listar_usuarios(self):
+    #     limpar_tela(self.root)
+    #     self.root.title("Usuários")
+    #     user = UserList(self.root)
+        

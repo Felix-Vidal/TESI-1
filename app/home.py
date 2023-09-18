@@ -1,7 +1,15 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from schedulingList import ScheduleList
+from schedulingForm import ScheduleForm
+from requesterList import RequesterList
+from requesterForm import RequesterForm
+from classRoomList import ClassRoomList
+from classRoomForm import ClassRoomForm
+from blockForm import BlockForm
+from blockList import BlockList
+from userForm import UserForm
 
-from userFrom import UserForm
 from userList import UserList
 
 def limpar_tela(frame):
@@ -40,22 +48,29 @@ class Home:
         self.btn_room = ttk.Menubutton(self.sidebar, text="Salas", style="Outline.TMenubutton")
         self.btn_room.pack(pady=5)
         self.room_menu = tk.Menu(self.btn_room, tearoff=0)
-        self.room_menu.add_command(label="Cadastrar")
-        self.room_menu.add_command(label="Listar")
+        self.room_menu.add_command(label="Cadastrar", command=self.cadastrar_classrooms)
+        self.room_menu.add_command(label="Listar", command=self.listar_classrooms)
         self.btn_room["menu"] = self.room_menu
         
         self.btn_block = ttk.Menubutton(self.sidebar, text="Blocos", style="Outline.TMenubutton")
         self.btn_block.pack(pady=5)
         self.block_menu = tk.Menu(self.btn_block, tearoff=0)
-        self.block_menu.add_command(label="Cadastrar")
-        self.block_menu.add_command(label="Listar")
+        self.block_menu.add_command(label="Cadastrar", command=self.cadastrar_blocos)
+        self.block_menu.add_command(label="Listar", command=self.listar_blocos)
         self.btn_block["menu"] = self.block_menu
         
-        self.btn_request = ttk.Menubutton(self.sidebar, text="Requisições", style="Outline.TMenubutton")
+        self.btn_request = ttk.Menubutton(self.sidebar, text="Solicitantes", style="Outline.TMenubutton")
         self.btn_request.pack(pady=5)
         self.request_menu = tk.Menu(self.btn_request, tearoff=0)
-        self.request_menu.add_command(label="Cadastrar")
-        self.request_menu.add_command(label="Listar")
+        self.request_menu.add_command(label="Cadastrar", command=self.cadastrar_requesters)
+        self.request_menu.add_command(label="Listar", command=self.listar_requesters)
+        self.btn_request["menu"] = self.request_menu
+        
+        self.btn_request = ttk.Menubutton(self.sidebar, text="Agendados", style="Outline.TMenubutton")
+        self.btn_request.pack(pady=5)
+        self.request_menu = tk.Menu(self.btn_request, tearoff=0)
+        self.request_menu.add_command(label="Cadastrar", command=self.cadastrar_schedules)
+        self.request_menu.add_command(label="Listar", command=self.listar_schedules)
         self.btn_request["menu"] = self.request_menu
         
         # Conteúdo principal
@@ -76,5 +91,45 @@ class Home:
         limpar_tela(self.root)
         self.root.title("Usuários")
         user = UserList(self.root)
+        
+    def cadastrar_blocos(self):
+        limpar_tela(self.root)
+        self.root.title("Blocos")
+        block = BlockForm(self.root)
+        
+    def listar_blocos(self):
+        limpar_tela(self.root)
+        self.root.title("Blocos")
+        block = BlockList(self.root)
 
+    
+    def cadastrar_classrooms(self):
+        limpar_tela(self.root)
+        self.root.title("Salas")
+        block = ClassRoomForm(self.root)
+        
+    def listar_classrooms(self):
+        limpar_tela(self.root)
+        self.root.title("Salas")
+        classroom = ClassRoomList(self.root)
+        
+    def cadastrar_requesters(self):
+        limpar_tela(self.root)
+        self.root.title("Requesters")
+        requester = RequesterForm(self.root)
+        
+    def listar_requesters(self):
+        limpar_tela(self.root)
+        self.root.title("Requester")
+        requester = RequesterList(self.root)
+        
+    def cadastrar_schedules(self):
+        limpar_tela(self.root)
+        self.root.title("Schedule")
+        schedule = ScheduleForm(self.root)
+        
+    def listar_schedules(self):
+        limpar_tela(self.root)
+        self.root.title("Schedule")
+        schedule = ScheduleList(self.root)
 

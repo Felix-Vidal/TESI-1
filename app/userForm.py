@@ -2,6 +2,7 @@ from ttkbootstrap import *
 from tkinter import ttk, messagebox
 from infra.entities.ERole import ERole
 
+
 from infra.repository.UsersRepository import UsersRepository
 
 # from app.home import Home
@@ -76,61 +77,58 @@ class UserForm:
         # Create the user form
         self.create_user_form()
 
-    def create_user_form(self):
-        # Labels
-        ttk.Label(self.user_form_frame, text="User Name:").grid(row=0, column=0, padx=5, pady=5)
-        ttk.Label(self.user_form_frame, text="Full Name:").grid(row=1, column=0, padx=5, pady=5)
-        ttk.Label(self.user_form_frame, text="Password:").grid(row=2, column=0, padx=5, pady=5)
-        ttk.Label(self.user_form_frame, text="Role:").grid(row=3, column=0, padx=5, pady=5)
-
-        # Entry fields
-        self.user_name_entry = ttk.Entry(self.user_form_frame)
-        self.user_name_entry.grid(row=0, column=1, padx=5, pady=5)
-
-        self.full_name_entry = ttk.Entry(self.user_form_frame)
-        self.full_name_entry.grid(row=1, column=1, padx=5, pady=5)
-
-        self.password_entry = ttk.Entry(self.user_form_frame, show="*")
-        self.password_entry.grid(row=2, column=1, padx=5, pady=5)
-
-        self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole])
-        self.role_combobox.grid(row=3, column=1, padx=5, pady=5)
-
-        # Button to submit the form
-        ttk.Button(self.user_form_frame, text="Submit", style="Outline.TButton", command=self.submit_user).grid(row=4, column=0, columnspan=2, pady=10)
-
-    def submit_user(self):
-        user_name = self.user_name_entry.get()
+    def register_user(self):
+        """
+        Callback function to register a new user.
+        """
+        # Retrieve user input from the form
+        username = self.username_entry.get()
         full_name = self.full_name_entry.get()
         password = self.password_entry.get()
-        role = ERole[self.role_combobox.get()]
-
-        # Ensure user_name, full_name, and password are not empty
-        if not user_name or not full_name or not password:
-            messagebox.showerror("Error", "Please provide all user details.")
+        role = ERole.ROLE_USER  # Assuming a new user is a regular user
+        
+        # Validate input (you can add more validation if needed)
+        if not username or not full_name or not password or not role:
+            messagebox.showerror("Error", "Please fill in all fields.")
             return
 
         # Insert the user into the database
-        result = UsersRepository.insert(user_name, full_name, password, role)
-
-        if result:
-            messagebox.showinfo("Success", "User successfully added.")
+        success = UsersRepository.insert(username, full_name, password, role)
+        if success:
+            messagebox.showinfo("Success", "User registered successfully.")
         else:
-            messagebox.showerror("Error", "User with this username already exists.")
+            messagebox.showerror("Error", "Username is already taken.")
 
-        # Update the Treeview with the new data
-        self.update_treeview()
+    def create_user_form(self):
+        """
+        Create the user registration form.
+        """
+        # Create a frame to hold the user form
+        self.user_form_frame = ttk.Frame(self.main_content)
+        self.user_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-    def update_treeview(self):
-        # Function to update the Treeview with user data
-        # Retrieve user data from the database using UsersRepository
-        users_data = UsersRepository.gets()
+        # Create and place the form widgets
+        ttk.Label(self.user_form_frame, text="Username:").grid(row=0, column=0, padx=5, pady=5)
+        self.username_entry = ttk.Entry(self.user_form_frame)
+        self.username_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        # Clear existing Treeview data
-        self.treeview.delete(*self.treeview.get_children())
+        ttk.Label(self.user_form_frame, text="Full Name:").grid(row=1, column=0, padx=5, pady=5)
+        self.full_name_entry = ttk.Entry(self.user_form_frame)
+        self.full_name_entry.grid(row=1, column=1, padx=5, pady=5)
 
-        # Insert user data into the Treeview
-        for user in users_data:
-            self.treeview.insert("", "end", values=(user.userName, user.fullName, user.password, user.role))
+        ttk.Label(self.user_form_frame, text="Password:").grid(row=2, column=0, padx=5, pady=5)
+        self.password_entry = ttk.Entry(self.user_form_frame, show="*")
+        self.password_entry.grid(row=2, column=1, padx=5, pady=5)
+        
+        ttk.Label(self.user_form_frame, text="Role:").grid(row=3, column=0, padx=5, pady=5)
+        self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole])
+        self.role_combobox.grid(row=3, column=1, padx=5, pady=5)
 
+        register_button = ttk.Button(self.user_form_frame, text="Register", style="Outline.TButton", command=self.register_user)
+        register_button.grid(row=4, column=0, columnspan=2, pady=10)
+        
+    # def listar_usuarios(self):
+    #     limpar_tela(self.root)
+    #     self.root.title("Usuários")
+    #     user = UserList(self.root)
         

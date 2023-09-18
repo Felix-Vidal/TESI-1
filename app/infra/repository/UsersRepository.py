@@ -27,6 +27,7 @@ class UsersRepository():
                 data= Users(userName=userName, fullName=fullName, password=password, role=role)
                 db.session.add(data)
                 db.session.commit()
+                return True
             else:
                 return False
 

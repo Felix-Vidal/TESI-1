@@ -13,12 +13,28 @@ class BlocksRepository():
         with DBConnectionHandler() as db:
             data = db.session.query(Blocks).filter(Blocks.id == id).first()
             return data
+        
+    @staticmethod
+    def get_by_id(block_id):
+        with DBConnectionHandler() as db:
+            session = db.get_session()
+            block = session.query(Blocks).filter(Blocks.id == block_id).first()
+            return block
+    
+    def getName(name):
+        with DBConnectionHandler() as db:
+            data = db.session.query(Blocks).filter(Blocks.name == name).first()
+            return data
 
     def insert(name):
         with DBConnectionHandler() as db:
-            data = Blocks(name=name)
-            db.session.add(data)
-            db.session.commit()
+            if BlocksRepository.getName(name) ==  None:
+                data = Blocks(name=name)
+                db.session.add(data)
+                db.session.commit()
+                return True
+            else: 
+                return False
 
     def update(id, name):
         with DBConnectionHandler() as db:

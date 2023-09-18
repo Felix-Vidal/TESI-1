@@ -1,6 +1,8 @@
 from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
 from sqlalchemy import Column, ForeignKey, Integer, DateTime
+from infra.entities.Requesters import Requesters
+from infra.entities.ClassRooms import ClassRooms
 
 class Schedulings(Base):
     __tablename__ = "schedulings" 
