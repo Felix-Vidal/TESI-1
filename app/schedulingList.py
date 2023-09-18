@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 from infra.repository.SchedulingRepository import SchedulingRepository
 from infra.repository.BlocksRepository import BlocksRepository
 from infra.repository.ClassRoomsRepository import ClassRoomsRepository
-from userForm import UserForm
 from infra.repository.UsersRepository import UsersRepository
 
 

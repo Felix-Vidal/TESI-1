@@ -2,7 +2,6 @@ from ttkbootstrap import *
 from tkinter import ttk, messagebox
 from infra.entities.ERole import ERole
 
-
 from infra.repository.UsersRepository import UsersRepository
 
 # from app.home import Home
@@ -20,7 +19,7 @@ class UserForm:
         
         # Create a frame to hold the user form
         self.user_form_frame = ttk.Frame(self.main_content)
-        self.user_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        self.user_form_frame.pack()
 
         # Create the user form
         self.create_user_form()
@@ -56,7 +55,7 @@ class UserForm:
         font = ("", 16)
         # Create a frame to hold the user form
         self.user_form_frame = ttk.Frame(self.main_content)
-        self.user_form_frame.pack(padx=(100,0), fill=tk.BOTH, expand=True)
+        self.user_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
 
         # Create and place the form widgets
         ttk.Label(self.user_form_frame, text="Username:").pack(anchor="w")
@@ -75,11 +74,8 @@ class UserForm:
         self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole], width=width, font=font)
         self.role_combobox.pack(anchor="w")
 
-        register_button = ttk.Button(self.user_form_frame, text="Register", style="Outline.TButton", command=self.register_user)
-        register_button.pack(anchor="w")
+        self.register_button = ttk.Button(self.user_form_frame, text="Register", style="Outline.TButton", command=self.register_user)
+        self.register_button.pack(anchor="w")
         
-    # def listar_usuarios(self):
-    #     limpar_tela(self.root)
-    #     self.root.title("Usuários")
-    #     user = UserList(self.root)
+        
         

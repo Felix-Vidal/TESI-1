@@ -9,7 +9,6 @@ from classRoomForm import ClassRoomForm
 from blockForm import BlockForm
 from blockList import BlockList
 from userForm import UserForm
-
 from userList import UserList
 
 def limpar_tela(frame):
@@ -38,41 +37,22 @@ class Home:
         self.title_label.pack(fill=tk.X)
         
         # Menubuttons na barra lateral com estilo "OUTLINE"
-        self.btn_user = ttk.Menubutton(self.sidebar, text="Usuarios", style="Outline.TMenubutton")
-        self.btn_user.pack(pady=(10, 5))
-        self.user_menu = tk.Menu(self.btn_user, tearoff=0)
-        self.user_menu.add_command(label="Cadastrar", command=self.cadastrar_usuarios)
-        self.user_menu.add_command(label="Listar", command=self.listar_usuarios)
-        self.btn_user["menu"] = self.user_menu
-        
-        self.btn_room = ttk.Menubutton(self.sidebar, text="Salas", style="Outline.TMenubutton")
+
+        self.btn_schedule = ttk.Button(self.sidebar, text="Agendados", style="Outline.TButton", command=self.listar_schedules)
+        self.btn_schedule.pack(pady=5)
+
+        self.btn_request = ttk.Button(self.sidebar, text="Solicitantes", style="Outline.TButton", command=self.listar_requesters)
+        self.btn_request.pack(pady=5)
+
+        self.btn_room = ttk.Button(self.sidebar, text="Salas", style="Outline.TButton", command=self.listar_classrooms)
         self.btn_room.pack(pady=5)
-        self.room_menu = tk.Menu(self.btn_room, tearoff=0)
-        self.room_menu.add_command(label="Cadastrar", command=self.cadastrar_classrooms)
-        self.room_menu.add_command(label="Listar", command=self.listar_classrooms)
-        self.btn_room["menu"] = self.room_menu
-        
-        self.btn_block = ttk.Menubutton(self.sidebar, text="Blocos", style="Outline.TMenubutton")
+
+        self.btn_block = ttk.Button(self.sidebar, text="Blocos", style="Outline.TButton", command=self.listar_blocos)
         self.btn_block.pack(pady=5)
-        self.block_menu = tk.Menu(self.btn_block, tearoff=0)
-        self.block_menu.add_command(label="Cadastrar", command=self.cadastrar_blocos)
-        self.block_menu.add_command(label="Listar", command=self.listar_blocos)
-        self.btn_block["menu"] = self.block_menu
-        
-        self.btn_request = ttk.Menubutton(self.sidebar, text="Solicitantes", style="Outline.TMenubutton")
-        self.btn_request.pack(pady=5)
-        self.request_menu = tk.Menu(self.btn_request, tearoff=0)
-        self.request_menu.add_command(label="Cadastrar", command=self.cadastrar_requesters)
-        self.request_menu.add_command(label="Listar", command=self.listar_requesters)
-        self.btn_request["menu"] = self.request_menu
-        
-        self.btn_request = ttk.Menubutton(self.sidebar, text="Agendados", style="Outline.TMenubutton")
-        self.btn_request.pack(pady=5)
-        self.request_menu = tk.Menu(self.btn_request, tearoff=0)
-        self.request_menu.add_command(label="Cadastrar", command=self.cadastrar_schedules)
-        self.request_menu.add_command(label="Listar", command=self.listar_schedules)
-        self.btn_request["menu"] = self.request_menu
-        
+
+        self.btn_user = ttk.Button(self.sidebar, text="Usuarios", style="Outline.TButton", command=self.listar_usuarios)
+        self.btn_user.pack(pady=(10, 5))
+
         # Conteúdo principal
         self.main_content = ttk.Frame(root)
         self.main_content.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
