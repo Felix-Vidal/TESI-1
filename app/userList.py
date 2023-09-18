@@ -20,12 +20,20 @@ class UserList:
         self.btn_list_users.pack(pady=10)
         
       # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.main_content, columns=("ID", "UserName", "FullName", "Role"), padding=(10, 20, 10, 5))
-        self.treeview.heading("#1", text="ID")
-        self.treeview.heading("#2", text="UserName")
-        self.treeview.heading("#3", text="FullName")
-        self.treeview.heading("#4", text="Role")
+        self.treeview = ttk.Treeview(self.main_content, columns=("id", "userName", "fullName", "role"), padding=(10, 20, 10, 5))
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.treeview.heading("id", text="ID", anchor='center')
+        self.treeview.heading("userName", text="UserName", anchor='center')
+        self.treeview.heading("fullName", text="FullName", anchor='center')
+        self.treeview.heading("role", text="Role", anchor='center')
+
+        self.treeview.column('id', minwidth=15, width=30, anchor='center')
+        self.treeview.column('userName', minwidth=200, width=200, anchor='center')
+        self.treeview.column('fullName', minwidth=200, width=200, anchor='center')
+        self.treeview.column('role', minwidth=200, width=200, anchor='center')
+
+        
 
     def exibir_lista_usuarios(self):
         for item in self.treeview.get_children():
@@ -38,7 +46,7 @@ class UserList:
 
         # Preencher a Treeview com os usuários
         for user in users:
-            self.treeview.insert("", "end", values=(user.id, user.userName, user.fullName, user.role.name))
+            self.treeview.insert("", "end", values=[user.id, user.userName, user.fullName, user.role.name])
             print(f"ID: {user.id}, UserName: {user.userName}, FullName: {user.fullName}, Role: {user.role.name}")
 
 

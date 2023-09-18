@@ -46,7 +46,7 @@ print("\t\tRequester")
 
 print("==========================================")
 for requester in RequesterRepository.gets():
-    print(f"ID: {requester.id} Name: {requester.name} Email: {requester.email} Telephone: {requester.telephone} Requester:{requester.typeRequester}")
+    print(f"ID: {requester.id} Name: {requester.name} Email: {requester.email} Telephone: {requester.telephone} Requester: {requester.typeRequester}")
 print("==========================================", end="\n\n")
 
 SchedulingRepository.insert(1,1, datetime(2023, 9, 11, 12, 0, 0))

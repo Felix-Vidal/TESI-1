@@ -49,6 +49,6 @@ class Init:
         TelaPrincipal = Login(self.root)
 
 
-root = ttk.Window(themename="cyborg")
+root = ttk.Window(themename="superhero")
 TelaPricipal = Init(root)
 root.mainloop()

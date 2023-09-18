@@ -19,11 +19,12 @@ class ScheduleList:
         self.main_content = main_content
         
         # Create a Treeview to display the scheduling list
-        self.treeview = ttk.Treeview(self.main_content, columns=("ID", "Requester", "Classroom", "Date and Time"), padding=(10, 20, 10, 5))
+        self.treeview = ttk.Treeview(self.main_content, columns=("ID", "Requester", "Classroom", "Date and Time", "Block"), padding=(10, 20, 10, 5))
         self.treeview.heading("#1", text="ID")
         self.treeview.heading("#2", text="Requester")
         self.treeview.heading("#3", text="Classroom")
         self.treeview.heading("#4", text="Date and Time")
+        self.treeview.heading("#5", text="Block")
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Button to refresh and display the scheduling list
@@ -35,15 +36,6 @@ class ScheduleList:
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Retrieve the list of schedulings from the repository
-        schedulings = SchedulingRepository.gets()
-
-        print("Displaying scheduling list")
-
         # Populate the Treeview with the scheduling data
-        for scheduling in schedulings:
-            requester_name = scheduling[1].name if scheduling[1] else "N/A"
-            classroom_name = scheduling[2].name if scheduling[2] else "N/A"
-            datetime_str = str(scheduling[0].dateTime)
-            self.treeview.insert("", "end", values=(scheduling[0].id, requester_name, classroom_name, datetime_str))
-            print(f"ID: {scheduling[0].id}, Requester: {requester_name}, Classroom: {classroom_name}, Date and Time: {datetime_str}")
+        for scheduling, requester, classRoom, block in SchedulingRepository.gets():
+            self.treeview.insert("", "end", values=(scheduling.id, requester.name, classRoom.name, scheduling.dateTime, block.name))

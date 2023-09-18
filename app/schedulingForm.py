@@ -1,11 +1,11 @@
-from ttkbootstrap import *
+import datetime
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 from datetime import datetime
-import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 from infra.repository.SchedulingRepository import SchedulingRepository
 from infra.repository.RequesterRepository import RequesterRepository
 from infra.entities.ERequester import ERequester
-from tkcalendar import DateEntry
 
 
 from infra.repository.UsersRepository import UsersRepository
@@ -24,14 +24,14 @@ class ScheduleForm:
         self.main_content = main_content
         
         self.schedule_form_frame = ttk.Frame(self.main_content)
-        self.schedule_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        self.schedule_form_frame.pack(padx=10, pady=10, fill=ttk.BOTH, expand=True)
 
         self.create_schedule_form()
 
     def register_schedule(self):
         requester_id = int(self.requester_id_entry.get())
         classroom_id = int(self.classroom_id_entry.get())
-        selected_date = self.date_entry.get_date()
+        selected_date = self.date.entry.get().replace("/","-")
         selected_time = self.time_combo.get()
         
         try:
@@ -58,9 +58,9 @@ class ScheduleForm:
         self.classroom_id_entry = ttk.Entry(self.schedule_form_frame)
         self.classroom_id_entry.grid(row=1, column=1, padx=5, pady=5)
         
-        ttk.Label(self.schedule_form_frame, text="Enter Date (YYYY-MM-DD):").grid(row=2, column=0, padx=5, pady=5)
-        self.date_entry = ttk.Entry(self.schedule_form_frame)
-        self.date_entry.grid(row=2, column=1, padx=5, pady=5)
+        ttk.Label(self.schedule_form_frame, text="Enter Date:").grid(row=2, column=0, padx=5, pady=5)
+        self.date = ttk.DateEntry(self.schedule_form_frame, dateformat='%Y/%m/%d', firstweekday=6)
+        self.date.grid(row=2, column=1, padx=5, pady=5)
         
         ttk.Label(self.schedule_form_frame, text="Time:").grid(row=3, column=0, padx=5, pady=5)
         self.time_combo = ttk.Combobox(self.schedule_form_frame, values=['7:30', '8:20', '9:20', '10:10', '11:10', '12:00', '13:30', '14:20', '15:20', '16:10', '17:10', '18:00', '19:30', '20:20', '21:20', '22:10'])

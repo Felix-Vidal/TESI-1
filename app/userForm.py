@@ -21,9 +21,6 @@ class UserForm:
         # Create a frame to hold the user form
         self.user_form_frame = ttk.Frame(self.main_content)
         self.user_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
-        
-        self.treeview = ttk.Treeview(self.main_content, padding=(10, 20, 10, 5))
-        self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Create the user form
         self.create_user_form()
@@ -54,29 +51,32 @@ class UserForm:
         """
         Create the user registration form.
         """
+
+        width = 50
+        font = ("", 16)
         # Create a frame to hold the user form
         self.user_form_frame = ttk.Frame(self.main_content)
-        self.user_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        self.user_form_frame.pack(padx=(100,0), fill=tk.BOTH, expand=True)
 
         # Create and place the form widgets
-        ttk.Label(self.user_form_frame, text="Username:").grid(row=0, column=0, padx=5, pady=5)
-        self.username_entry = ttk.Entry(self.user_form_frame)
-        self.username_entry.grid(row=0, column=1, padx=5, pady=5)
+        ttk.Label(self.user_form_frame, text="Username:").pack(anchor="w")
+        self.username_entry = ttk.Entry(self.user_form_frame, width=width, font=font)
+        self.username_entry.pack(anchor="w")
 
-        ttk.Label(self.user_form_frame, text="Full Name:").grid(row=1, column=0, padx=5, pady=5)
-        self.full_name_entry = ttk.Entry(self.user_form_frame)
-        self.full_name_entry.grid(row=1, column=1, padx=5, pady=5)
+        ttk.Label(self.user_form_frame, text="Full Name:").pack(anchor="w")
+        self.full_name_entry = ttk.Entry(self.user_form_frame, width=width, font=font)
+        self.full_name_entry.pack(anchor="w")
 
-        ttk.Label(self.user_form_frame, text="Password:").grid(row=2, column=0, padx=5, pady=5)
-        self.password_entry = ttk.Entry(self.user_form_frame, show="*")
-        self.password_entry.grid(row=2, column=1, padx=5, pady=5)
+        ttk.Label(self.user_form_frame, text="Password:").pack(anchor="w")
+        self.password_entry = ttk.Entry(self.user_form_frame, show="*", width=width, font=font)
+        self.password_entry.pack(anchor="w")
         
-        ttk.Label(self.user_form_frame, text="Role:").grid(row=3, column=0, padx=5, pady=5)
-        self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole])
-        self.role_combobox.grid(row=3, column=1, padx=5, pady=5)
+        ttk.Label(self.user_form_frame, text="Role:").pack(anchor="w")
+        self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole], width=width, font=font)
+        self.role_combobox.pack(anchor="w")
 
         register_button = ttk.Button(self.user_form_frame, text="Register", style="Outline.TButton", command=self.register_user)
-        register_button.grid(row=4, column=0, columnspan=2, pady=10)
+        register_button.pack(anchor="w")
         
     # def listar_usuarios(self):
     #     limpar_tela(self.root)
