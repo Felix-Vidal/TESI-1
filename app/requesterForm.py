@@ -20,7 +20,7 @@ class RequesterForm:
         
         
         self.requester_form_frame = ttk.Frame(self.main_content)
-        self.requester_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        self.requester_form_frame.pack()
 
         self.create_requester_form()
 

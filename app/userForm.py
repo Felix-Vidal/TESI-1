@@ -45,13 +45,9 @@ class UserForm:
             messagebox.showerror("Error", "Username is already taken.")
 
     def create_user_form(self):
-        """
-        Create the user registration form.
-        """
         width = 50
         font = ("", 16)
 
-        # Create a frame to hold the user form
         self.user_form_frame = ttk.Frame(self.main_content)
         self.user_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
         if self.id:

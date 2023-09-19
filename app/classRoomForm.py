@@ -42,7 +42,7 @@ class ClassRoomForm:
             return
 
         if self.id:
-            success = ClassRoomsRepository.insert(self.id, name, capacity, block_id, room)
+            success = ClassRoomsRepository.update(self.id, name, capacity, block_id, room)
         else:
             success = ClassRoomsRepository.insert(name, capacity, block_id, room)
         if success:
