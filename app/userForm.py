@@ -37,8 +37,6 @@ class UserForm:
         # Validate input (you can add more validation if needed)
         if not username or not full_name or not password or not role:
             messagebox.showerror("Error", "Please fill in all fields.")
-            return
-
         # Insert the user into the database
         if self.id:
             success = UsersRepository.update(self.id, username, full_name, password, role)
