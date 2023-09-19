@@ -32,7 +32,7 @@ class UserForm:
         username = self.username_entry.get()
         full_name = self.full_name_entry.get()
         password = self.password_entry.get()
-        role = ERole.ROLE_USER  # Assuming a new user is a regular user
+        role = self.role_combobox.get() # Assuming a new user is a regular user
         
         # Validate input (you can add more validation if needed)
         if not username or not full_name or not password or not role:

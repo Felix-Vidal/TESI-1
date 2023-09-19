@@ -38,16 +38,24 @@ class BlocksRepository():
 
     def update(id, name):
         with DBConnectionHandler() as db:
-            db.session.query(Blocks).filter(Blocks.id == id).update({
-                
-                "name":name
-                
-            })
-            db.session.commit()
+            if BlocksRepository.get(id):
+                db.session.query(Blocks).filter(Blocks.id == id).update({
+                    
+                    "name":name
+                    
+                })
+                db.session.commit()
+                return True
+            else:
+                return False
 
     def delete(id):
         with DBConnectionHandler() as db:
-            db.session.query(Blocks).filter(Blocks.id == id).delete()
-            db.session.commit()
+            if BlocksRepository.get(id):
+                db.session.query(Blocks).filter(Blocks.id == id).delete()
+                db.session.commit()
+                return True
+            else:
+                return False
 
         
