@@ -55,13 +55,15 @@ class UserForm:
         """
         width = 50
         font = ("", 16)
+
+        # Create a frame to hold the user form
+        self.user_form_frame = ttk.Frame(self.main_content)
+        self.user_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
         if self.id:
             user = UsersRepository.get(self.id)
 
         
-            # Create a frame to hold the user form
-            self.user_form_frame = ttk.Frame(self.main_content)
-            self.user_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
+            
 
             # Create and place the form widgets
             ttk.Label(self.user_form_frame, text="Username:").pack(anchor="w")
@@ -83,10 +85,6 @@ class UserForm:
             self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole], width=width, font=font)
             self.role_combobox.pack(anchor="w")
         else:
-
-            # Create a frame to hold the user form
-            self.user_form_frame = ttk.Frame(self.main_content)
-            self.user_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
 
             # Create and place the form widgets
             ttk.Label(self.user_form_frame, text="Username:").pack(anchor="w")

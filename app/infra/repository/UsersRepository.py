@@ -38,15 +38,19 @@ class UsersRepository():
 
     def update(id, userName, fullName, password, role):
         with DBConnectionHandler() as db:
-            db.session.query(Users).filter(Users.id == id).update({
+            if UsersRepository.getUserName(userName) !=  None:
+                db.session.query(Users).filter(Users.id == id).update({
 
-                "userName": userName,
-                "fullName": fullName,
-                "password": password,
-                "role": role
-                
-            })
-            db.session.commit()
+                    "userName": userName,
+                    "fullName": fullName,
+                    "password": password,
+                    "role": role
+                    
+                })
+                db.session.commit()
+                return True
+            else:
+                return False
 
     def delete(id):
         with DBConnectionHandler() as db:
