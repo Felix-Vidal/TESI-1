@@ -21,7 +21,7 @@ class UserList:
         
       # Treeview no conteúdo principal
         self.treeview = ttk.Treeview(self.main_content, columns=("id", "userName", "fullName", "role"), height=25)
-        self.treeview.pack(fill=tk.X, padx=10)
+        self.treeview.pack(fill=tk.X, padx=10, pady=10)
 
         self.treeview.heading("id", text="ID", anchor='w')
         self.treeview.heading("userName", text="UserName", anchor='w')
@@ -39,13 +39,13 @@ class UserList:
         # scb.grid(row=0, column=1, sticky='ns')
         # self.treeview.config(yscrollcommand=scb.set)
 
-        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton")
+        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="TButton", command=self.delete)
         self.btn_Delete.pack(side=tk.RIGHT, padx=5)
 
-        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton")
+        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="TButton", command=self.editar)
         self.btn_editar.pack(side=tk.RIGHT, padx=5 )
 
-        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
+        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="TButton", command=self.cadastrar_usuarios)
         self.btn_registrar.pack(side=tk.RIGHT, padx=5)
         
         if self.user_role == ERole.ROLE_USER:
