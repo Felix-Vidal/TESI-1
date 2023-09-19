@@ -33,14 +33,14 @@ class UserList:
 
 
         #         #Barra de rolagem
-        # scb = tk.Scrollbar(self.main_content, orient=tk.VERTICAL, command=self.treeview.yview)
+        # scb = ttk.Scrollbar(self.main_content, orient="vertical", command=self.treeview.yview)
         # scb.grid(row=0, column=1, sticky='ns')
         # self.treeview.config(yscrollcommand=scb.set)
 
-        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton")
+        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton", command=self.delete)
         self.btn_Delete.pack(side=tk.RIGHT, padx=5)
 
-        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton")
+        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton", command=self.editar)
         self.btn_editar.pack(side=tk.RIGHT, padx=5 )
 
         self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
@@ -49,9 +49,29 @@ class UserList:
         self.exibir_lista_usuarios()
         
 
+    def editar(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            userName = self.treeview.item(item[0], "values")[1]
+            fullName = self.treeview.item(item[0], "values")[2]
+            role = self.treeview.item(item[0], "values")[3]
+            print(role)
+            limpar_tela(self.main_content)
+            self.root.title("Usuários")
+            user = UserForm(self.root ,self.main_content, id)
 
-
-
+    def delete(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            if UsersRepository.delete(id):
+                self.exibir_lista_usuarios()
+    
     def exibir_lista_usuarios(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
