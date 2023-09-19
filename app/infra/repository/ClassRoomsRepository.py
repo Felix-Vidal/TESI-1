@@ -42,5 +42,7 @@ class ClassRoomsRepository:
 
     def delete(id):
         with DBConnectionHandler() as db:
-            db.session.query(ClassRooms).filter(ClassRooms.id == id).delete()
-            db.session.commit()
+            sucess = db.session.query(ClassRooms).filter(ClassRooms.id == id).delete()
+            if sucess:
+                db.session.commit()
+                return True

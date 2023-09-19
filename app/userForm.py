@@ -25,9 +25,6 @@ class UserForm:
         self.create_user_form()
 
     def register_user(self):
-        """
-        Callback function to register a new user.
-        """
         # Retrieve user input from the form
         username = self.username_entry.get()
         full_name = self.full_name_entry.get()
@@ -103,7 +100,7 @@ class UserForm:
             
         self.role_combobox.config(state='readonly')
 
-        self.register_button = ttk.Button(self.user_form_frame, text="Register", style="Outline.TButton", command=self.register_user)
+        self.register_button = ttk.Button(self.user_form_frame, text="Register", style="TButton", command=self.register_user)
         self.register_button.pack(anchor="w")
         
         

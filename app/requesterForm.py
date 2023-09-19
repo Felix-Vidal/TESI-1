@@ -4,8 +4,6 @@ from infra.repository.RequesterRepository import RequesterRepository
 from infra.entities.ERequester import ERequester
 
 
-from infra.repository.UsersRepository import UsersRepository
-
 # from app.home import Home
 
 def limpar_tela(frame):
@@ -21,8 +19,8 @@ class RequesterForm:
         self.id = id
         
         
-        self.user_form_frame = ttk.Frame(self.main_content)
-        self.user_form_frame.pack()
+        self.requester_form_frame = ttk.Frame(self.main_content)
+        self.requester_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
         self.create_requester_form()
 
@@ -49,46 +47,49 @@ class RequesterForm:
 
     def create_requester_form(self):
         
+        width = 50
+        font = ("", 16)
+        
         self.requester_form_frame = ttk.Frame(self.main_content)
-        self.requester_form_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+        self.requester_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
 
         if self.id:
-            user = RequesterRepository.get(self.id)
+            requester = RequesterRepository.get(self.id)
             # Create and place the form widgets
             ttk.Label(self.requester_form_frame, text="Name:").pack(anchor="w")
-            self.name_entry = ttk.Entry(self.requester_form_frame)
-            self.name_entry.insert(0, user.name)
+            self.name_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
+            self.name_entry.insert(0, requester.name)
             self.name_entry.pack(anchor="w")
 
             ttk.Label(self.requester_form_frame, text="Email:").pack(anchor="w")
-            self.email_entry = ttk.Entry(self.requester_form_frame)
-            self.email_entry.insert(0, user.email)
+            self.email_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
+            self.email_entry.insert(0, requester.email)
             self.email_entry.pack(anchor="w")
 
             ttk.Label(self.requester_form_frame, text="Telephone:").pack(anchor="w")
-            self.telephone_entry = ttk.Entry(self.requester_form_frame)
-            self.telephone_entry.insert(0, user.telephone)
+            self.telephone_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
+            self.telephone_entry.insert(0, requester.telephone)
             self.telephone_entry.pack(anchor="w")
             
             ttk.Label(self.requester_form_frame, text="Type Requester:").pack(anchor="w")
-            self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester])
+            self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester], width=width, font=font)
             self.type_requester_combobox.pack(anchor="w")
         else:
 
             ttk.Label(self.requester_form_frame, text="Name:").pack(anchor="w")
-            self.name_entry = ttk.Entry(self.requester_form_frame)
+            self.name_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
             self.name_entry.pack(anchor="w")
 
             ttk.Label(self.requester_form_frame, text="Email:").pack(anchor="w")
-            self.email_entry = ttk.Entry(self.requester_form_frame)
+            self.email_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
             self.email_entry.pack(anchor="w")
 
             ttk.Label(self.requester_form_frame, text="Telephone:").pack(anchor="w")
-            self.telephone_entry = ttk.Entry(self.requester_form_frame)
+            self.telephone_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
             self.telephone_entry.pack(anchor="w")
             
             ttk.Label(self.requester_form_frame, text="Type Requester:").pack(anchor="w")
-            self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester])
+            self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester], width=width, font=font)
             self.type_requester_combobox.pack(anchor="w")
 
 
