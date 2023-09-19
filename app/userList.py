@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.entities.ERole import ERole
 from userForm import UserForm
 from infra.repository.UsersRepository import UsersRepository
 
@@ -10,9 +11,10 @@ def limpar_tela(frame):
 
 class UserList:
     
-    def __init__(self, root, main_content):
+    def __init__(self, root, main_content, user_role):
 
         self.root = root
+        self.user_role = user_role
         self.main_content = main_content
         
         
@@ -46,6 +48,11 @@ class UserList:
         self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
         self.btn_registrar.pack(side=tk.RIGHT, padx=5)
         
+        if self.user_role == ERole.ROLE_USER:
+            self.btn_registrar.pack_forget()
+            self.btn_editar.pack_forget()
+            self.btn_Delete.pack_forget()
+            
         self.exibir_lista_usuarios()
         
 

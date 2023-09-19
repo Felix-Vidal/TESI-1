@@ -20,6 +20,11 @@ class UsersRepository():
             data = db.session.query(Users).filter(Users.userName == userName).first()
             return data
     
+    def getUserRole(role):
+        with DBConnectionHandler() as db:
+            data = db.session.query(Users).filter(Users.role == role).first()
+            return data
+    
 
     def insert(userName, fullName, password, role):
         with DBConnectionHandler() as db:

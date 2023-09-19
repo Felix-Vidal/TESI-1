@@ -17,15 +17,16 @@ def limpar_tela(frame):
 
 class Home:
     
-    def __init__(self, root):
+    def __init__(self, root, user_role):
 
         self.root = root
         # Configuração da janela principal
         self.root.title("SGAS")
+        self.user_role = user_role
         
         # Criação do estilo usando ttkbootstrap
         self.style = Style()
-        self.style.configure("Outline.TButton", padding=(10, 5), width=15)
+        self.style.configure("TButton", padding=(10, 5), width=15)
         self.style.configure("Outline.TMenubutton", padding=(10, 5), width=15)
         
         # Criação da barra lateral
@@ -38,19 +39,19 @@ class Home:
         
         # Menubuttons na barra lateral com estilo "OUTLINE"
 
-        self.btn_schedule = ttk.Button(self.sidebar, text="Agendados", style="Outline.TButton", command=self.listar_schedules)
+        self.btn_schedule = ttk.Button(self.sidebar, text="Agendados", style="TButton", command=self.listar_schedules)
         self.btn_schedule.pack(pady=5)
 
-        self.btn_request = ttk.Button(self.sidebar, text="Solicitantes", style="Outline.TButton", command=self.listar_requesters)
+        self.btn_request = ttk.Button(self.sidebar, text="Solicitantes", style="TButton", command=self.listar_requesters)
         self.btn_request.pack(pady=5)
 
-        self.btn_room = ttk.Button(self.sidebar, text="Salas", style="Outline.TButton", command=self.listar_classrooms)
+        self.btn_room = ttk.Button(self.sidebar, text="Salas", style="TButton", command=self.listar_classrooms)
         self.btn_room.pack(pady=5)
 
-        self.btn_block = ttk.Button(self.sidebar, text="Blocos", style="Outline.TButton", command=self.listar_blocos)
+        self.btn_block = ttk.Button(self.sidebar, text="Blocos", style="TButton", command=self.listar_blocos)
         self.btn_block.pack(pady=5)
 
-        self.btn_user = ttk.Button(self.sidebar, text="Usuarios", style="Outline.TButton", command=self.listar_usuarios)
+        self.btn_user = ttk.Button(self.sidebar, text="Usuarios", style="TButton", command=self.listar_usuarios)
         self.btn_user.pack(pady=(10, 5))
 
         # Conteúdo principal
@@ -70,7 +71,7 @@ class Home:
     def listar_usuarios(self):
         limpar_tela(self.main_content)
         self.root.title("Usuários")
-        user = UserList(self.root, self.main_content)
+        user = UserList(self.root, self.main_content, self.user_role)
         
     def cadastrar_blocos(self):
         limpar_tela(self.main_content)

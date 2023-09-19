@@ -43,10 +43,10 @@ class Login:
 
         # Simulando um processo de autenticação simples
         if username == user.userName and password == user.password:
-            self.open_home()
+            self.open_home(user.role)
         else:
             messagebox.showerror("Login", "Credenciais inválidas.")
 
-    def open_home(self):
+    def open_home(self, user_role):
         limpar_tela(self.root)
-        TelaPricipal = Home(self.root)
+        TelaPricipal = Home(self.root, user_role)
