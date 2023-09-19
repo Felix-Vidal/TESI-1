@@ -12,10 +12,11 @@ def limpar_tela(frame):
 
 class ScheduleList:
     
-    def __init__(self, root, main_content):
+    def __init__(self, root, main_content, user_role):
 
         self.root = root
         self.main_content = main_content
+        self.user_role = user_role
         
         # Create a Treeview to display the scheduling list
         self.treeview = ttk.Treeview(self.main_content, columns=("ID", "Requester", "Classroom", "Date and Time", "Block"), padding=(10, 20, 10, 5))

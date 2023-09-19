@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from classRoomForm import ClassRoomForm
 from infra.entities.ERole import ERole
 from infra.repository.BlocksRepository import BlocksRepository
 from infra.repository.ClassRoomsRepository import ClassRoomsRepository
@@ -60,4 +61,29 @@ class ClassRoomList:
         limpar_tela(self.root)
         self.root.title("Usuários")
         user = UserForm(self.root)
+        
+    def editar(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            limpar_tela(self.main_content)
+            room = ClassRoomForm(self.root ,self.main_content, id)
+    
+    def delete(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            if ClassRoomsRepository.delete(id):
+                self.exibir_lista_usuarios()
+    def exibir_lista_usuarios(self):
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+        # Preencher a Treeview com os usuários
+        for room in ClassRoomsRepository.gets():
+            self.treeview.insert("", "end", values=[room.id, room.name])
 
