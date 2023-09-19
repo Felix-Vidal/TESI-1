@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from requesterForm import RequesterForm
 from infra.entities.ERole import ERole
 
 from infra.repository.RequesterRepository import RequesterRepository
@@ -19,28 +20,54 @@ class RequesterList:
         
         
       # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.main_content, columns=("ID", "Name", "Email", "Telephone", "Requester Type"), padding=(10, 20, 10, 5))
-        self.treeview.heading("#1", text="ID")
-        self.treeview.heading("#2", text="Name")
-        self.treeview.heading("#3", text="Email")
-        self.treeview.heading("#4", text="Telephone")
-        self.treeview.heading("#4", text="Requester Type")
-        self.treeview.pack(fill=tk.BOTH, expand=True)
+        self.treeview = ttk.Treeview(self.main_content, columns=("id", "name", "email", "telephone", "requesterType"), padding=(10, 20, 10, 5), height=25)
+        self.treeview.pack(fill=tk.X, padx=10)
+
+        self.treeview.heading("id", text="ID")
+        self.treeview.heading("name", text="Name")
+        self.treeview.heading("email", text="Email")
+        self.treeview.heading("telephone", text="Telephone")
+        self.treeview.heading("requesterType", text="Requester Type")
+
+        self.treeview.column("id",  minwidth=15, width=30, anchor='w')
+        self.treeview.column("name", minwidth=200, width=200, anchor='w')
+        self.treeview.column("email", minwidth=200, width=200, anchor='w')
+        self.treeview.column("telephone", minwidth=200, width=200, anchor='w')
+        self.treeview.column("requesterType", minwidth=200, width=200, anchor='w')
         
-        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton")
+        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton", command=self.delete)
         self.btn_Delete.pack(side=tk.RIGHT, padx=5)
 
-        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton")
+        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton", command=self.editar)
         self.btn_editar.pack(side=tk.RIGHT, padx=5 )
 
-        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
+        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_requester)
         self.btn_registrar.pack(side=tk.RIGHT, padx=5)
         
+        self.exibir_lista_requesters()
 
-        # Botão para exibir a lista de usuários
-        self.btn_list_requesters = ttk.Button(self.main_content, text="Exibir Lista de Requesters", style="Outline.TButton", command=self.exibir_lista_requesters)
-        self.btn_list_requesters.pack(pady=10)
+    def editar(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            limpar_tela(self.main_content)
+            user = RequesterForm(self.root ,self.main_content, id)
 
+    def delete(self):
+        item = self.treeview.selection()
+        if len(item) != 1:
+            messagebox.showwarning('Aviso', 'Selecione apenas um item')
+        else:
+            id = int(self.treeview.item(item[0], "values")[0])
+            if RequesterRepository.delete(id):
+                self.exibir_lista_requesters()
+
+    def cadastrar_requester(self):
+        limpar_tela(self.main_content)
+        user = RequesterForm(self.root ,self.main_content)
+        
     def exibir_lista_requesters(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
@@ -50,6 +77,5 @@ class RequesterList:
         # Preencher a Treeview com os usuários
         for requester in RequesterRepository.gets():
             self.treeview.insert("", "end", values=(requester.id, requester.name, requester.email, requester.telephone ,requester.typeRequester.name))
-            print(f"ID: {requester.id}, Name: {requester.name}, email: {requester.eamil}, telephone: {requester.telephone} ,Role: {requester.typeRequester.name}")
 
 

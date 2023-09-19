@@ -37,7 +37,7 @@ class ClassRoomForm:
         name = self.name_entry.get()
         capacity = int(self.capacity_entry.get())
         block_name = self.block_combobox.get()
-        room = ERoom.CLASS_ROOM
+        room = self.room_combobox.get()
 
         
         
