@@ -50,6 +50,8 @@ class UsersRepository():
 
     def delete(id):
         with DBConnectionHandler() as db:
-            db.session.query(Users).filter(Users.id == id).delete()
-            db.session.commit()
+            success = db.session.query(Users).filter(Users.id == id).delete()
+            if success:
+                db.session.commit()
+                return True
         
