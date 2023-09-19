@@ -69,7 +69,7 @@ class ClassRoomList:
         else:
             id = int(self.treeview.item(item[0], "values")[0])
             if ClassRoomsRepository.delete(id):
-                self.exibir_lista_salas()
+                self.exibir_lista_sala()
                 
     def exibir_lista_sala(self):
         for item in self.treeview.get_children():
@@ -77,6 +77,7 @@ class ClassRoomList:
 
         # Preencher a Treeview com os usuários
         for classRoom, block in ClassRoomsRepository.gets():
+            
             self.treeview.insert("", "end", values=(classRoom.id, classRoom.name, classRoom.capacity, block.name ,classRoom.typeRoom))
 
     def cadastrar_sala(self):

@@ -15,14 +15,10 @@ class RequesterRepository:
 
     def insert(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
-            if RequesterRepository.get(id) == None:
                 data = Requesters(name=name, email=email, telephone=telephone, typeRequester=typeRequester)
                 db.session.add(data)
                 db.session.commit()
-                return True
-            else:
-                return False
-
+                
     def update(id, name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:
             if RequesterRepository.get(id):
