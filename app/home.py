@@ -81,7 +81,7 @@ class Home:
     def listar_blocos(self):
         limpar_tela(self.main_content)
         self.root.title("Blocos")
-        block = BlockList(self.root, self.main_content)
+        block = BlockList(self.root, self.main_content,self.user_role)
 
     
     def cadastrar_classrooms(self):
@@ -92,7 +92,7 @@ class Home:
     def listar_classrooms(self):
         limpar_tela(self.main_content)
         self.root.title("Salas")
-        classroom = ClassRoomList(self.root, self.main_content)
+        classroom = ClassRoomList(self.root, self.main_content, self.user_role)
         
     def cadastrar_requesters(self):
         limpar_tela(self.main_content)
@@ -102,7 +102,7 @@ class Home:
     def listar_requesters(self):
         limpar_tela(self.main_content)
         self.root.title("Requester")
-        requester = RequesterList(self.root, self.main_content)
+        requester = RequesterList(self.root, self.main_content,self.user_role)
         
     def cadastrar_schedules(self):
         limpar_tela(self.main_content)
@@ -112,5 +112,5 @@ class Home:
     def listar_schedules(self):
         limpar_tela(self.main_content)
         self.root.title("Schedule")
-        schedule = ScheduleList(self.root, self.main_content)
+        schedule = ScheduleList(self.root, self.main_content, self.user_role)
 

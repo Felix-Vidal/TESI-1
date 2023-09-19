@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.entities.ERole import ERole
 
 from infra.repository.RequesterRepository import RequesterRepository
 
@@ -10,10 +11,11 @@ def limpar_tela(frame):
 
 class RequesterList:
     
-    def __init__(self, root, main_content):
+    def __init__(self, root, main_content, user_role):
 
         self.root = root
         self.main_content = main_content
+        self.user_role = user_role
         
         
       # Treeview no conteúdo principal
@@ -24,6 +26,16 @@ class RequesterList:
         self.treeview.heading("#4", text="Telephone")
         self.treeview.heading("#4", text="Requester Type")
         self.treeview.pack(fill=tk.BOTH, expand=True)
+        
+        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton")
+        self.btn_Delete.pack(side=tk.RIGHT, padx=5)
+
+        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton")
+        self.btn_editar.pack(side=tk.RIGHT, padx=5 )
+
+        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
+        self.btn_registrar.pack(side=tk.RIGHT, padx=5)
+        
 
         # Botão para exibir a lista de usuários
         self.btn_list_requesters = ttk.Button(self.main_content, text="Exibir Lista de Requesters", style="Outline.TButton", command=self.exibir_lista_requesters)

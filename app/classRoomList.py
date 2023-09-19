@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.entities.ERole import ERole
 from infra.repository.BlocksRepository import BlocksRepository
 from infra.repository.ClassRoomsRepository import ClassRoomsRepository
 from userForm import UserForm
@@ -12,10 +13,11 @@ def limpar_tela(frame):
 
 class ClassRoomList:
     
-    def __init__(self, root, main_content):
+    def __init__(self, root, main_content, user_role):
 
         self.root = root
         self.main_content = main_content
+        self.user_role = user_role
         
         
       # Treeview no conteúdo principal
@@ -26,6 +28,20 @@ class ClassRoomList:
         self.treeview.heading("#4", text="Block")
         self.treeview.heading("#5", text="Tipo de sala")
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="Outline.TButton")
+        self.btn_Delete.pack(side=tk.RIGHT, padx=5)
+
+        self.btn_editar = ttk.Button(self.main_content, text="Editar", style="Outline.TButton")
+        self.btn_editar.pack(side=tk.RIGHT, padx=5 )
+
+        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="Outline.TButton", command=self.cadastrar_usuarios)
+        self.btn_registrar.pack(side=tk.RIGHT, padx=5)
+        
+        if self.user_role == ERole.ROLE_USER:
+            self.btn_registrar.pack_forget()
+            self.btn_editar.pack_forget()
+            self.btn_Delete.pack_forget()
 
         # Botão para exibir a lista de usuários
         self.btn_list_users = ttk.Button(self.main_content, text="Exibir Lista de Usuários", style="Outline.TButton", command=self.exibir_lista_usuarios)
