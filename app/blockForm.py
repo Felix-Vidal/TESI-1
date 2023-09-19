@@ -59,17 +59,17 @@ class BlockForm:
         if self.id:
             block = BlocksRepository.get(self.id)
 
-            ttk.Label(self.block_form_frame, text="Name:").grid(row=0, column=0, padx=5, pady=5)
+            ttk.Label(self.block_form_frame, text="Name:").pack(anchor="w")
             self.name_entry = ttk.Entry(self.block_form_frame, width=width, font=font)
             self.name_entry.insert(0, block.name)
-            self.name_entry.grid(row=0, column=1, padx=5, pady=5)
+            self.name_entry.pack(anchor="w")
 
         else:
             # Create and place the form widgets
-            ttk.Label(self.block_form_frame, text="Name:", width=width, font=font).grid(row=0, column=0, padx=5, pady=5)
+            ttk.Label(self.block_form_frame, text="Name:", width=width, font=font).pack(anchor="w")
             self.name_entry = ttk.Entry(self.block_form_frame, width=width, font=font)
-            self.name_entry.grid(row=0, column=1, padx=5, pady=5)
+            self.name_entry.pack(anchor="w")
 
         register_button = ttk.Button(self.block_form_frame, text="Register", style="Outline.TButton", command=self.register_block)
-        register_button.grid(row=4, column=0, columnspan=2, pady=10)
+        register_button.pack(anchor="w")
         

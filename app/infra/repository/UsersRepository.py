@@ -38,7 +38,7 @@ class UsersRepository():
 
     def update(id, userName, fullName, password, role):
         with DBConnectionHandler() as db:
-            if UsersRepository.getUserName(userName) !=  None:
+            if UsersRepository.get(id) !=  None:
                 db.session.query(Users).filter(Users.id == id).update({
 
                     "userName": userName,
