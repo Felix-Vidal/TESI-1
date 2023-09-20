@@ -51,6 +51,10 @@ class ScheduleForm:
             success = SchedulingRepository.insert(requester, classroom, date_time)
         if success:
             messagebox.showinfo("Success", "Scheduling successful.")
+            print("Requester ID:", requester)
+            print("Classroom ID:", classroom)
+            print("Date:", selected_date)
+            print("Time:", selected_time)
         else:
             messagebox.showerror("Error", "Time slot already taken for this classroom.")
 
@@ -93,7 +97,7 @@ class ScheduleForm:
             self.classroom_id_entry.pack(anchor="w")
             
             ttk.Label(self.schedule_form_frame, text="Enter Date:").pack(anchor="w")
-            self.date = ttk.DateEntry(self.schedule_form_frame, dateformat='%Y/%m/%d', firstweekday=6, width=width, font=font)
+            self.date = ttk.DateEntry(self.schedule_form_frame, dateformat='%Y/%m/%d', firstweekday=6, width=width)
             self.date.pack(anchor="w")
             
             ttk.Label(self.schedule_form_frame, text="Time:").pack(anchor="w")

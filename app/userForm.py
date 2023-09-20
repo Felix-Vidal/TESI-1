@@ -54,7 +54,7 @@ class UserForm:
             user = UsersRepository.get(self.id)
 
         
-            
+            role_name = user.role.name.split(".")[-1]
 
             # Create and place the form widgets
             ttk.Label(self.user_form_frame, text="Username:").pack(anchor="w")
@@ -74,6 +74,7 @@ class UserForm:
             
             ttk.Label(self.user_form_frame, text="Role:").pack(anchor="w")
             self.role_combobox = ttk.Combobox(self.user_form_frame, values=[role.name for role in ERole], width=width, font=font)
+            self.role_combobox.insert(0, role_name)
             self.role_combobox.pack(anchor="w")
         else:
 

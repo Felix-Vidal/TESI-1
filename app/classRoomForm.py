@@ -58,7 +58,8 @@ class ClassRoomForm:
         self.classroom_form_frame = ttk.Frame(self.main_content)
         self.classroom_form_frame.pack(padx=(200,0), pady=40, fill=tk.BOTH, expand=True)
         if self.id:
-            classroom = ClassRoomsRepository.get(self.id)
+            classroom, block = ClassRoomsRepository.get(self.id)
+            print(classroom)
             
             # Create and place the form widgets
             ttk.Label(self.classroom_form_frame, text="Name:").pack(anchor="w")
@@ -73,9 +74,10 @@ class ClassRoomForm:
 
             ttk.Label(self.classroom_form_frame, text="Block:").pack(anchor="w")
             self.block_combobox = ttk.Combobox(self.classroom_form_frame, values=[block.name for block in BlocksRepository.gets()], width=width, font=font)
+            self.block_combobox.insert(0, block.name)
             self.block_combobox.pack(anchor="w")
             
-            ttk.Label(self.classroom_form_frame, text="Room Type:").grid(row=3, column=0, padx=5, pady=5)
+            ttk.Label(self.classroom_form_frame, text="Room Type:").pack(anchor="w")
             self.room_combobox = ttk.Combobox(self.classroom_form_frame, values=[room.name for room in ERoom], width=width, font=font)
             self.room_combobox.pack("w")
         else:
