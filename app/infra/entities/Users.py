@@ -1,6 +1,6 @@
 from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String, Enum, Boolean
 from infra.entities.ERole import ERole
 
 
@@ -12,6 +12,7 @@ class Users(Base):
     fullName = Column(String(50))
     password = Column(String(50))
     role = Column(Enum(ERole))
+    active = Column(Boolean, default=True)
 
 def create_admin_user(session):
     admin_user = session.query(Users).filter_by(userName='admin').first()

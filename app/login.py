@@ -43,7 +43,10 @@ class Login:
 
         # Simulando um processo de autenticação simples
         if username == user.userName and password == user.password:
-            self.open_home(user.role)
+            if(user.active):
+                self.open_home(user.role)
+            else:
+                messagebox.showerror("Login", "Conta desativada.")
         else:
             messagebox.showerror("Login", "Credenciais inválidas.")
 

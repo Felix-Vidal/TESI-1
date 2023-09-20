@@ -17,7 +17,8 @@ class UsersRepository():
                     Users.userName.like(f'%{searchTerm}%'),
                     Users.fullName.like(f'%{searchTerm}%'),
                     Users.password.like(f'%{searchTerm}%'),
-                    Users.role.like(f'%{searchTerm}%'))
+                    Users.role.like(f'%{searchTerm}%')),
+                    Users.active.like(f'%{searchTerm}%')
 
                 ).all()
             return data
@@ -41,7 +42,8 @@ class UsersRepository():
     def insert(userName, fullName, password, role):
         with DBConnectionHandler() as db:
             if UsersRepository.getUserName(userName) ==  None:
-                data= Users(userName=userName, fullName=fullName, password=password, role=role)
+                Users()
+                data = Users(userName=userName, fullName=fullName, password=password, role=role, active=True)
                 db.session.add(data)
                 db.session.commit()
                 return True
@@ -64,9 +66,20 @@ class UsersRepository():
             else:
                 return False
 
-    def delete(id):
+    def habilitar(id):
         with DBConnectionHandler() as db:
-            success = db.session.query(Users).filter(Users.id == id).delete()
+            success = db.session.query(Users).filter(Users.id == id).update({
+                "active": True
+            })
+            if success:
+                db.session.commit()
+                return True
+    
+    def desabilita(id):
+        with DBConnectionHandler() as db:
+            success = db.session.query(Users).filter(Users.id == id).update({
+                "active": False
+            })
             if success:
                 db.session.commit()
                 return True
