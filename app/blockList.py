@@ -80,12 +80,9 @@ class BlockList:
     def exibir_lista_blocos(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
-        
-        print("Exibindo lista de blocos")
 
         # Preencher a Treeview com os usuários
         for block in BlocksRepository.gets():
             self.treeview.insert("", "end", values=(block.id, block.name))
-            print(f"ID: {block.id}, name: {block.name}")
 
 
