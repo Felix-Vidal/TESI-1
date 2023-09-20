@@ -106,12 +106,12 @@ class ScheduleForm:
             self.time_combo.pack(anchor="w")
         else:
             ttk.Label(self.schedule_form_frame, text="Requester ID:").pack(anchor="w")
-            requester_names = [f"{requester.id} - {requester.name}" for requester in Requesters]
+            requester_names = [f"{requester.id} - {requester.name}" for requester in RequesterRepository.gets()]
             self.requester_name_combobox = ttk.Combobox(self.schedule_form_frame, values=requester_names, width=width, font=font)
             self.requester_name_combobox.pack(anchor="w")
             
             ttk.Label(self.schedule_form_frame, text="Classroom ID:").pack(anchor="w")
-            classroom_names = [f"{classroom[0].id} - {classroom[0].name}" for classroom in classrooms]
+            classroom_names = [f"{classroom.id} - {classroom.name} - {block.name}" for classroom, block in ClassRoomsRepository.gets()]
             self.classroom_name_combobox = ttk.Combobox(self.schedule_form_frame, values=classroom_names, width=width, font=font)
             self.classroom_name_combobox.pack(anchor="w")
             
