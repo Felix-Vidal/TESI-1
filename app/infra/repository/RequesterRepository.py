@@ -22,6 +22,11 @@ class RequesterRepository:
         with DBConnectionHandler() as db:
             data = db.session.query(Requesters).filter(Requesters.id == id).first()
             return data
+        
+    def getName(name):
+        with DBConnectionHandler() as db:
+            data = db.session.query(Requesters).filter(Requesters.name == name).first()
+            return data
 
     def insert(name, email, telephone, typeRequester):
         with DBConnectionHandler() as db:

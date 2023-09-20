@@ -59,7 +59,6 @@ class ScheduleList:
             limpar_tela(self.main_content)
             self.root.title("Agendamento")
             classroom = ScheduleForm(self.root ,self.main_content, id)
-        self.display_scheduling_list()
 
     def canceled(self):
         item = self.treeview.selection()
@@ -80,9 +79,18 @@ class ScheduleList:
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Populate the Treeview with the scheduling data
-        for scheduling, requester, classRoom, block in SchedulingRepository.gets():
+        # Populate the Treeview with the scheduli
+        #  # Get all scheduling records
+        scheduling_records = SchedulingRepository.gets()
 
+        # Print the header
+        print("{:<5} {:<15} {:<15} {:<20} {:<15} {:<15}".format("ID", "Requester", "ClassRoom", "DateTime", "Block", "Situation"))
+
+        # Print each record
+        for scheduling, requester, classRoom, block in scheduling_records:
+            print("{:<5} {:<15} {:<15} {:<20} {:<15} {:<15}".format(scheduling.id, requester.name, classRoom.name, scheduling.dateTime, block.name, scheduling.situation.name))
+        # ng data
+        for scheduling, requester, classRoom, block in SchedulingRepository.gets():
             self.treeview.insert("", "end", values=(scheduling.id, requester.name, classRoom.name, scheduling.dateTime, block.name, scheduling.situation.name))
     def cadastrar_agendamento(self):
         limpar_tela(self.main_content)

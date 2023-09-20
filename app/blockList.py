@@ -73,16 +73,21 @@ class BlockList:
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Preencher a Treeview com os usuários
-        for block in BlocksRepository.gets():
-            self.treeview.insert("", "end", values=[block.id, block.name])
+        for index, block in enumerate(BlocksRepository.gets()):
+            tag = 'evenrow' if index % 2 == 0 else 'oddrow'
+            bg_color = '#28394a' if index % 2 == 0 else '#32465a'
+            self.treeview.insert("", "end", values=(block.id, block.name))
+            self.treeview.tag_configure(tag, background=bg_color)
 
     def exibir_lista_blocos(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
+        blocks = BlocksRepository.gets()
+        for index, block in enumerate(blocks):
+            tag = 'evenrow' if index % 2 == 0 else 'oddrow'
+            bg_color = '#28394a' if index % 2 == 0 else '#32465a'
+            self.treeview.insert("", "end", values=(block.id, block.name), tags=(tag,))
+            self.treeview.tag_configure(tag, background=bg_color)
 
-        # Preencher a Treeview com os usuários
-        for block in BlocksRepository.gets():
-            self.treeview.insert("", "end", values=(block.id, block.name))
 
 

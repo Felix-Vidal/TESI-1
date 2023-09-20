@@ -75,11 +75,13 @@ class ClassRoomList:
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Preencher a Treeview com os usuários
-        for classRoom, block in ClassRoomsRepository.gets():
+        class_rooms = ClassRoomsRepository.gets()
+        for index, (class_room, block) in enumerate(class_rooms):
+            tag = 'evenrow' if index % 2 == 0 else 'oddrow'
+            bg_color = '#28394a' if index % 2 == 0 else '#32465a'
+            self.treeview.insert("", "end", values=(class_room.id, class_room.name, class_room.capacity, block.name, class_room.typeRoom.name), tags=(tag,))
+            self.treeview.tag_configure(tag, background=bg_color)
             
-            self.treeview.insert("", "end", values=(classRoom.id, classRoom.name, classRoom.capacity, block.name , classRoom.typeRoom.name))
-
     def cadastrar_salas(self):
         limpar_tela(self.main_content)
         self.root.title("Salas")

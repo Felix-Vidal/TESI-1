@@ -72,8 +72,12 @@ class RequesterList:
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
-        # Preencher a Treeview com os usuários
-        for requester in RequesterRepository.gets():
-            self.treeview.insert("", "end", values=(requester.id, requester.name, requester.email, requester.telephone , requester.typeRequester.name))
+        requesters = RequesterRepository.gets()
+
+        for index, requester in enumerate(requesters):
+            tag = 'evenrow' if index % 2 == 0 else 'oddrow'
+            bg_color = '#28394a' if index % 2 == 0 else '#32465a'
+            self.treeview.insert("", "end", values=(requester.id, requester.name, requester.email, requester.telephone, requester.typeRequester.name), tags=(tag,))
+            self.treeview.tag_configure(tag, background=bg_color)
 
 

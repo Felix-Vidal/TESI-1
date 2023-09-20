@@ -31,7 +31,7 @@ class RequesterForm:
         telephone = int(self.telephone_entry.get())
         typeRequester = self.type_requester_combobox.get()  
         
-        # Validate input (you can add more validation if needed)
+       
         if not name or not email or not telephone or not typeRequester:
             messagebox.showerror("Error", "Please fill in all fields.")
             return
@@ -95,7 +95,7 @@ class RequesterForm:
             self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester], width=width, font=font)
             self.type_requester_combobox.pack(anchor="w")
 
-
+        self.type_requester_combobox.config(state='readonly')
         register_button = ttk.Button(self.requester_form_frame, text="Register", style="TButton", command=self.register_requester)
         register_button.pack(anchor="w")
         
