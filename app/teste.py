@@ -65,7 +65,7 @@ print("\t\tScheduling")
 
 print("==========================================")
 for scheduling, requester, classRoom, block in SchedulingRepository.gets("12"):
-    print(f"Scheduling: ID {scheduling.id} Data: {scheduling.dateTime} \nRequester: ID:{requester.id} Name: {requester.name} \nClassRoom: ID: {classRoom.id} name:{classRoom.name} capacity:{classRoom.capacity} name the block: {block.name} TypeRoom: {classRoom.typeRoom} \n")
+    print(f"Scheduling: ID {scheduling.id} Situation:{scheduling.situation} Data: {scheduling.dateTime} \nRequester: ID:{requester.id} Name: {requester.name} \nClassRoom: ID: {classRoom.id} name:{classRoom.name} capacity:{classRoom.capacity} name the block: {block.name} TypeRoom: {classRoom.typeRoom} \n")
 print("==========================================", end="\n\n")
 
 

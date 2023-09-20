@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.entities.ERole import ERole
 from schedulingList import ScheduleList
 from schedulingForm import ScheduleForm
 from requesterList import RequesterList
@@ -52,7 +53,9 @@ class Home:
         self.btn_block.pack(pady=5)
 
         self.btn_user = ttk.Button(self.sidebar, text="Usuarios", style="TButton", command=self.listar_usuarios)
-        self.btn_user.pack(pady=(10, 5))
+        print(self.user_role)
+        self.admin_user(self.user_role)
+        
 
         # Conteúdo principal
         self.main_content = ttk.Frame(root)
@@ -62,7 +65,13 @@ class Home:
         self.treeview = ttk.Treeview(self.main_content, padding=(10, 20, 10, 5))
         self.treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    
+    def admin_user(self, role):
+        if role == ERole.ROLE_ADMIN:
+            self.btn_user.pack(pady=(10, 5))
+        else:
+            self.btn_user.pack_forget()
+            
+
     def cadastrar_usuarios(self):
         limpar_tela(self.main_content)
         self.root.title("Usuários")

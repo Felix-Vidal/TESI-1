@@ -71,8 +71,6 @@ class RequesterList:
     def exibir_lista_requesters(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
-        
-        print("Exibindo lista de requesters")
 
         # Preencher a Treeview com os usuários
         for requester in RequesterRepository.gets():

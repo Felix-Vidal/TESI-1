@@ -1,5 +1,6 @@
 from ttkbootstrap import *
 from tkinter import ttk, messagebox
+from infra.entities.ESituation import ESituation
 from schedulingForm import ScheduleForm
 from classRoomForm import ClassRoomForm
 from infra.repository.SchedulingRepository import SchedulingRepository
@@ -21,7 +22,7 @@ class ScheduleList:
         self.user_role = user_role
         
         # Create a Treeview to display the scheduling list
-        self.treeview = ttk.Treeview(self.main_content, columns=("id", "requester", "classRoom", "dateTime", "block"), height=25)
+        self.treeview = ttk.Treeview(self.main_content, columns=("id", "requester", "classRoom", "dateTime", "block", 'situation'), height=25)
         self.treeview.pack(fill=tk.X, padx=10, pady=10)
         
         self.treeview.heading("id", text="ID", anchor='w')
@@ -29,14 +30,16 @@ class ScheduleList:
         self.treeview.heading("classRoom", text = "Sala", anchor='w')
         self.treeview.heading("dateTime", text="Data e Hora", anchor='w')
         self.treeview.heading("block", text="Bloco", anchor='w')
+        self.treeview.heading("situation", text="Situation", anchor='w')
         
         self.treeview.column('id',  minwidth=15, width=30, anchor='w')
         self.treeview.column('requester',  minwidth=200, width=200, anchor='w')
         self.treeview.column('classRoom',  minwidth=200, width=200, anchor='w')
         self.treeview.column('dateTime',  minwidth=200, width=200, anchor='w')
         self.treeview.column('block', minwidth=200, width=200, anchor='w')
+        self.treeview.column('situation', minwidth=200, width=200, anchor='w')
         
-        self.btn_Delete = ttk.Button(self.main_content, text="Delete", style="TButton", command=self.delete)
+        self.btn_Delete = ttk.Button(self.main_content, text="Cancelar", style="TButton", command=self.canceled)
         self.btn_Delete.pack(side=tk.RIGHT, padx=5)
 
         self.btn_editar = ttk.Button(self.main_content, text="Editar", style="TButton", command=self.editar)
@@ -57,13 +60,17 @@ class ScheduleList:
             self.root.title("Agendamento")
             classroom = ScheduleForm(self.root ,self.main_content, id)
 
-    def delete(self):
+    def canceled(self):
         item = self.treeview.selection()
         if len(item) != 1:
             messagebox.showwarning('Aviso', 'Selecione apenas um item')
         else:
             id = int(self.treeview.item(item[0], "values")[0])
-            if SchedulingRepository.delete(id):
+            situation = self.treeview.item(item[0], "values")[5]
+            if situation == ESituation.MARKED.name:
+                SchedulingRepository.canceled(id)
+            else:
+                messagebox.showwarning('Aviso', 'item ja foi cancelado')
                 self.display_scheduling_list()
 
 
@@ -74,8 +81,8 @@ class ScheduleList:
 
         # Populate the Treeview with the scheduling data
         for scheduling, requester, classRoom, block in SchedulingRepository.gets():
-            self.treeview.insert("", "end", values=(scheduling.id, requester.name, classRoom.name, scheduling.dateTime, block.name))
-        print("mostrando agenda")
+
+            self.treeview.insert("", "end", values=(scheduling.id, requester.name, classRoom.name, scheduling.dateTime, block.name, scheduling.situation.name))
     def cadastrar_agendamento(self):
         limpar_tela(self.main_content)
         self.root.title("Agendamento")

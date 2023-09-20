@@ -3,6 +3,7 @@ from infra.entities.Schedulings import Schedulings
 from infra.entities.Requesters import Requesters
 from infra.entities.ClassRooms import ClassRooms
 from infra.entities.Blocks import Blocks
+from infra.entities.ESituation import ESituation
 from sqlalchemy import and_, or_
 class SchedulingRepository:
     
@@ -10,9 +11,9 @@ class SchedulingRepository:
         data = None
         with DBConnectionHandler() as db:
             if schedulings:
-                data = db.session.query(Schedulings).filter(and_(Schedulings.classRoom == classRoom, Schedulings.dateTime == dateTime, Schedulings.id != schedulings)).all()
+                data = db.session.query(Schedulings).filter(and_(Schedulings.classRoom == classRoom, Schedulings.dateTime == dateTime, Schedulings.id != schedulings, Schedulings.situation == ESituation.MARKED)).all()
             else:
-                data = db.session.query(Schedulings).filter(and_(Schedulings.classRoom == classRoom, Schedulings.dateTime == dateTime)).all()
+                data = db.session.query(Schedulings).filter(and_(Schedulings.classRoom == classRoom, Schedulings.dateTime == dateTime, Schedulings.situation == ESituation.MARKED)).all()
 
         if len(data) == 0:
             return True
@@ -26,8 +27,9 @@ class SchedulingRepository:
                 
             else:
                 data = db.session.query(Schedulings, Requesters, ClassRooms, Blocks).join(Schedulings, Requesters.id == Schedulings.requester).join(ClassRooms, ClassRooms.id == Schedulings.classRoom).join(Blocks, Blocks.id == ClassRooms.block).filter(or_(
-                   Schedulings.id.like(f'%{searchTerm}%'),
+                    Schedulings.id.like(f'%{searchTerm}%'),
                     Schedulings.dateTime.like(f'%{searchTerm}%'),
+                    Schedulings.situation.like(f'%{searchTerm}%'),
                     Requesters.name.like(f'%{searchTerm}%'),
                     ClassRooms.name.like(f'%{searchTerm}%'),
                     Blocks.name.like(f'%{searchTerm}%') 
@@ -64,7 +66,11 @@ class SchedulingRepository:
             else:
                 return False
 
-    def delete(id):
+    def canceled(id):
         with DBConnectionHandler() as db:
-            db.session.query(Schedulings).filter(Schedulings.id == id).delete()
-            db.session.commit()
+            success = db.session.query(Schedulings).filter(Schedulings.id == id).update({
+                "situation": ESituation.CANCELED
+            })
+            if success:
+                db.session.commit()
+                return True
