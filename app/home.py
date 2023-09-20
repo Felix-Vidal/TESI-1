@@ -53,7 +53,6 @@ class Home:
         self.btn_block.pack(pady=5)
 
         self.btn_user = ttk.Button(self.sidebar, text="Usuarios", style="TButton", command=self.listar_usuarios)
-        print(self.user_role)
         self.admin_user(self.user_role)
         
 

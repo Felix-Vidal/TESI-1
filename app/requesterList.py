@@ -74,6 +74,6 @@ class RequesterList:
 
         # Preencher a Treeview com os usuários
         for requester in RequesterRepository.gets():
-            self.treeview.insert("", "end", values=(requester.id, requester.name, requester.email, requester.telephone ,requester.typeRequester.name))
+            self.treeview.insert("", "end", values=(requester.id, requester.name, requester.email, requester.telephone , requester.typeRequester.name))
 
 
