@@ -3,7 +3,7 @@ from infra.entities.Schedulings import Schedulings
 from infra.entities.Requesters import Requesters
 from infra.entities.ClassRooms import ClassRooms
 from infra.entities.Blocks import Blocks
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 class SchedulingRepository:
     
     def checkTime(classRoom, dateTime, schedulings=None):
@@ -19,10 +19,20 @@ class SchedulingRepository:
         
         return False
 
-    def gets():
+    def gets(searchTerm=None):
         with DBConnectionHandler() as db:
-            data = db.session.query(Schedulings, Requesters, ClassRooms, Blocks).join(Schedulings, Requesters.id == Schedulings.requester).join(ClassRooms, ClassRooms.id == Schedulings.classRoom).join(Blocks, Blocks.id == ClassRooms.block).all()
-            return data
+            if searchTerm == None:
+                data = db.session.query(Schedulings, Requesters, ClassRooms, Blocks).join(Schedulings, Requesters.id == Schedulings.requester).join(ClassRooms, ClassRooms.id == Schedulings.classRoom).join(Blocks, Blocks.id == ClassRooms.block).all()
+                
+            else:
+                data = db.session.query(Schedulings, Requesters, ClassRooms, Blocks).join(Schedulings, Requesters.id == Schedulings.requester).join(ClassRooms, ClassRooms.id == Schedulings.classRoom).join(Blocks, Blocks.id == ClassRooms.block).filter(or_(
+                   Schedulings.id.like(f'%{searchTerm}%'),
+                    Schedulings.dateTime.like(f'%{searchTerm}%'),
+                    Requesters.name.like(f'%{searchTerm}%'),
+                    ClassRooms.name.like(f'%{searchTerm}%'),
+                    Blocks.name.like(f'%{searchTerm}%') 
+                )).all()
+            return data   
 
     def get(id):
         with DBConnectionHandler() as db:

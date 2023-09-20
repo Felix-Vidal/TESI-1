@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from infra.config.connection import DBConnectionHandler
 from infra.entities.Users import Users
 
@@ -5,9 +6,20 @@ from infra.entities.Users import Users
 
 class UsersRepository():
 
-    def gets():
+    def gets(searchTerm=None):
+
         with DBConnectionHandler() as db:
-            data = db.session.query(Users).all()
+            if searchTerm == None:
+                data = db.session.query(Users).all()
+            else:
+                data = db.session.query(Users).filter(or_(
+
+                    Users.userName.like(f'%{searchTerm}%'),
+                    Users.fullName.like(f'%{searchTerm}%'),
+                    Users.password.like(f'%{searchTerm}%'),
+                    Users.role.like(f'%{searchTerm}%'))
+
+                ).all()
             return data
 
     def get(id):

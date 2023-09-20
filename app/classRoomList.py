@@ -40,7 +40,7 @@ class ClassRoomList:
         self.btn_editar = ttk.Button(self.main_content, text="Editar", style="TButton", command=self.editar)
         self.btn_editar.pack(side=tk.RIGHT, padx=5 )
 
-        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="TButton", command=self.cadastrar_sala)
+        self.btn_registrar = ttk.Button(self.main_content, text="Registrar", style="TButton", command=self.cadastrar_salas)
         self.btn_registrar.pack(side=tk.RIGHT, padx=5)
         
         if self.user_role == ERole.ROLE_USER:
@@ -48,7 +48,7 @@ class ClassRoomList:
             self.btn_editar.pack_forget()
             self.btn_Delete.pack_forget()
             
-        self.exibir_lista_sala()
+        self.exibir_lista_salas()
 
 
 
@@ -69,9 +69,9 @@ class ClassRoomList:
         else:
             id = int(self.treeview.item(item[0], "values")[0])
             if ClassRoomsRepository.delete(id):
-                self.exibir_lista_sala()
+                self.exibir_lista_salas()
                 
-    def exibir_lista_sala(self):
+    def exibir_lista_salas(self):
         for item in self.treeview.get_children():
             self.treeview.delete(item)
 
@@ -80,7 +80,7 @@ class ClassRoomList:
             
             self.treeview.insert("", "end", values=(classRoom.id, classRoom.name, classRoom.capacity, block.name ,classRoom.typeRoom))
 
-    def cadastrar_sala(self):
+    def cadastrar_salas(self):
         limpar_tela(self.main_content)
         self.root.title("Salas")
         sala = ClassRoomForm(self.root, self.main_content)

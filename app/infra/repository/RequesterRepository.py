@@ -1,11 +1,21 @@
+from sqlalchemy import or_
 from infra.config.connection import DBConnectionHandler
 from infra.entities.Requesters import Requesters
 
 class RequesterRepository:
 
-    def gets():
+    def gets(searchTerm=None):
         with DBConnectionHandler() as db:
-            data = db.session.query(Requesters).all()
+            if searchTerm == None:
+                data = db.session.query(Requesters).all()
+            else:
+                data = db.session.query(Requesters).filter(or_(
+                    Requesters.id.like(f'%{searchTerm}%'),
+                    Requesters.name.like(f'%{searchTerm}%'),
+                    Requesters.email.like(f'%{searchTerm}%'),
+                    Requesters.telephone.like(f'%{searchTerm}%'),
+                    Requesters.typeRequester.like(f'%{searchTerm}%'),
+                )).all()
             return data
 
     def get(id):
