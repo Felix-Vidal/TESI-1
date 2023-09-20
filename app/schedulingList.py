@@ -55,7 +55,7 @@ class ScheduleList:
             id = int(self.treeview.item(item[0], "values")[0])
             limpar_tela(self.main_content)
             self.root.title("Agendamento")
-            classroom = ClassRoomForm(self.root ,self.main_content, id)
+            classroom = ScheduleForm(self.root ,self.main_content, id)
 
     def delete(self):
         item = self.treeview.selection()
@@ -63,7 +63,7 @@ class ScheduleList:
             messagebox.showwarning('Aviso', 'Selecione apenas um item')
         else:
             id = int(self.treeview.item(item[0], "values")[0])
-            if ClassRoomsRepository.delete(id):
+            if SchedulingRepository.delete(id):
                 self.display_scheduling_list()
 
 

@@ -60,7 +60,7 @@ class ClassRoomList:
             id = int(self.treeview.item(item[0], "values")[0])
             limpar_tela(self.main_content)
             self.root.title("Salas")
-            user = ClassRoomForm(self.root ,self.main_content, id)
+            room = ClassRoomForm(self.root ,self.main_content, id)
 
     def delete(self):
         item = self.treeview.selection()

@@ -55,7 +55,9 @@ class RequesterForm:
 
         if self.id:
             requester = RequesterRepository.get(self.id)
-            # Create and place the form widgets
+            
+            requester_type = requester.typeRequester.name.split(".")[-1]
+            
             ttk.Label(self.requester_form_frame, text="Name:").pack(anchor="w")
             self.name_entry = ttk.Entry(self.requester_form_frame, width=width, font=font)
             self.name_entry.insert(0, requester.name)
@@ -73,6 +75,7 @@ class RequesterForm:
             
             ttk.Label(self.requester_form_frame, text="Type Requester:").pack(anchor="w")
             self.type_requester_combobox = ttk.Combobox(self.requester_form_frame, values=[typeRequester.name for typeRequester in ERequester], width=width, font=font)
+            self.type_requester_combobox.insert(0, requester_type)
             self.type_requester_combobox.pack(anchor="w")
         else:
 
