@@ -3,8 +3,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.style import Style
 from PIL import Image, ImageTk
 from login import Login
-from datetime import datetime
-import time
+
 def clean_screen(frame):
     for widget in frame.winfo_children():
         widget.destroy()

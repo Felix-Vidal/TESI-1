@@ -41,15 +41,19 @@ class ClassRoomsRepository:
 
     def update(id, name, capacity, block, typeRoom):
         with DBConnectionHandler() as db:
-            db.session.query(ClassRooms).filter(ClassRooms.id == id).update({
+            if ClassRoomsRepository.get(id) !=  None:
+                db.session.query(ClassRooms).filter(ClassRooms.id == id).update({
 
-                "name":name, 
-                "capacity":capacity, 
-                "block":block, 
-                "typeRoom":typeRoom
-                
-            })
-            db.session.commit()
+                    "name":name, 
+                    "capacity":capacity, 
+                    "block":block, 
+                    "typeRoom":typeRoom
+                    
+                })
+                db.session.commit()
+                return True
+            else:
+                return False
 
     def delete(id):
         with DBConnectionHandler() as db:

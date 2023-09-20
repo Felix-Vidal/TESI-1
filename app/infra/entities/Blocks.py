@@ -1,7 +1,7 @@
 
 from infra.config.base import Base
 from infra.config.connection import DBConnectionHandler
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String
 
 
 class Blocks(Base):
