@@ -29,7 +29,7 @@ class RequesterForm:
         name = self.name_entry.get()
         email = self.email_entry.get()
         telephone = int(self.telephone_entry.get())
-        typeRequester = ERequester.ROLE_PROFESSOR  
+        typeRequester = self.type_requester_combobox.get()  
         
         # Validate input (you can add more validation if needed)
         if not name or not email or not telephone or not typeRequester:
@@ -96,7 +96,7 @@ class RequesterForm:
             self.type_requester_combobox.pack(anchor="w")
 
 
-        register_button = ttk.Button(self.requester_form_frame, text="Register", style="Outline.TButton", command=self.register_requester)
+        register_button = ttk.Button(self.requester_form_frame, text="Register", style="TButton", command=self.register_requester)
         register_button.pack(anchor="w")
         
    

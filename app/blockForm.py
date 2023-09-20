@@ -70,6 +70,6 @@ class BlockForm:
             self.name_entry = ttk.Entry(self.block_form_frame, width=width, font=font)
             self.name_entry.pack(anchor="w")
 
-        register_button = ttk.Button(self.block_form_frame, text="Register", style="Outline.TButton", command=self.register_block)
+        register_button = ttk.Button(self.block_form_frame, text="Register", style="TButton", command=self.register_block)
         register_button.pack(anchor="w")
         

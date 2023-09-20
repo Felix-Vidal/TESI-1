@@ -78,7 +78,7 @@ class ClassRoomList:
         # Preencher a Treeview com os usuários
         for classRoom, block in ClassRoomsRepository.gets():
             
-            self.treeview.insert("", "end", values=(classRoom.id, classRoom.name, classRoom.capacity, block.name ,classRoom.typeRoom))
+            self.treeview.insert("", "end", values=(classRoom.id, classRoom.name, classRoom.capacity, block.name ,classRoom.typeRoom.name))
 
     def cadastrar_salas(self):
         limpar_tela(self.main_content)

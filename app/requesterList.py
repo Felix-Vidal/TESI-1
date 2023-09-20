@@ -20,14 +20,14 @@ class RequesterList:
         
         
       # Treeview no conteúdo principal
-        self.treeview = ttk.Treeview(self.main_content, columns=("id", "name", "email", "telephone", "requesterType"), padding=(10, 20, 10, 5), height=25)
+        self.treeview = ttk.Treeview(self.main_content, columns=("id", "name", "email", "telephone", "requesterType"), height=25)
         self.treeview.pack(fill=tk.X, padx=10, pady=10)
 
-        self.treeview.heading("id", text="ID")
-        self.treeview.heading("name", text="Name")
-        self.treeview.heading("email", text="Email")
-        self.treeview.heading("telephone", text="Telephone")
-        self.treeview.heading("requesterType", text="Requester Type")
+        self.treeview.heading("id", text="ID",anchor='w')
+        self.treeview.heading("name", text="Name", anchor='w')
+        self.treeview.heading("email", text="Email", anchor='w')
+        self.treeview.heading("telephone", text="Telephone", anchor='w')
+        self.treeview.heading("requesterType", text="Requester Type", anchor='w')
 
         self.treeview.column("id",  minwidth=15, width=30, anchor='w')
         self.treeview.column("name", minwidth=200, width=200, anchor='w')

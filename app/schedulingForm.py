@@ -81,12 +81,10 @@ class ScheduleForm:
             
             ttk.Label(self.schedule_form_frame, text="Enter Date:").pack(anchor="w")
             self.date = ttk.DateEntry(self.schedule_form_frame, dateformat='%Y/%m/%d', firstweekday=6, width=width)
-            self.date.insert(0, )
             self.date.pack(anchor="w")
             
             ttk.Label(self.schedule_form_frame, text="Time:").pack(anchor="w")
             self.time_combo = ttk.Combobox(self.schedule_form_frame, values=['7:30', '8:20', '9:20', '10:10', '11:10', '12:00', '13:30', '14:20', '15:20', '16:10', '17:10', '18:00', '19:30', '20:20', '21:20', '22:10'], width=width, font=font)
-            self.time_combo.insert(0, )
             self.time_combo.pack(anchor="w")
         else:
             ttk.Label(self.schedule_form_frame, text="Requester ID:").pack(anchor="w")

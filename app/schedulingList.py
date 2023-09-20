@@ -59,6 +59,7 @@ class ScheduleList:
             limpar_tela(self.main_content)
             self.root.title("Agendamento")
             classroom = ScheduleForm(self.root ,self.main_content, id)
+        self.display_scheduling_list()
 
     def canceled(self):
         item = self.treeview.selection()
